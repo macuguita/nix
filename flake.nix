@@ -5,21 +5,28 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = inputs: {
-    nixosConfigurations.nix-raul = inputs.nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, ... }:
+    let
       system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        inputs.home-manager.nixosModules.home-manager
+    in {
+      nixosConfigurations.nix-raul = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.raul = import ./home.nix;
+
+          nixpkgs.overlays = [
+            neovim-nightly-overlay.overlays.default
+          ];
         }
       ];
     };
   };
 }
-

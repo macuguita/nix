@@ -28,6 +28,20 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Samba
+  services.samba = {
+    enable = true;
+    settings = {
+      root = {
+        path = "/";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "valid users" = "raul";
+      };
+    };
+  };
+
   # Set your time zone.
   time.timeZone = "Europe/Madrid";
 
@@ -58,7 +72,7 @@
     settings = rec {
       initial_session = {
         command = "${pkgs.zsh}/bin/zsh -l -c Hyprland";
-	user = "raul";
+    user = "raul";
       };
       default_session = initial_session;
     };
@@ -90,7 +104,17 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
+    pulseaudio
   ];
+
+  services.flatpak.enable = true;
+  systemd.services.flatpak-repo = {
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.flatpak ];
+    script = ''
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    '';
+  };
 
   # Hyprland
   programs.hyprland = {
@@ -100,14 +124,20 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.kdePackages.kwallet
+    ];
   };
+
+  environment.etc."xdg/menus/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
   # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.noto
   ];
 
+  # Steam
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
 
