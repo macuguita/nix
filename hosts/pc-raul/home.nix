@@ -1,8 +1,23 @@
 { config, pkgs, inputs, ... }:
 
 {
+  imports =
+    [
+    ./../../homeManagerModules/default.nix
+    ];
   home.username = "raul";
   home.homeDirectory = "/home/raul";
+
+  myHome = {
+    cursor.enable = true;
+    shell.enable = true;
+    desktop = {
+      firefox.enable = true;
+      darkMode.enable = true;
+    }:
+  };
+
+  gtk.enable = true;
 
   home.packages = with pkgs; [
     neovide
@@ -62,55 +77,7 @@
     kdePackages.okular
   ];
 
-  programs.neovim = {
-    enable = true;
-    package = pkgs.neovim;
-  };
-
   home.file.".local/share/sounds/freedesktop".source = "${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop";
-
-  home.shellAliases = {
-    cat = "bat";
-    grep = "grep --color=auto";
-    mv = "mv -i";
-    rm = "rm -Iv";
-    n = "nvim";
-    p = "ps aux | grep $1";
-    ls = "ls -h --color=auto --group-directories-first";
-    la = "ls -lah --color=auto --group-directories-first";
-    wget = "wget --hsts-file=${config.xdg.cacheHome}/wget-hsts";
-    rebuild = "sudo nixos-rebuild switch $@";
-  };
-
-  programs.firefox = {
-    enable = true;
-  };
-
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-  };
-  gtk = {
-    enable = true;
-    cursorTheme = {
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
-      size = 20;
-    };
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
-  };
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    # x11.enable = true;
-    name = "Bibata-Modern-Classic";
-    package = pkgs.bibata-cursors;
-    size = 20;
-  };
 
   home.stateVersion = "25.05";
 }
