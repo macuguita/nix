@@ -17,7 +17,7 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "nix-raul"; # Define your hostname.
+  networking.hostName = "pc-raul"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -27,6 +27,11 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 
   # Samba
   services.samba = {
@@ -135,6 +140,7 @@
   # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.noto
+    maple-mono.NL-NF-unhinted
   ];
 
   # Steam
