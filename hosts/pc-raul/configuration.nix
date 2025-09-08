@@ -1,58 +1,65 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [
+  imports = [
     ./hardware-configuration.nix
     ./../../nixosModules/default.nix
-    ];
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   boot = {
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot.enable      = true;
     loader.efi.canTouchEfiVariables = true;
 
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
   networking = {
-    hostName = "pc-raul";
+    hostName              = "pc-raul";
     networkmanager.enable = true;
   };
 
   programs.zsh = {
-    enable = true;
+    enable                    = true;
     syntaxHighlighting.enable = true;
-    autosuggestions.enable = true;
+    autosuggestions.enable    = true;
   };
 
   users.users.raul = {
     isNormalUser = true;
-    description = "raul";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
+    description  = "raul";
+    shell        = pkgs.zsh;
+    extraGroups  = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   services.openssh.enable = true;
 
   myNixos = {
-    steam.enable = true;
-    samba.enable = true;
-    flatpak.enable = true;
-    xdg.enable = true;
+    flatpak.enable  = true;
+    fonts.enableAll = true;
+    greetd.enable   = true;
+    samba.enable    = true;
+    steam.enable    = true;
+    xdg.enable      = true;
   };
 
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
+    enable            = true;
+    alsa.enable       = true;
     alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+    pulse.enable      = true;
+    jack.enable       = true;
   };
 
   hardware.bluetooth = {
-    enable = true;
+    enable      = true;
     powerOnBoot = true;
   };
 
@@ -72,11 +79,11 @@
 
   security.rtkit.enable = true;
 
-# Open ports in the firewall.
-# networking.firewall.allowedTCPPorts = [ ... ];
-# networking.firewall.allowedUDPPorts = [ ... ];
-# Or disable the firewall altogether.
-# networking.firewall.enable = false;
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
   system.stateVersion = "25.05";
 

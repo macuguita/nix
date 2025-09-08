@@ -1,12 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
 {
   options.myNixos.steam = {
     enable = mkOption {
-      type = types.bool;
-      default = false;
+      type        = types.bool;
+      default     = false;
       description = "Enable steam and gaming optimizations";
     };
   };
@@ -21,7 +26,7 @@ with lib;
     ];
 
     programs = {
-      gamemode.enable = true;
+      gamemode.enable  = true;
       gamescope.enable = true;
       steam = {
         enable = true;
@@ -38,4 +43,3 @@ with lib;
     };
   };
 }
-
