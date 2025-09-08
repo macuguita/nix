@@ -10,59 +10,41 @@
 
   outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, ... }:
     let
-      # Define systems you want to support
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      
-      # Helper function to create host configurations
-      mkHost = { hostname, system, user, modules ? [] }: {
-        ${hostname} = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit hostname user; };
-          modules = [
-            # Host-specific configuration
-            ./hosts/${hostname}/configuration.nix
-            
-            # Home Manager integration
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${user} = import ./hosts/${hostname}/home.nix;
-              
-              # Apply overlays
-              nixpkgs.overlays = [
-                neovim-nightly-overlay.overlays.default
-              ];
-            }
-          ] ++ modules; # Add any additional modules
-        };
-      };
-      
-      # Define your hosts here
-      hosts = [
-        {
-          hostname = "pc-raul";
-          system = "x86_64-linux";
-          user = "raul";
-        }
-        # Add more hosts like this:
-        # {
-        #   hostname = "laptop";
-        #   system = "x86_64-linux";
-        #   user = "raul";
-        # }
-        # {
-        #   hostname = "server";
-        #   system = "aarch64-linux";
-        #   user = "admin";
-        # }
-      ];
-    in
-    {
-      # Generate nixosConfigurations for all hosts
-      nixosConfigurations = nixpkgs.lib.foldl' 
-        (acc: host: acc // (mkHost host))
-        {}
-        hosts;
+    systems = [ "x86_64-linux" "aarch64-linux" ];
+
+  mkHost = { hostname, system, user, modules ? [] }: {
+    ${hostname} = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit hostname user; };
+      modules = [
+        ./hosts/${hostname}/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${user} = import ./hosts/${hostname}/home.nix;
+
+            nixpkgs.overlays = [
+              neovim-nightly-overlay.overlays.default
+            ];
+          }
+      ] ++ modules;
     };
+  };
+
+  hosts = [
+  {
+    hostname = "pc-raul";
+    system = "x86_64-linux";
+    user = "raul";
+  }
+  ];
+  in
+  {
+    nixosConfigurations = nixpkgs.lib.foldl'
+      (acc: host: acc // (mkHost host))
+      {}
+    hosts;
+  };
 }
