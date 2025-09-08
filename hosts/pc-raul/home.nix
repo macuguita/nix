@@ -17,6 +17,7 @@
     fastfetch
     cargo
     waybar
+    bluetui
     wf-recorder
     grim
     slurp
@@ -34,10 +35,17 @@
     firefox
     fzf
     steam
+    qbittorrent
     pavucontrol
     pywal16
     yt-dlp
     mpv
+    wineWowPackages.stable
+    winetricks
+    woomer
+    jdk
+    glfw
+    jetbrains.idea-community-bin
     kdePackages.dolphin
     kdePackages.ark
     kdePackages.kio
@@ -71,6 +79,7 @@
     ls = "ls -h --color=auto --group-directories-first";
     la = "ls -lah --color=auto --group-directories-first";
     wget = "wget --hsts-file=${config.xdg.cacheHome}/wget-hsts";
+    rebuild = "sudo nixos-rebuild switch $@";
   };
 
   programs.firefox = {
