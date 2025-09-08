@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -8,8 +13,8 @@ in
 {
   options.myHome.cursor = {
     enable = mkOption {
-      type = types.bool;
-      default = false;
+      type        = types.bool;
+      default     = false;
       description = "Enable custom cursor configuration.";
     };
   };
@@ -18,19 +23,18 @@ in
     gtk = {
       enable = true;
       cursorTheme = {
-        name = "Bibata-Modern-Classic";
+        name    = "Bibata-Modern-Classic";
         package = pkgs.bibata-cursors;
-        size = 20;
+        size    = 20;
       };
     };
 
     home.pointerCursor = {
-      gtk.enable = true;
+      gtk.enable   = true;
       # x11.enable = true; # uncomment if you want X11 cursor too
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
-      size = 20;
+      name         = "Bibata-Modern-Classic";
+      package      = pkgs.bibata-cursors;
+      size         = 20;
     };
   };
 }
-

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -8,36 +13,33 @@ in
 {
   options.myHome.desktop = {
     firefox.enable = mkOption {
-      type = types.bool;
-      default = false;
+      type        = types.bool;
+      default     = false;
       description = "Enable firefox and its configs.";
-    }
+    };
     darkMode.enable = mkOption {
-      type = types.bool;
-      default = false;
+      type        = types.bool;
+      default     = false;
       description = "Enable dark mode wherever it is possible.";
     };
   };
 
-  #TODO: add firefox extensions and configs
-  config = mkIf cfg.firefox.enable {
-    programs.firefox = {
+  config = {
+    programs.firefox = mkIf cfg.firefox.enable {
       enable = true;
     };
-  };
 
-  config = mkIf cfg.darkMode.enable {
-    dconf.settings = {
+    dconf.settings = mkIf cfg.darkMode.enable {
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
       };
     };
-    gtk = {
+
+    gtk = mkIf cfg.darkMode.enable {
       theme = {
-        name = "Adwaita-dark";
+        name    = "Adwaita-dark";
         package = pkgs.gnome-themes-extra;
       };
     };
   };
 }
-

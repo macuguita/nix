@@ -1,20 +1,19 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [
+  imports = [
     ./../../homeManagerModules/default.nix
-    ];
-  home.username = "raul";
+  ];
+  home.username      = "raul";
   home.homeDirectory = "/home/raul";
 
   myHome = {
     cursor.enable = true;
-    shell.enable = true;
     desktop = {
-      firefox.enable = true;
+      firefox.enable  = true;
       darkMode.enable = true;
-    }:
+    };
+    neovim.enable = true;
   };
 
   gtk.enable = true;
@@ -77,8 +76,8 @@
     kdePackages.okular
   ];
 
-  home.file.".local/share/sounds/freedesktop".source = "${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop";
+  home.file.".local/share/sounds/freedesktop".source =
+    "${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop";
 
   home.stateVersion = "25.05";
 }
-
