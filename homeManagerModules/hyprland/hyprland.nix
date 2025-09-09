@@ -31,7 +31,6 @@ in
       pkgs.dunst
       pkgs.libnotify
       pkgs.pywal16
-      pkgs.rofi-wayland
       pkgs.waybar
       pkgs.woomer
     ];
