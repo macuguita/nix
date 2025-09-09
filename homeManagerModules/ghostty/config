@@ -1,0 +1,27 @@
+#~~~~~~~~~~~~~~~~~~#
+#  Ghostty Config  #
+#~~~~~~~~~~~~~~~~~~#
+
+# MacOS
+config-file = ?extra
+
+# Terminal
+term = "xterm-256color"
+
+# Keybinds
+keybind = ctrl+t=new_tab
+
+# Window
+theme = catppuccin-mocha
+background = 121212
+foreground = ffffff
+window-height = 24
+window-width = 80
+confirm-close-surface = false
+
+# Cursor
+cursor-style = bar
+
+# Fonts
+font-size = 11
+

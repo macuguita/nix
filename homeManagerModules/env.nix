@@ -16,9 +16,9 @@ in
 
   config = mkIf cfg.enable {
     home.sessionVariables = {
-      EDITOR  = "nvim";
+      # EDITOR  = "nvim";
       TERM    = "xterm-256color";
-      BROWSER = "firefox";
+      # BROWSER = "firefox";
 
       macuguita = "true";
 
@@ -28,7 +28,7 @@ in
 
       LESSHISTFILE = "$XDG_CACHE_HOME/less_history";
 
-      WINEPREFIX = "$XDG_DATA_HOME/wineprefixes/default";
+      # WINEPREFIX = "$XDG_DATA_HOME/wineprefixes/default";
       GNUPGHOME  = "$XDG_DATA_HOME/gnupg";
     };
   };

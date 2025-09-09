@@ -1,0 +1,14 @@
+#~~~~~~~~~~~~~~~~~~~~~~~~#
+#  MacOS Ghostty Config  #
+#~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# MacOS
+macos-titlebar-style = native
+macos-titlebar-proxy-icon = hidden
+
+# Font
+font-family = "Maple Mono NF"
+font-style-bold = Bold
+font-style-italic = Italic
+font-style-bold-italic = Bold Italic
+

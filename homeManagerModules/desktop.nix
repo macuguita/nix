@@ -17,6 +17,11 @@ in
       default     = false;
       description = "Enable firefox and its configs.";
     };
+    minecraft.enable = mkOption {
+      type        = types.bool;
+      default     = false;
+      description = "Enable Prism launcher and its configs.";
+    };
     darkMode.enable = mkOption {
       type        = types.bool;
       default     = false;
@@ -28,6 +33,17 @@ in
     programs.firefox = mkIf cfg.firefox.enable {
       enable = true;
     };
+    home.sessionVariables = mkIf cfg.firefox.enable {
+      BROWSER = "firefox";
+    };
+
+    home.packages = [
+    ]
+    ++ lib.optionals cfg.minecraft.enable [
+      pkgs.prismlauncher
+      pkgs.jdk
+      pkgs.glfw
+    ];
 
     dconf.settings = mkIf cfg.darkMode.enable {
       "org/gnome/desktop/interface" = {
@@ -37,7 +53,7 @@ in
 
     gtk = mkIf cfg.darkMode.enable {
       theme = {
-        name    = "Adwaita-dark";
+        name = "Adwaita-dark";
         package = pkgs.gnome-themes-extra;
       };
     };
