@@ -1,0 +1,17 @@
+#~~~~~~~~~~~~~~~~~~~~~~~~#
+#  Linux Ghostty Config  #
+#~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# Window
+background-opacity = 0.75
+
+# Linux
+gtk-titlebar = false
+gtk-adwaita = false
+window-decoration = true
+
+# Fonts
+font-family = "Maple Mono NL NF SemiBold"
+font-style-bold = "Maple Mono NL NF ExtraBold"
+font-style-italic = "Maple Mono NL NF SemiBold Italic"
+font-style-bold-italic = "Maple Mono NL NF ExtraBold Italic"

@@ -32,7 +32,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.fzf ];
+    home.packages = [
+      pkgs.fzf
+      pkgs.bat
+    ];
 
     home.shellAliases = mkIf cfg.enableAliases {
       cat     = "bat";

@@ -10,70 +10,33 @@
   myHome = {
     cursor.enable = true;
     desktop = {
-      firefox.enable  = true;
-      darkMode.enable = true;
+      firefox.enable     = true;
+      minecraft.enable   = true;
+      darkMode.enable    = true;
     };
-    neovim.enable = true;
+    devel.enableJetbrains = true;
+    ghostty.enable        = true;
+    hyprland.enable       = true;
+    kde.enable            = true;
+    neovim.enable         = true;
+    rofi.enable           = true;
+    vesktop.enable        = true;
+    wine.enable           = true;
   };
 
   gtk.enable = true;
 
   home.packages = with pkgs; [
-    neovide
-    vesktop
-    prismlauncher
-    wl-clipboard
-    ffmpeg
-    imagemagick
-    bat
+    wl-clipboard # put in built nix script
+    wf-recorder # put in built nix script
+    grim # put in built nix script
+    slurp # put in built nix script
     btop
-    gcc
-    fastfetch
-    cargo
-    waybar
     bluetui
-    wf-recorder
-    grim
-    slurp
-    dunst
-    libnotify
-    hyprpaper
-    hyprlock
-    hyprpicker
-    hypridle
-    hyprsunset
-    hyprpolkitagent
-    hyprland-qt-support
     ghostty
-    rofi-wayland
-    firefox
-    fzf
-    steam
     qbittorrent
-    pavucontrol
-    pywal16
-    yt-dlp
     mpv
-    wineWowPackages.stable
-    winetricks
-    woomer
-    jdk
-    glfw
-    jetbrains.idea-community-bin
-    kdePackages.dolphin
-    kdePackages.ark
-    kdePackages.kio
-    kdePackages.kio-admin
-    kdePackages.kio-extras
-    kdePackages.kio-fuse
-    kdePackages.kservice
-    kdePackages.kwallet
-    kdePackages.kwallet-pam
-    kdePackages.baloo
-    kdePackages.baloo-widgets
-    kdePackages.ffmpegthumbs
-    kdePackages.gwenview
-    kdePackages.okular
+    filezilla
   ];
 
   home.file.".local/share/sounds/freedesktop".source =
