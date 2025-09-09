@@ -4,24 +4,24 @@
   imports = [
     ./../../homeManagerModules/default.nix
   ];
-  home.username      = "raul";
+  home.username = "raul";
   home.homeDirectory = "/home/raul";
 
   myHome = {
     cursor.enable = true;
     desktop = {
-      firefox.enable     = true;
-      minecraft.enable   = true;
-      darkMode.enable    = true;
+      firefox.enable = true;
+      minecraft.enable = true;
+      darkMode.enable = true;
     };
     devel.enableJetbrains = true;
-    ghostty.enable        = true;
-    hyprland.enable       = true;
-    kde.enable            = true;
-    neovim.enable         = true;
-    rofi.enable           = true;
-    vesktop.enable        = true;
-    wine.enable           = true;
+    ghostty.enable = true;
+    hyprland.enable = true;
+    kde.enable = true;
+    neovim.enable = true;
+    rofi.enable = true;
+    vesktop.enable = true;
+    wine.enable = true;
   };
 
   gtk.enable = true;

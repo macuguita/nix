@@ -1,15 +1,14 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
 
 let
   allFonts = {
-    noto       = pkgs.nerd-fonts.noto;
+    noto = pkgs.nerd-fonts.noto;
     maple-mono = pkgs.maple-mono.NL-NF-unhinted;
   };
 
@@ -18,14 +17,14 @@ in
 {
   options.myNixos.fonts = {
     enableAll = mkOption {
-      type        = types.bool;
-      default     = false;
+      type = types.bool;
+      default = false;
       description = "Enable all fonts";
     };
 
     fonts = mkOption {
-      type        = types.attrsOf types.bool;
-      default     = defaultFontAttrs;
+      type = types.attrsOf types.bool;
+      default = defaultFontAttrs;
       description = "Enable/disable individual fonts";
     };
   };

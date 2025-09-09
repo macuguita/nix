@@ -16,10 +16,10 @@ with lib;
       enable = true;
       settings = {
         root = {
-          path          = "/";
-          browseable    = "yes";
-          "read only"   = "no";
-          "guest ok"    = "no";
+          path = "/";
+          browseable = "yes";
+          "read only" = "no";
+          "guest ok" = "no";
           "valid users" = "raul";
         };
       };

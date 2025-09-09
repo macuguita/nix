@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -14,23 +13,24 @@ in
 {
   options.myHome.neovim = {
     enable = mkOption {
-      type        = types.bool;
-      default     = false;
+      type = types.bool;
+      default = false;
       description = "Enable neovim.";
     };
   };
 
   config = mkIf cfg.enable {
     programs.neovim = {
-      enable        = true;
-      package       = pkgs.neovim;
+      enable = true;
+      package = pkgs.neovim;
       defaultEditor = true;
     };
     home.packages = [
       pkgs.neovide
       pkgs.libclang
       pkgs.lua-language-server
-      pkgs.nil
+      pkgs.nixd
+      pkgs.nixpkgs-fmt
     ];
     home.sessionVariables = {
       EDITOR = "nvim";
