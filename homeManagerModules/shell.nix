@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -13,20 +12,20 @@ in
 {
   options.myHome.shell = {
     enable = mkOption {
-      type        = types.bool;
-      default     = true;
+      type = types.bool;
+      default = true;
       description = "Enable shell config and aliases.";
     };
 
     enableAliases = mkOption {
-      type        = types.bool;
-      default     = true;
+      type = types.bool;
+      default = true;
       description = "Enable shell aliases.";
     };
 
     enableZsh = mkOption {
-      type        = types.bool;
-      default     = true;
+      type = types.bool;
+      default = true;
       description = "Enable zsh config.";
     };
   };
@@ -38,15 +37,15 @@ in
     ];
 
     home.shellAliases = mkIf cfg.enableAliases {
-      cat     = "bat";
-      grep    = "grep --color=auto";
-      mv      = "mv -i";
-      rm      = "rm -Iv";
-      n       = "nvim";
-      p       = "ps aux | grep $1";
-      ls      = "ls -h --color=auto --group-directories-first";
-      la      = "ls -lah --color=auto --group-directories-first";
-      wget    = "wget --hsts-file=${config.xdg.cacheHome}/wget-hsts";
+      cat = "bat";
+      grep = "grep --color=auto";
+      mv = "mv -i";
+      rm = "rm -Iv";
+      n = "nvim";
+      p = "ps aux | grep $1";
+      ls = "ls -h --color=auto --group-directories-first";
+      la = "ls -lah --color=auto --group-directories-first";
+      wget = "wget --hsts-file=${config.xdg.cacheHome}/wget-hsts";
       rebuild = "sudo nixos-rebuild switch $@";
     };
 

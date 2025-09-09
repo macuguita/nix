@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -10,8 +9,8 @@ with lib;
 {
   options.myNixos.xdg = {
     enable = mkOption {
-      type        = types.bool;
-      default     = false;
+      type = types.bool;
+      default = false;
       description = "Enable some fixes for opening files in file managers";
     };
   };

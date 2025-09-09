@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -14,8 +13,8 @@ in
 {
   options.myHome.vesktop = {
     enable = mkOption {
-      type        = types.bool;
-      default     = false;
+      type = types.bool;
+      default = false;
       description = "Enable vesktop and its configuration.";
     };
   };

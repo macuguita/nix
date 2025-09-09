@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -13,13 +12,13 @@ in
 {
   options.myHome.devel = {
     enable = mkOption {
-      type        = types.bool;
-      default     = true;
+      type = types.bool;
+      default = true;
       description = "Enable development stuff.";
     };
     enableJetbrains = mkOption {
-      type        = types.bool;
-      default     = false;
+      type = types.bool;
+      default = false;
       description = "Enables jetbrains ides";
     };
   };

@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -10,13 +9,19 @@ with lib;
 let
   cfg = config.myHome.ghostty;
   createSymlink = path: config.lib.file.mkOutOfStoreSymlink path;
-  extraConfig = if pkgs.stdenv.isLinux then ./linux else if pkgs.stdenv.isDarwin then ./macos else throw "OS not supported";
+  extraConfig =
+    if pkgs.stdenv.isLinux then
+      ./linux
+    else if pkgs.stdenv.isDarwin then
+      ./macos
+    else
+      throw "OS not supported";
 in
 {
   options.myHome.ghostty = {
     enable = mkOption {
-      type        = types.bool;
-      default     = false;
+      type = types.bool;
+      default = false;
       description = "Enable ghostty.";
     };
   };

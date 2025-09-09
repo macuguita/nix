@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -14,8 +13,8 @@ in
 {
   options.myHome.vim = {
     enable = mkOption {
-      type        = types.bool;
-      default     = true;
+      type = types.bool;
+      default = true;
       description = "Enable vimrc.";
     };
   };

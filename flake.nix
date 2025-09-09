@@ -10,21 +10,20 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      neovim-nightly-overlay,
-      nixos-wsl,
-      ...
+    { nixpkgs
+    , home-manager
+    , neovim-nightly-overlay
+    , nixos-wsl
+    , ...
     }:
     let
       mkHost =
-        {
-          hostname,
-          system,
-          user,
-          modules ? [ ],
-          isWSL ? false,
+        { hostname
+        , system
+        , user
+        , modules ? [ ]
+        , isWSL ? false
+        ,
         }:
         {
           ${hostname} = nixpkgs.lib.nixosSystem {
@@ -49,7 +48,7 @@
                 nixos-wsl.nixosModules.default
                 {
                   wsl.enable = true;
-                  system.stateVersion = "25.05"; # adjust to your desired version
+                  system.stateVersion = "25.05";
                 }
               ] else [ ])
               ++ modules;
@@ -74,4 +73,3 @@
       nixosConfigurations = nixpkgs.lib.foldl' (acc: host: acc // (mkHost host)) { } hosts;
     };
 }
-

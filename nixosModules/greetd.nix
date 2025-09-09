@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 with lib;
@@ -10,8 +9,8 @@ with lib;
 {
   options.myNixos.greetd = {
     enable = mkOption {
-      type        = types.bool;
-      default     = false;
+      type = types.bool;
+      default = false;
       description = "Enable greetd Hyprland auto-login";
     };
   };
@@ -22,7 +21,7 @@ with lib;
       settings = rec {
         initial_session = {
           command = "${pkgs.zsh}/bin/zsh -l -c Hyprland &> /dev/null";
-          user    = "raul";
+          user = "raul";
         };
         default_session = initial_session;
       };

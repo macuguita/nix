@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 local servers = {
     "lua_ls",
     "clangd",
-    "nil_ls",
+    "nixd",
 }
 for _, server in ipairs(servers) do
     vim.lsp.enable(server)
@@ -89,6 +89,16 @@ vim.lsp.config("lua_ls", {
             }
         }
     }
+})
+vim.lsp.config("nixd", {
+    cmd = { "nixd" },
+    settings = {
+        nixd = {
+            formatting = {
+                command = { "nixpkgs-fmt" }
+            }
+        }
+    },
 })
 
 -- Show trailing whitespace
