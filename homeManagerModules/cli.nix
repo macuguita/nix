@@ -23,8 +23,8 @@ in
       pkgs.ffmpeg
       pkgs.imagemagick
       pkgs.fastfetch
-      pkgs.pavucontrol
       pkgs.yt-dlp
-    ];
+    ]
+    ++ lib.optional pkgs.stdenv.isLinux pkgs.pavucontrol;
   };
 }
