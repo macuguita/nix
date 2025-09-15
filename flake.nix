@@ -60,7 +60,7 @@
 
                   nix-homebrew = {
                     enable = true;
-                    enableRosetta = true; # Apple Silicon only
+                    enableRosetta = true;
                     user = user;
 
                     taps = {
