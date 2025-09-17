@@ -21,7 +21,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = [
-      pkgs.rofi-wayland
+      pkgs.rofi
     ];
     xdg.configFile."rofi" = {
       source = createSymlink ./rofi;
