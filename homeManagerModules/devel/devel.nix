@@ -39,7 +39,7 @@ in
       userEmail = "raulpripri@gmail.com";
 
       extraConfig = {
-        user.signingkey = "${builtins.getEnv "HOME"}/.sshKey/id_ed25519_personal.pub";
+        user.signingkey = "~/.sshKey/id_ed25519_personal.pub";
 
         core = {
           excludesFile = "${toString ./gitignore}";
