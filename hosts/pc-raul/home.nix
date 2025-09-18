@@ -26,6 +26,7 @@
 #  stylix.image = /tmp/current_wallpaper.jpg;
   stylix.targets."neovim".enable = false;
   stylix.targets."firefox".enable = false;
+  stylix.targets."hyprland".enable = false;
 
   gtk.enable = true;
 
