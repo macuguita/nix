@@ -19,7 +19,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    stylix.targets.kde.enable = true;
     home.packages = [
+      pkgs.libsForQt5.qt5ct
+      pkgs.kdePackages.qt6ct
       pkgs.kdePackages.dolphin
       pkgs.kdePackages.ark
       pkgs.kdePackages.kio

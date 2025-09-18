@@ -10,6 +10,10 @@ let
   cfg = config.myHome.hyprland;
 in
 {
+  imports = [
+    ./hyprlock.nix
+    ./hyprpaper.nix
+  ];
   options.myHome.hyprland = {
     enable = mkOption {
       type = types.bool;
@@ -19,6 +23,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    myHome.hyprlock.enable = true;
+    myHome.hyprpaper.enable = true;
     wayland.windowManager.hyprland = {
       enable = true;
       package = null;
@@ -37,6 +43,7 @@ in
         "hyprpaper &"
         "waybar &"
         "[workspace 1 silent] firefox"
+        "[workspace special:discord] vesktop"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "sh $HOME/.config/scripts/randomWallpaper.sh"
         "hyprlock"
@@ -48,11 +55,13 @@ in
         "XDG_MENU_PREFIX,arch-"
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
+        "QT_QPA_PLATFORMTHEME,qt6ct"
       ];
 
       general = {
         gaps_in = 5;
         gaps_out = 20;
+        border_size = 2;
         resize_on_border = false;
         allow_tearing = false;
         layout = "dwindle";
@@ -137,7 +146,6 @@ in
 
         touchpad.natural_scroll = false;
       };
-      gestures.workspace_swipe = false;
 
       bind = [
         "$mainMod, T, exec, $terminal"
@@ -168,28 +176,32 @@ in
         "$mainMod, down, movefocus, d"
 
         # Special workspaces
-        "$mainMod, 0, workspace, 10"
-        "$mainMod, Control_L&Control_R, 0, movetoworkspace, 10"
         "$mainMod, S, togglespecialworkspace, discord"
-        "$mainMod, Control_L&Control_R, 0, movetoworkspace, special:discord"
+        "$mainMod Control_L&Control_R, S, movetoworkspace, special:discord"
 
         # Window manip
         "$mainMod, A, togglesplit," #dwindle
         "$mainMod, mouse:275, togglefloating"
       ]
       ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+        # Workspaces 1..9
         builtins.concatLists (builtins.genList
           (i:
             let ws = i + 1;
             in [
-              "$mainMod, ${toString i}, workspace, ${toString ws}"
-              "$mainMod Control_L&Control_R, ${toString i}, movetoworkspace, ${toString ws}"
+              "$mainMod, ${toString ws}, workspace, ${toString ws}"
+              "$mainMod Control_L&Control_R, ${toString ws}, movetoworkspace, ${toString ws}"
             ]
           )
-          9)
-      );
+          9
+        )
+      )
+      ++
+      [
+        # Workspace 10 for 0 key
+        "$mainMod, 0, workspace, 10"
+        "$mainMod Control_L&Control_R, 0, movetoworkspace, 10"
+      ];
       bindm = [
         # Window manip
         "$mainMod, mouse:272, movewindow"
@@ -207,6 +219,9 @@ in
       ];
 
       windowrulev2 = [
+        # Vesktop
+        "workspace special:discord silent, class:^(vesktop)$"
+
         # Firefox pip
         "float, class:^(firefox)$, title:^(Picture-in-Picture)$"
         "pin, class:^(firefox)$, title:^(Picture-in-Picture)$"
@@ -233,18 +248,18 @@ in
         "noanim, title:^wayland-boomer$"
         "rounding 0, title:^wayland-boomer$"
       ];
-      windowrule = [ "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0" ];
+      windowrule = [
+        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+        "suppressevent maximize, class:.*"
+      ];
     };
     home.packages = [
       pkgs.hyprpaper
       pkgs.hyprlock
       pkgs.hyprpicker
-      pkgs.hypridle
       pkgs.hyprsunset
       pkgs.hyprpolkitagent
       pkgs.hyprland-qt-support
-      pkgs.dunst
-      pkgs.libnotify
       pkgs.pywal16
       pkgs.waybar
       pkgs.woomer

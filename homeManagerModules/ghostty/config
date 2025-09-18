@@ -12,7 +12,7 @@ term = "xterm-256color"
 keybind = ctrl+t=new_tab
 
 # Window
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 background = 121212
 foreground = ffffff
 window-height = 24
