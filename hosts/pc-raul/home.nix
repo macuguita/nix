@@ -8,25 +8,33 @@
   home.homeDirectory = "/home/raul";
 
   myHome = {
-    cursor.enable = true;
     desktop = {
       firefox.enable = true;
       minecraft.enable = true;
     };
     devel.enableJetbrains = true;
+    dunst.enable = true;
     ghostty.enable = true;
     hyprland.enable = true;
     kde.enable = true;
     neovim.enable = true;
     rofi.enable = true;
+    stylix.enable = true;
     vesktop.enable = true;
+    waybar.enable = true;
     wine.enable = true;
   };
 
-#  stylix.image = /tmp/current_wallpaper.jpg;
-  stylix.targets."neovim".enable = false;
-  stylix.targets."firefox".enable = false;
-  stylix.targets."hyprland".enable = false;
+  stylix = {
+    image = ./wallpaper.jpg;
+    targets = {
+      "neovim".enable = false;
+      "firefox".enable = false;
+      "hyprland".enable = false;
+      qt.enable = true;
+      qt.platform = "qtct";
+    };
+  };
 
   gtk.enable = true;
 

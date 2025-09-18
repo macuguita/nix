@@ -7,7 +7,6 @@ background-opacity = 0.75
 
 # Linux
 gtk-titlebar = false
-gtk-adwaita = false
 window-decoration = true
 
 # Fonts
