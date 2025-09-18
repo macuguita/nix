@@ -56,8 +56,8 @@ in
         resize_on_border = false;
         allow_tearing = false;
         layout = "dwindle";
-        "col.inactive_border" = "rgba(${config.stylix.base16Scheme.base0}aa)";
-        "col.active_border" = "rgba(${config.stylix.base16Scheme.base01}ee) rgba(${config.stylix.base16Scheme.base04}ee) rgba(${config.stylix.base16Scheme.base06}ee) 135deg";
+        "col.inactive_border" = "rgba(${config.lib.stylix.colors.base00}aa)";
+        "col.active_border" = "rgba(${config.lib.stylix.colors.base01}ee) rgba(${config.lib.stylix.colors.base04}ee) rgba(${config.lib.stylix.colors.base06}ee) 135deg";
       };
 
       decoration = {
