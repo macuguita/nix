@@ -21,11 +21,6 @@ in
       default = false;
       description = "Enable Prism launcher and its configs.";
     };
-    darkMode.enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Enable dark mode wherever it is possible.";
-    };
   };
 
   config = {
@@ -43,18 +38,5 @@ in
       pkgs.jdk
       pkgs.glfw
     ];
-
-    dconf.settings = mkIf cfg.darkMode.enable {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-      };
-    };
-
-    gtk = mkIf cfg.darkMode.enable {
-      theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome-themes-extra;
-      };
-    };
   };
 }

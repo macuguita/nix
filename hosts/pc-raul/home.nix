@@ -12,7 +12,6 @@
     desktop = {
       firefox.enable = true;
       minecraft.enable = true;
-      darkMode.enable = true;
     };
     devel.enableJetbrains = true;
     ghostty.enable = true;
@@ -23,6 +22,10 @@
     vesktop.enable = true;
     wine.enable = true;
   };
+
+#  stylix.image = /tmp/current_wallpaper.jpg;
+  stylix.targets."neovim".enable = false;
+  stylix.targets."firefox".enable = false;
 
   gtk.enable = true;
 
