@@ -11,6 +11,10 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
@@ -27,6 +31,7 @@
     , neovim-nightly-overlay
     , nixos-wsl
     , nix-darwin
+    , stylix
     , nix-homebrew
     , homebrew-core
     , homebrew-cask
@@ -94,6 +99,7 @@
                     neovim-nightly-overlay.overlays.default
                   ];
                 }
+                stylix.nixosModules.stylix
               ] ++ (if type == "wsl" then [
                 nixos-wsl.nixosModules.default
                 {

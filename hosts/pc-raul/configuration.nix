@@ -41,6 +41,10 @@
 
   services.openssh.enable = true;
 
+  stylix.enable = true;
+  stylix.polarity = "dark";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+
   myNixos = {
     flatpak.enable = true;
     fonts.enableAll = true;
