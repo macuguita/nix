@@ -43,8 +43,14 @@ in
       rm = "rm -Iv";
       n = "nvim";
       p = "ps aux | grep $1";
-      ls = "ls -h --color=auto --group-directories-first";
-      la = "ls -lah --color=auto --group-directories-first";
+      ls =
+        if pkgs.stdenv.isLinux
+        then "ls -h --color=auto --group-directories-first"
+        else "ls -h --color=auto";
+      la =
+        if pkgs.stdenv.isLinux
+        then "ls -lah --color=auto --group-directories-first"
+        else "ls -lah --color=auto";
       wget = "wget --hsts-file=${config.xdg.cacheHome}/wget-hsts";
       rebuild = "sudo nixos-rebuild switch $@";
     };
