@@ -22,6 +22,7 @@
       "blockbench"
       "discord"
       "qbittorrent"
+      "clion"
     ];
   };
 
