@@ -25,11 +25,13 @@ in
   config = mkIf cfg.enable {
     myHome.hyprlock.enable = true;
     myHome.hyprpaper.enable = true;
+
     wayland.windowManager.hyprland = {
       enable = true;
       package = null;
       portalPackage = null;
     };
+
     wayland.windowManager.hyprland.settings = {
       monitor = "HDMI-A-1, 1920x1080@74.97Hz, 0x0, 1";
       "$terminal" = "ghostty";
@@ -154,20 +156,20 @@ in
         "$mainMod, F, exec, $fileManager"
         "$mainMod, SPACE, exec, $menu"
         "$mainMod, B, exec, $browser"
-        "$mainMod, P, exec, sh $HOME/.config/scripts/colorPicker.sh"
+        "$mainMod, P, exec, colorPicker"
         # Zoomer
         "$mainMod, mouse:274, exec, grim - | wayland-boomer"
 
         # Screenshots
-        "$mainMod SHIFT, 3, exec, sh $HOME/.config/scripts/screenshot.sh fullscreen"
-        "$mainMod SHIFT, 4, exec, sh $HOME/.config/scripts/screenshot.sh area"
-        "$mainMod SHIFT, 5, exec, sh $HOME/.config/scripts/record.sh"
+        "$mainMod SHIFT, 3, exec, screenshot fullscreen"
+        "$mainMod SHIFT, 4, exec, screenshot area"
+        "$mainMod SHIFT, 5, exec, record"
 
         # Randomize wallpaper
         #"$mainMod SHIFT, w, exec, sh $HOME/.config/scripts/randomWallpaper.sh"
 
         # Autoclicker
-        "$mainMod, F8, exec, sh $HOME/.config/scripts/toggleAutoclicker.sh"
+        "$mainMod, F8, exec, toggleAutoclicker"
 
         # Move focus with mainMod + arrow keys
         "$mainMod, left, movefocus, l"
@@ -209,9 +211,9 @@ in
       ];
       bindel = [
         # Volume up/down
-        ", XF86AudioRaiseVolume, exec, sh $HOME/.config/scripts/volumeNotify.sh up"
-        ", XF86AudioLowerVolume, exec, sh $HOME/.config/scripts/volumeNotify.sh down"
-        ", XF86AudioMute, exec, sh $HOME/.config/scripts/volumeNotify.sh mute"
+        ", XF86AudioRaiseVolume, exec, changeVolume up"
+        ", XF86AudioLowerVolume, exec, changeVolume down"
+        ", XF86AudioMute, exec, changeVolume mute"
 
         # Brightness up/down
         "$mainMod, XF86AudioLowerVolume, exec, hyprctl hyprsunset gamma -10"

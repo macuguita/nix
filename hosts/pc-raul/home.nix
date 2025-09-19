@@ -1,5 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
+let
+  changeVolume = import ./../../homeManagerModules/scripts/changeVolume.nix { inherit pkgs; };
+  colorPicker = import ./../../homeManagerModules/scripts/colorPicker.nix { inherit pkgs config; };
+  discordAudio = import ./../../homeManagerModules/scripts/discordAudio.nix { inherit pkgs; };
+  m3u8toMP4 = import ./../../homeManagerModules/scripts/m3u8toMP4.nix { inherit pkgs; };
+  optimizeImage = import ./../../homeManagerModules/scripts/optimizeImage.nix { inherit pkgs; };
+  optimizeVideo = import ./../../homeManagerModules/scripts/optimizeVideo.nix { inherit pkgs; };
+  record = import ./../../homeManagerModules/scripts/record.nix { inherit pkgs; };
+  screenshot = import ./../../homeManagerModules/scripts/screenshot.nix { inherit pkgs; };
+  screenTemperature = import ./../../homeManagerModules/scripts/screenTemperature.nix { inherit pkgs; };
+  shittifyVideo = import ./../../homeManagerModules/scripts/shittifyVideo.nix { inherit pkgs; };
+  toggleAutoclicker = import ./../../homeManagerModules/scripts/toggleAutoclicker.nix { inherit pkgs; };
+  youtubeToMP3 = import ./../../homeManagerModules/scripts/youtubeToMP3.nix { inherit pkgs; };
+  youtubeToMP4 = import ./../../homeManagerModules/scripts/youtubeToMP4.nix { inherit pkgs; };
+in
 {
   imports = [
     ./../../homeManagerModules/default.nix
@@ -38,21 +53,27 @@
 
   gtk.enable = true;
 
-  home.packages = with pkgs; [
-    wl-clipboard # put in built nix script
-    wf-recorder # put in built nix script
-    grim # put in built nix script
-    slurp # put in built nix script
-    btop
-    bluetui
-    ghostty
-    qbittorrent
-    mpv
-    filezilla
+  home.packages = [
+    changeVolume
+    colorPicker
+    discordAudio
+    m3u8toMP4
+    optimizeImage
+    optimizeVideo
+    record
+    screenshot
+    screenTemperature
+    shittifyVideo
+    toggleAutoclicker
+    youtubeToMP3
+    youtubeToMP4
+    pkgs.btop
+    pkgs.bluetui
+    pkgs.ghostty
+    pkgs.qbittorrent
+    pkgs.mpv
+    pkgs.filezilla
   ];
-
-  home.file.".local/share/sounds/freedesktop".source =
-    "${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop";
 
   home.stateVersion = "25.05";
 }
