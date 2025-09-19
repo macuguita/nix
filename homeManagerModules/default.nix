@@ -11,7 +11,7 @@
     ./hyprland/hyprland.nix # default: false
     ./kde.nix # default: false
     ./neovim/neovim.nix # default: false
-    ./rofi/rofi.nix # default: false
+    ./rofi.nix # default: false
     ./shell.nix # default: true
     ./ssh.nix # default: true
     ./stylix.nix # default: false
