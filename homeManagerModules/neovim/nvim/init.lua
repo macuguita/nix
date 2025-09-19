@@ -18,7 +18,7 @@ vim.opt.guicursor   = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait7
 vim.g.mapleader = " "
 
 -- Neovide
-vim.o.guifont = "Maple Mono NF:h14"
+vim.o.guifont = "Maple Mono NL NF:h14"
 vim.g.neovide_cursor_animation_length = 0
 
 -- Keybinds
