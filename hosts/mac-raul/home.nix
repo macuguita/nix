@@ -1,8 +1,8 @@
-{ ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [
-    ./../../homeManagerModules/default.nix
+    ./../../homeManagerModules/defaultDarwin.nix
   ];
   home.username = "raul";
   home.homeDirectory = "/Users/raul";

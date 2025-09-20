@@ -17,7 +17,7 @@ let
 in
 {
   imports = [
-    ./../../homeManagerModules/default.nix
+    ./../../homeManagerModules/defaultLinux.nix
   ];
   home.username = "raul";
   home.homeDirectory = "/home/raul";
