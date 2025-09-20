@@ -54,6 +54,7 @@
                 ./hosts/${hostname}/darwin-configuration.nix
                 home-manager.darwinModules.home-manager
                 nix-homebrew.darwinModules.nix-homebrew
+                stylix.nixosModules.stylix
                 {
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
