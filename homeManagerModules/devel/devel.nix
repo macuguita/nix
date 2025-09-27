@@ -29,6 +29,7 @@ in
       pkgs.gcc
       pkgs.cargo
       pkgs.jdk
+      pkgs.direnv
     ]
     ++ lib.optional cfg.enableJetbrains pkgs.jetbrains.idea-community-bin;
 
