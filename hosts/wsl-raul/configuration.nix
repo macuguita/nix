@@ -36,7 +36,10 @@
   wsl.enable = true;
   wsl.defaultUser = "raul";
 
-  stylix.enable = false;
+  stylix.enable = true;
+  stylix.polarity = "dark";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+  stylix.autoEnable = false;
 
   system.stateVersion = "25.05"; # Did you read the comment?
 }
