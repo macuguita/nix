@@ -4,9 +4,13 @@ pkgs.writeShellScriptBin "optimizeImage" ''
   temp_img=$(mktemp)
 
   echo "Optimizing image: $1"
-  ${pkgs.imagemagick}/bin/convert "$1" -strip -alpha on -define png:compression -level=9 "$temp_image"
+  ${pkgs.imagemagick}/bin/magick "$1" -strip -alpha on -define png:compression-level=9 "$temp_img"
 
-  mv "$temp_image" "$1"
-
-  echo "Replaced original image with optimized version: $1"
+  if [[ $? -eq 0 ]]
+  then
+    mv "$temp_img" "$1"
+    echo "Replaced original image with optimized version: $1"
+  else
+    echo "ERROR: could not optimize the image"
+  fi
 ''

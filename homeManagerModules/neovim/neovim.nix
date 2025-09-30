@@ -26,7 +26,6 @@ in
       defaultEditor = true;
     };
     home.packages = [
-      pkgs.neovide
       pkgs.libclang
       pkgs.lua-language-server
       pkgs.nixd
