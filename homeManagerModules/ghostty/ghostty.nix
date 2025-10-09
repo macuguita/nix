@@ -34,5 +34,6 @@ in
       "ghostty/config".source = createSymlink ./config;
       "ghostty/extra".source = createSymlink extraConfig;
     };
+    home.file.".local/share/kservices5/ServiceMenus/ghostty_dolphin.desktop".source = ./ghostty_dolphin.desktop;
   };
 }

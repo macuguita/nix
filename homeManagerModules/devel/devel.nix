@@ -29,8 +29,13 @@ in
       pkgs.gcc
       pkgs.cargo
       pkgs.jdk
+      pkgs.direnv
+      pkgs.vscodium
     ]
-    ++ lib.optional cfg.enableJetbrains pkgs.jetbrains.idea-community-bin;
+    ++ lib.optionals cfg.enableJetbrains [
+      pkgs.jetbrains.idea-ultimate
+      pkgs.jetbrains.webstorm
+    ];
 
     programs.git = {
       enable = true;
