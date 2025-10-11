@@ -23,6 +23,10 @@ in
     };
   };
 
+  imports = [
+    ./lf/lf.nix
+  ];
+
   config = {
     programs.firefox = mkIf cfg.firefox.enable {
       enable = true;
