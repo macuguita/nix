@@ -15,17 +15,17 @@
         &{{
             case $(file --mime-type -bL -- "$f") in
                 text/*|application/json)
-                    lf -remote "send $id \$$EDITOR \$fx" ;;
+                    $$EDITOR "$f" ;;
                 image/*)
-                    ${pkgs.imv}/bin/imv "$fx" ;;
+                    ${pkgs.imv}/bin/imv "$f" ;;
                 audio/*)
-                    ${pkgs.mpv}/bin/mpv "$fx" ;;
+                    ${pkgs.mpv}/bin/mpv "$f" ;;
                 video/*)
                     ${pkgs.mpv}/bin/mpv --no-terminal "$f" ;;
                 application/pdf|application/epub+zip)
                     ${pkgs.zathura}/bin/zathura "$f" ;;
                 *)
-                    lf -remote "send $id \$$EDITOR \$fx" ;;
+                    $$EDITOR "$f" ;;
             esac
         }}
       '';

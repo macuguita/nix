@@ -24,16 +24,18 @@ in
   };
 
   imports = [
-#    ./lf/lf.nix
+    #./lf/lf.nix
   ];
 
   config = {
     programs.firefox = mkIf cfg.firefox.enable {
       enable = true;
     };
-    home.sessionVariables = mkIf cfg.firefox.enable {
+    home.sessionVariables = {
+      ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    } // (mkIf cfg.firefox.enable {
       BROWSER = "firefox";
-    };
+    });
 
     home.packages = [
       pkgs.unzip

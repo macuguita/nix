@@ -67,7 +67,7 @@ in
     toggleAutoclicker
     youtubeToMP3
     youtubeToMP4
-#    pkgs.aseprite
+    pkgs.aseprite
     pkgs.btop
     pkgs.bluetui
     pkgs.ghostty

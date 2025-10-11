@@ -23,7 +23,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    myHome.hyprlock.enable = true;
+    #myHome.hyprlock.enable = true;
     myHome.hyprpaper.enable = true;
 
     wayland.windowManager.hyprland = {
@@ -48,7 +48,7 @@ in
         "[workspace special:discord] vesktop"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "sh $HOME/.config/scripts/randomWallpaper.sh"
-        "hyprlock"
+        #"hyprlock"
         "hyprsunset"
         "systemctl --user start hyprpolkitagent"
       ];
@@ -257,12 +257,9 @@ in
     };
     home.packages = [
       pkgs.hyprpaper
-      pkgs.hyprlock
-      pkgs.hyprpicker
       pkgs.hyprsunset
       pkgs.hyprpolkitagent
       pkgs.hyprland-qt-support
-      pkgs.pywal16
       pkgs.waybar
       pkgs.woomer
     ];

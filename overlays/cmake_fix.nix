@@ -2,7 +2,7 @@
 let
   broken_pkgs = {
     # add all broken packages here
-    inherit (prev) trlib hpipm libdm;
+    inherit (prev) trlib hpipm libdm aseprite;
   };
 in
 lib.mapAttrs (n: pkg:

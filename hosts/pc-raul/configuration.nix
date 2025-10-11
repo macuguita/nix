@@ -48,11 +48,12 @@
   myNixos = {
     flatpak.enable = true;
     fonts.enableAll = true;
-    greetd.enable = true;
     samba.enable = true;
     steam.enable = true;
     xdg.enable = true;
   };
+
+  services.displayManager.ly.enable = true;
 
   services.pipewire = {
     enable = true;
@@ -74,6 +75,7 @@
     wget
     git
     pulseaudio
+    ntfs3g
   ];
 
   programs.hyprland = {
