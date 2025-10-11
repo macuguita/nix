@@ -67,13 +67,14 @@ in
     toggleAutoclicker
     youtubeToMP3
     youtubeToMP4
-    pkgs.aseprite
+#    pkgs.aseprite
     pkgs.btop
     pkgs.bluetui
     pkgs.ghostty
     pkgs.qbittorrent
     pkgs.mpv
     pkgs.filezilla
+    pkgs.blockbench
   ];
 
   home.stateVersion = "25.05";

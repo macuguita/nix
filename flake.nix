@@ -97,6 +97,7 @@
                   home-manager.useUserPackages = true;
                   home-manager.users.${user} = import ./hosts/${hostname}/home.nix;
                   nixpkgs.overlays = [
+                    (import ./overlays/cmake_fix.nix { inherit (nixpkgs) lib; })
                     neovim-nightly-overlay.overlays.default
                   ];
                 }
