@@ -6,6 +6,7 @@
     ./desktop.nix # default: false
     ./devel/devel.nix # default: true (jetbrains false)
     ./dunst.nix # default: false
+    ./emulators.nix # default: false
     ./env.nix # default: true
     ./ghostty/ghostty.nix # default: false
     ./hyprland/hyprland.nix # default: false

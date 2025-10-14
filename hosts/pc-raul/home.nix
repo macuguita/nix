@@ -29,6 +29,7 @@ in
     };
     devel.enableJetbrains = true;
     dunst.enable = true;
+    emulators.enable = true;
     ghostty.enable = true;
     hyprland.enable = true;
     kde.enable = true;

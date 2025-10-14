@@ -40,7 +40,6 @@ in
     home.packages = [
       pkgs.unzip
       pkgs.zip
-      pkgs.kitty
     ]
     ++ lib.optionals cfg.minecraft.enable [
       pkgs.prismlauncher

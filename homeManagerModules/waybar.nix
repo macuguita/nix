@@ -19,121 +19,145 @@ in
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."waybar/config.jsonc".text = ''
-      {
-          "layer": "top",
-          "position": "top",
-          "spacing": 0,
-          "modules-left": [
-            "hyprland/workspaces",
-            "tray",
-            "custom/lock",
-            "custom/reboot",
-            "custom/power"
-          ],
-          "modules-center": [
-            "hyprland/window"
-          ],
-          "modules-right": [
-            "custom/recording",
-            "pulseaudio",
-            "memory",
-            "cpu",
-            "clock"
-          ],
-          "hyprland/workspaces": {
-            "disable-scroll": false,
-            "all-outputs": true,
-            "format": "{icon}",
-            "on-click": "activate",
-            "persistent-workspaces": {
-            "*":[1,2,3,4,5,6,7,8,9]
+    xdg.configFile."waybar/config.jsonc".text =
+      let
+        logOut = pkgs.writeShellScriptBin "logOut.sh" ''
+          if ${pkgs.procps}/bin/pgrep -x hyprland >/dev/null 2>&1; then
+              compositor="hyprland"
+          elif ${pkgs.procps}/bin/pgrep -x niri >/dev/null 2>&1; then
+              compositor="niri"
+          else
+              compositor=""
+          fi
+
+          case "$compositor" in
+              hyprland)
+                  ${pkgs.hyprland}/bin/hyprctl dispatch exit
+                  ;;
+              niri)
+                  ${pkgs.procps}/bin/pkill -TERM -x niri
+                  ;;
+              *)
+                  ${pkgs.systemd}/bin/loginctl terminate-user "$USER"
+                  ;;
+          esac
+        '';
+      in
+      ''
+        {
+            "layer": "top",
+            "position": "top",
+            "spacing": 0,
+            "modules-left": [
+              "hyprland/workspaces",
+              "tray",
+              "custom/lock",
+              "custom/reboot",
+              "custom/power"
+            ],
+            "modules-center": [
+              "hyprland/window"
+            ],
+            "modules-right": [
+              "custom/recording",
+              "pulseaudio",
+              "memory",
+              "cpu",
+              "clock"
+            ],
+            "hyprland/workspaces": {
+              "disable-scroll": false,
+              "all-outputs": true,
+              "format": "{icon}",
+              "on-click": "activate",
+              "persistent-workspaces": {
+              "*":[1,2,3,4,5,6,7,8,9]
+              },
+              "format-icons": {
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "default": "󱄅"
+              }
             },
-            "format-icons": {
-              "1": "1",
-              "2": "2",
-              "3": "3",
-              "4": "4",
-              "5": "5",
-              "6": "6",
-              "7": "7",
-              "8": "8",
-              "9": "9",
-              "default": "󱄅"
+            "custom/lock": {
+            "format": "    ",
+            "on-click": "${logOut}/bin/logOut.sh",
+            "tooltip": true,
+            "tooltip-format": "Cerrar sesion"
+            },
+            "custom/reboot": {
+              "format": "    ",
+              "on-click": "systemctl reboot",
+              "tooltip": true,
+              "tooltip-format": "Reiniciar"
+            },
+            "custom/power": {
+              "format": "    ",
+              "on-click": "systemctl poweroff",
+              "tooltip": true,
+              "tooltip-format": "Apagar"
+            },
+            "pulseaudio": {
+              "format": "<span color='#00FF7F'>{icon}</span>{volume}% ",
+              "format-muted": "<span color='#FF4040'> 󰖁 </span>0% ",
+              "format-icons": {
+                "headphone": "<span color='#BF00FF'>  </span>",
+                "hands-free": "<span color='#BF00FF'>  </span>",
+                "headset": "<span color='#BF00FF'>  </span>",
+                "phone": "<span color='#00FFFF'>  </span>",
+                "portable": "<span color='#00FFFF'>  </span>",
+                "car": "<span color='#FFA500'>  </span>",
+                "default": [
+                  "<span color='#808080'>  </span>",
+                  "<span color='#FFFF66'>  </span>",
+                  "<span color='#00FF7F'>  </span>"
+                ]
+              },
+              "on-click-right": "sh $HOME/.config/scripts/volumeNotify.sh mute",
+              "on-click": "sh $HOME/.config/scripts/volumeNotify.sh mute",
+              "on-scroll-up": "sh $HOME/.config/scripts/volumeNotify.sh up",
+              "on-scroll-down": "sh $HOME/.config/scripts/volumeNotify.sh down",
+              "tooltip": true,
+              "tooltip-format": "Volumen: {volume}%"
+            },
+            "custom/recording": {
+              "format": "  Rec  ",
+          		"return-type": "json",
+          		"interval": 1,
+          		"exec": "echo '{\"class\": \"recording\"}'",
+          		"exec-if": "pgrep wf-recorder"
+            },
+            "memory": {
+              "format": "  <span color='#${config.lib.stylix.colors.base05}'>{used:0.1f}G/{total:0.1f}G</span> ",
+              "on-click": "ghostty -e btop",
+              "tooltip": true,
+              "tooltip-format": "Memoria usada: {used:0.2f}G/{total:0.2f}G"
+            },
+            "cpu": {
+              "format": "  <span color='#${config.lib.stylix.colors.base05}'>{usage}%</span> ",
+              "on-click": "ghostty -e btop",
+              "tooltip": true
+            },
+            "clock": {
+              "interval": 1,
+              "timezone": "Europe/Madrid",
+              "format": "  <span color='#${config.lib.stylix.colors.base05}'>{:%H:%M}</span> ",
+              "tooltip": true,
+              "tooltip-format": "{:%A, %d %B %Y}"
+            },
+            "tray": {
+              "icon-size": 24,
+              "spacing": 6
             }
-          },
-          "custom/lock": {
-          "format": "    ",
-          "on-click": "pidof hyprlock || hyprlock",
-          "tooltip": true,
-          "tooltip-format": "Cerrar sesion"
-          },
-          "custom/reboot": {
-            "format": "    ",
-            "on-click": "systemctl reboot",
-            "tooltip": true,
-            "tooltip-format": "Reiniciar"
-          },
-          "custom/power": {
-            "format": "    ",
-            "on-click": "systemctl poweroff",
-            "tooltip": true,
-            "tooltip-format": "Apagar"
-          },
-          "pulseaudio": {
-            "format": "<span color='#00FF7F'>{icon}</span>{volume}% ",
-            "format-muted": "<span color='#FF4040'> 󰖁 </span>0% ",
-            "format-icons": {
-              "headphone": "<span color='#BF00FF'>  </span>",
-              "hands-free": "<span color='#BF00FF'>  </span>",
-              "headset": "<span color='#BF00FF'>  </span>",
-              "phone": "<span color='#00FFFF'>  </span>",
-              "portable": "<span color='#00FFFF'>  </span>",
-              "car": "<span color='#FFA500'>  </span>",
-              "default": [
-                "<span color='#808080'>  </span>",
-                "<span color='#FFFF66'>  </span>",
-                "<span color='#00FF7F'>  </span>"
-              ]
-            },
-            "on-click-right": "sh $HOME/.config/scripts/volumeNotify.sh mute",
-            "on-click": "sh $HOME/.config/scripts/volumeNotify.sh mute",
-            "on-scroll-up": "sh $HOME/.config/scripts/volumeNotify.sh up",
-            "on-scroll-down": "sh $HOME/.config/scripts/volumeNotify.sh down",
-            "tooltip": true,
-            "tooltip-format": "Volumen: {volume}%"
-          },
-          "custom/recording": {
-            "format": "  Rec  ",
-        		"return-type": "json",
-        		"interval": 1,
-        		"exec": "echo '{\"class\": \"recording\"}'",
-        		"exec-if": "pgrep wf-recorder"
-          },
-          "memory": {
-            "format": "  <span color='#${config.lib.stylix.colors.base05}'>{used:0.1f}G/{total:0.1f}G</span> ",
-            "on-click": "ghostty -e btop",
-            "tooltip": true,
-            "tooltip-format": "Memoria usada: {used:0.2f}G/{total:0.2f}G"
-          },
-          "cpu": {
-            "format": "  <span color='#${config.lib.stylix.colors.base05}'>{usage}%</span> ",
-            "on-click": "ghostty -e btop",
-            "tooltip": true
-          },
-          "clock": {
-            "interval": 1,
-            "timezone": "Europe/Madrid",
-            "format": "  <span color='#${config.lib.stylix.colors.base05}'>{:%H:%M}</span> ",
-            "tooltip": true,
-            "tooltip-format": "{:%A, %d %B %Y}"
-          },
-          "tray": {
-            "icon-size": 24,
-            "spacing": 6
           }
-        }
-    '';
+      '';
 
     xdg.configFile."waybar/style.css".text = ''
            * {
