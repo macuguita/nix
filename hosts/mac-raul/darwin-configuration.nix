@@ -23,6 +23,7 @@
       "discord"
       "qbittorrent"
       "clion"
+      "helium-browser"
     ];
   };
 
