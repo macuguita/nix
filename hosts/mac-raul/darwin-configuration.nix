@@ -6,6 +6,10 @@
 
   environment.systemPackages = with pkgs; [
     btop
+    prismlauncher
+    blockbench
+    discord
+    qbittorrent
   ];
 
   homebrew = {
@@ -17,12 +21,7 @@
     ];
 
     casks = [
-      "prismlauncher"
       "ghostty"
-      "blockbench"
-      "discord"
-      "qbittorrent"
-      "clion"
       "helium-browser"
     ];
   };
