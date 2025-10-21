@@ -33,6 +33,7 @@ in
   config = mkIf cfg.enable {
     home.packages = [
       pkgs.fzf
+      pkgs.fd
       pkgs.bat
     ];
 
@@ -55,6 +56,16 @@ in
       rebuild = "sudo nixos-rebuild switch $@";
     };
 
+    xdg.configFile."shell/vars".text = ''
+      export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
+    '';
+
+    home.file.".fdignore".text = ''
+      undodir/
+      plugged/
+      .git
+    '';
+
     programs.zsh = mkIf cfg.enableZsh {
       enable = true;
 
@@ -66,6 +77,7 @@ in
 
       initContent = ''
                 [ -f "$XDG_CONFIG_HOME/shell/tokens" ] && source "$XDG_CONFIG_HOME/shell/tokens"
+                [ -f "$XDG_CONFIG_HOME/shell/vars" ] && source "$XDG_CONFIG_HOME/shell/vars"
 
                 # Zsh modules
                 zmodload zsh/complist
@@ -94,7 +106,7 @@ in
                 bindkey "^[[3~" delete-char
 
                 # fzf setup
-                source <(fzf --zsh)
+                source <(${pkgs.fzf}/bin/fzf --zsh)
 
                 NEWLINE=$'\n'
                 PROMPT="''${NEWLINE}%K{#2E3440}%F{#E5E9F0} $(date +%I:%M%p | tr '[:upper:]' '[:lower:]') %K{#3b4252}%F{#ECEFF4} %n %K{#4c566a} %~ %f%k ''${NEWLINE} ❯ "
@@ -112,6 +124,9 @@ in
       historyFile = "${config.xdg.cacheHome}/bash_history";
 
       initExtra = ''
+        [ -f "$XDG_CONFIG_HOME/shell/tokens" ] && source "$XDG_CONFIG_HOME/shell/tokens"
+        [ -f "$XDG_CONFIG_HOME/shell/vars" ] && source "$XDG_CONFIG_HOME/shell/vars"
+
         NEWLINE=$'\n'
 
         PS1="''${NEWLINE}\[\e[38;5;46;48;5;235m\] \[\e[0m\]\[\e[38;5;46;48;5;237m\] \u \[\e[0m\]\[\e[38;5;46;48;5;239m\] \w \[\e[0m\]''${NEWLINE}\[\e[38;5;46m\]  ❯ \[\e[0m\]"
