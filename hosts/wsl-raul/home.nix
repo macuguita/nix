@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  optimizeImage = import ./../../homeManagerModules/scripts/optimizeImage.nix { inherit pkgs; };
+in
 {
   imports = [
     ./../../homeManagerModules/defaultLinux.nix
@@ -12,8 +15,9 @@
     wine.enable = true;
   };
 
-  home.packages = with pkgs; [
-    btop
+  home.packages = [
+    optimizeImage
+    pkgs.btop
   ];
 
   home.stateVersion = "25.05";
