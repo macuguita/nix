@@ -5,6 +5,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur.url = "github:nix-community/NUR";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nix-darwin = {
@@ -28,6 +29,7 @@
   outputs =
     { nixpkgs
     , home-manager
+    , nur
     , neovim-nightly-overlay
     , nixos-wsl
     , nix-darwin
@@ -92,12 +94,16 @@
               modules = [
                 ./hosts/${hostname}/configuration.nix
                 home-manager.nixosModules.home-manager
+                nur.modules.nixos.default
                 {
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.users.${user} = import ./hosts/${hostname}/home.nix;
+                  home-manager = {
+                    useGlobalPkgs = true;
+                    useUserPackages = true;
+                    users.${user} = import ./hosts/${hostname}/home.nix;
+                  };
                   nixpkgs.overlays = [
                     (import ./overlays/cmake_fix.nix { inherit (nixpkgs) lib; })
+                    nur.overlays.default
                     neovim-nightly-overlay.overlays.default
                   ];
                 }

@@ -24,7 +24,8 @@ in
 
   myHome = {
     desktop = {
-      firefox.enable = true;
+      firefox.enable = false;
+      helium.enable = true;
       minecraft.enable = true;
     };
     devel.enableJetbrains = true;

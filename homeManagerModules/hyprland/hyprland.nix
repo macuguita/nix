@@ -36,7 +36,7 @@ in
       monitor = "HDMI-A-1, 1920x1080@74.97Hz, 0x0, 1";
       "$terminal" = "ghostty";
       "$fileManager" = "dolphin";
-      "$browser" = "firefox";
+      "$browser" = config.home.sessionVariables.BROWSER;
       "$menu" = "rofi -show drun -show-icons";
       "$mainMod" = "SUPER";
 
@@ -44,7 +44,7 @@ in
         "dunst &"
         "hyprpaper &"
         "waybar &"
-        "[workspace 1 silent] firefox"
+        "[workspace 1 silent] ${config.home.sessionVariables.BROWSER}"
         "[workspace special:discord] vesktop"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "sh $HOME/.config/scripts/randomWallpaper.sh"

@@ -39,12 +39,11 @@ in
 
     programs.git = {
       enable = true;
+      settings = {
+        user.name = "macuguita";
+        user.email = "raulpripri@gmail.com";
 
-      userName = "macuguita";
-      userEmail = "raulpripri@gmail.com";
-
-      extraConfig = {
-        user.signingkey = "~/.sshKey/id_ed25519_personal.pub";
+        user.signingkey = "${config.home.homeDirectory}/.sshKey/id_ed25519_personal";
 
         core = {
           excludesFile = "${toString ./gitignore}";

@@ -16,6 +16,11 @@ in
       default = false;
       description = "Enable firefox and its configs.";
     };
+    helium.enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable helium and its configs.";
+    };
     minecraft.enable = mkOption {
       type = types.bool;
       default = false;
@@ -35,6 +40,8 @@ in
       ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     } // (mkIf cfg.firefox.enable {
       BROWSER = "firefox";
+    }) // (mkIf cfg.helium.enable {
+      BROWSER = "helium";
     });
 
     home.packages = [
@@ -45,6 +52,8 @@ in
       pkgs.prismlauncher
       pkgs.jdk
       pkgs.glfw
+    ] ++ lib.optionals cfg.helium.enable [
+      pkgs.nur.repos.Ev357.helium
     ];
   };
 }
