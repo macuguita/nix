@@ -63,7 +63,6 @@
                   home-manager.users.${user} = import ./hosts/${hostname}/home.nix;
 
                   nixpkgs.overlays = [
-                    (import ./overlays/macos_clang_fix.nix { inherit (nixpkgs) lib; })
                     neovim-nightly-overlay.overlays.default
                   ];
 

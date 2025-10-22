@@ -24,6 +24,8 @@
       "ghostty"
       "helium-browser"
     ];
+
+    onActivation.cleanup = "uninstall";
   };
 
   system.stateVersion = 5;
