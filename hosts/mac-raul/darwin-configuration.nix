@@ -23,6 +23,7 @@
     casks = [
       "ghostty"
       "helium-browser"
+      "zotero"
     ];
 
     onActivation.cleanup = "uninstall";
