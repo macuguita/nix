@@ -21,7 +21,6 @@ in
   config = mkIf cfg.enable {
     home.packages = [
       pkgs.vim
-      pkgs.gvim
       pkgs.ripgrep
       pkgs.fd
       pkgs.fzf

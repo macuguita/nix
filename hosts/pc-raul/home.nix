@@ -34,7 +34,7 @@ in
     ghostty.enable = true;
     hyprland.enable = true;
     kde.enable = true;
-    neovim.enable = true;
+    neovim.enable = false;
     rofi.enable = true;
     stylix.enable = true;
     vesktop.enable = true;
@@ -77,6 +77,7 @@ in
     pkgs.mpv
     pkgs.filezilla
     pkgs.blockbench
+    pkgs.krita
   ];
 
   home.stateVersion = "25.05";
