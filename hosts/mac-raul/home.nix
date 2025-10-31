@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 
 let
+  optimizeImage = import ./../../homeManagerModules/scripts/optimizeImage.nix { inherit pkgs; };
   optimizeVideo = import ./../../homeManagerModules/scripts/optimizeVideo.nix { inherit pkgs; };
 in
 {
@@ -11,6 +12,7 @@ in
   home.homeDirectory = "/Users/raul";
 
   home.packages = [
+    optimizeImage
     optimizeVideo
   ];
 

@@ -1,16 +1,35 @@
 { pkgs, ... }:
 
 pkgs.writeShellScriptBin "optimizeImage" ''
-  temp_img=$(mktemp)
-
-  echo "Optimizing image: $1"
-  ${pkgs.imagemagick}/bin/magick "$1" -strip -alpha on -define png:compression-level=9 "$temp_img"
-
-  if [[ $? -eq 0 ]]
-  then
-    mv "$temp_img" "$1"
-    echo "Replaced original image with optimized version: $1"
-  else
-    echo "ERROR: could not optimize the image"
+  if [[ $# -lt 1 ]]; then
+    echo "ERROR: Missing input image."
+    echo "Usage: optimizeImage <input-image> [output-image]"
+    exit 1
   fi
+
+  input="$1"
+  output="''${2:-}"
+
+  if [[ ! -f "$input" ]]; then
+    echo "ERROR: File does not exist or is not a regular file: $input"
+    exit 1
+  fi
+
+  if [[ -z "$output" ]]; then
+    temp_img=$(mktemp)
+    final_target="$input"
+  else
+    temp_img="$output"
+    final_target="$output"
+  fi
+
+  echo "Optimizing image: $input"
+  ${pkgs.imagemagick}/bin/magick "$input" -strip -alpha on -define png:compression-level=9 "$temp_img"
+
+  if [[ -z "$output" ]]; then
+    mv "$temp_img" "$input"
+  fi
+
+  echo "Optimized image written to: $final_target"
 ''
+
