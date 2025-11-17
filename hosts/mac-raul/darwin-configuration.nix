@@ -4,12 +4,19 @@
   imports = [
   ];
 
+  nix.gc = {
+    automatic = true;
+    interval = { Weekday = 0; Hour = 0; Minute = 0; };
+    options = "--delete-older-than 7d";
+  };
+
   environment.systemPackages = with pkgs; [
     btop
     prismlauncher
     blockbench
     discord
     qbittorrent
+    mpv
   ];
 
   homebrew = {
@@ -21,7 +28,6 @@
     ];
 
     casks = [
-      "ghostty"
       "helium-browser"
       "zotero"
     ];
