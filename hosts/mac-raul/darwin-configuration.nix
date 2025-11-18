@@ -19,22 +19,6 @@
     mpv
   ];
 
-  homebrew = {
-    enable = true;
-    user = "raul";
-
-    brews = [
-      "coreutils"
-    ];
-
-    casks = [
-      "helium-browser"
-      "zotero"
-    ];
-
-    onActivation.cleanup = "uninstall";
-  };
-
   system.stateVersion = 5;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

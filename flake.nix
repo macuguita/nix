@@ -6,7 +6,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/NUR";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
@@ -16,27 +15,14 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
-    };
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
   };
   outputs =
     { nixpkgs
     , home-manager
     , nur
-    , neovim-nightly-overlay
     , nixos-wsl
     , nix-darwin
     , stylix
-    , nix-homebrew
-    , homebrew-core
-    , homebrew-cask
     , ...
     }:
     let
@@ -55,35 +41,13 @@
               modules = [
                 ./hosts/${hostname}/darwin-configuration.nix
                 home-manager.darwinModules.home-manager
-                nix-homebrew.darwinModules.nix-homebrew
                 stylix.darwinModules.stylix
                 {
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
                   home-manager.users.${user} = import ./hosts/${hostname}/home.nix;
-
-                  nixpkgs.overlays = [
-                    neovim-nightly-overlay.overlays.default
-                  ];
-
-                  nix-homebrew = {
-                    enable = true;
-                    enableRosetta = true;
-                    user = user;
-
-                    taps = {
-                      "homebrew/homebrew-core" = homebrew-core;
-                      "homebrew/homebrew-cask" = homebrew-cask;
-                    };
-
-                    mutableTaps = false;
-                  };
                 }
-                ({ config, ... }: {
-                  homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
-                })
               ] ++ modules;
-
             };
           }
         else
@@ -102,9 +66,7 @@
                     users.${user} = import ./hosts/${hostname}/home.nix;
                   };
                   nixpkgs.overlays = [
-                    (import ./overlays/cmake_fix.nix { inherit (nixpkgs) lib; })
                     nur.overlays.default
-                    neovim-nightly-overlay.overlays.default
                   ];
                 }
                 stylix.nixosModules.stylix

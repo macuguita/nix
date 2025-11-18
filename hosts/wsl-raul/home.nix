@@ -11,7 +11,6 @@ in
   home.homeDirectory = "/home/raul";
 
   myHome = {
-    neovim.enable = true;
     wine.enable = true;
   };
 
