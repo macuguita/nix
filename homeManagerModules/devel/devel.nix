@@ -46,7 +46,7 @@ in
         user.signingkey = "${config.home.homeDirectory}/.sshKey/id_ed25519_personal";
 
         core = {
-          excludesFile = "${toString ./gitignore}";
+          excludesFile = toString ./gitignore;
           autocrlf = "input";
         };
 
