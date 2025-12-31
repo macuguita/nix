@@ -78,6 +78,11 @@
     ntfs3g
   ];
 
+  programs.java = {
+    enable = true;
+    package = pkgs.javaPackages.compiler.temurin-bin.jdk-25;
+  };
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;

@@ -50,8 +50,6 @@ in
     ]
     ++ lib.optionals cfg.minecraft.enable [
       pkgs.prismlauncher
-      pkgs.jdk
-      pkgs.glfw
     ] ++ lib.optionals cfg.helium.enable [
       pkgs.nur.repos.Ev357.helium
     ];

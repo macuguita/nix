@@ -26,9 +26,6 @@ in
   config = mkIf cfg.enable {
     home.packages = [
       pkgs.git
-      pkgs.gcc
-      pkgs.cargo
-      pkgs.jdk
       pkgs.direnv
       pkgs.vscodium
     ]
