@@ -30,7 +30,7 @@ in
       pkgs.vscodium
     ]
     ++ lib.optionals cfg.enableJetbrains [
-      pkgs.jetbrains.idea-ultimate
+      pkgs.jetbrains.idea
       pkgs.jetbrains.webstorm
     ];
 

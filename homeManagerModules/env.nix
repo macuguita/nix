@@ -15,6 +15,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    xdg.configHome = "${config.home.homeDirectory}/.config";
+    xdg.dataHome = "${config.home.homeDirectory}/.local/share";
+    xdg.cacheHome = "${config.home.homeDirectory}/.cache";
+    xdg.stateHome = "${config.home.homeDirectory}/.local/state";
+
     home.sessionVariables = {
       # EDITOR  = "nvim";
       TERM = "xterm-256color";
@@ -22,14 +27,9 @@ in
 
       macuguita = "true";
 
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_CACHE_HOME = "$HOME/.cache";
+      LESSHISTFILE = "${config.xdg.cacheHome}/less_history";
 
-      LESSHISTFILE = "$XDG_CACHE_HOME/less_history";
-
-      # WINEPREFIX = "$XDG_DATA_HOME/wineprefixes/default";
-      GNUPGHOME = "$XDG_DATA_HOME/gnupg";
+      GNUPGHOME = "${config.xdg.dataHome}/gnupg";
     };
   };
 }

@@ -24,7 +24,7 @@ in
       pkgs.winetricks
     ];
     home.sessionVariables = {
-      WINEPREFIX = "$XDG_DATA_HOME/wineprefixes/default";
+      WINEPREFIX = "${config.xdg.dataHome}/wineprefixes/default";
     };
   };
 }

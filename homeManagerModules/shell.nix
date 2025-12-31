@@ -76,8 +76,8 @@ in
       };
 
       initContent = ''
-                [ -f "$XDG_CONFIG_HOME/shell/tokens" ] && source "$XDG_CONFIG_HOME/shell/tokens"
-                [ -f "$XDG_CONFIG_HOME/shell/vars" ] && source "$XDG_CONFIG_HOME/shell/vars"
+                [ -f "${config.xdg.configHome}/shell/tokens" ] && source "${config.xdg.configHome}/shell/tokens"
+                [ -f "${config.xdg.configHome}/shell/vars" ] && source "${config.xdg.configHome}/shell/vars"
 
                 # Zsh modules
                 zmodload zsh/complist
@@ -124,8 +124,8 @@ in
       historyFile = "${config.xdg.cacheHome}/bash_history";
 
       initExtra = ''
-        [ -f "$XDG_CONFIG_HOME/shell/tokens" ] && source "$XDG_CONFIG_HOME/shell/tokens"
-        [ -f "$XDG_CONFIG_HOME/shell/vars" ] && source "$XDG_CONFIG_HOME/shell/vars"
+        [ -f "${config.xdg.configHome}/shell/tokens" ] && source "${config.xdg.configHome}/shell/tokens"
+        [ -f "${config.xdg.configHome}/shell/vars" ] && source "${config.xdg.configHome}/shell/vars"
 
         NEWLINE=$'\n'
 
