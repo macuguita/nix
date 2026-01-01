@@ -21,7 +21,7 @@ in
 
       matchBlocks = {
         "mac" = {
-          hostname = "m3-raul.local";
+          hostname = "192.168.1.151";
           user = "raul";
           identityFile = [ "~/.sshKey/id_ed25519_mac" ];
         };
