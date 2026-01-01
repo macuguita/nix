@@ -20,6 +20,18 @@ in
       enableDefaultConfig = false;
 
       matchBlocks = {
+        "mac" = {
+          hostname = "m3-raul.local";
+          user = "raul";
+          identityFile = [ "~/.sshKey/id_ed25519_mac" ];
+        };
+
+        "nix" = {
+          hostname = "pc-raul.local";
+          user = "raul";
+          identityFile = [ "~/.sshKey/id_ed25519_nix" ];
+        };
+
         "github.com" = {
           hostname = "github.com";
           user = "git";
