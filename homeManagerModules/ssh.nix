@@ -27,7 +27,7 @@ in
         };
 
         "nix" = {
-          hostname = "pc-raul.local";
+          hostname = "192.168.1.150";
           user = "raul";
           identityFile = [ "~/.sshKey/id_ed25519_nix" ];
         };
