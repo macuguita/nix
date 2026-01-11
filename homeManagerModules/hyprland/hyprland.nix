@@ -22,7 +22,8 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = 
+  mkIf cfg.enable {
     #myHome.hyprlock.enable = true;
     myHome.hyprpaper.enable = true;
 
@@ -44,8 +45,8 @@ in
         "dunst &"
         "hyprpaper &"
         "waybar &"
-        "[workspace 1 silent] ${config.home.sessionVariables.BROWSER}"
-        "[workspace special:discord] vesktop"
+        "[workspace 1 silent] hyprctl dispatch exec ${config.home.sessionVariables.BROWSER}"
+        "[workspace special:discord silent] vesktop"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "sh $HOME/.config/scripts/randomWallpaper.sh"
         #"hyprlock"
@@ -157,16 +158,11 @@ in
         "$mainMod, SPACE, exec, $menu"
         "$mainMod, B, exec, $browser"
         "$mainMod, P, exec, colorPicker"
-        # Zoomer
-        "$mainMod, mouse:274, exec, grim - | wayland-boomer"
 
         # Screenshots
         "$mainMod SHIFT, 3, exec, screenshot fullscreen"
         "$mainMod SHIFT, 4, exec, screenshot area"
         "$mainMod SHIFT, 5, exec, record"
-
-        # Randomize wallpaper
-        #"$mainMod SHIFT, w, exec, sh $HOME/.config/scripts/randomWallpaper.sh"
 
         # Autoclicker
         "$mainMod, F8, exec, toggleAutoclicker"
@@ -177,7 +173,7 @@ in
         "$mainMod, up, movefocus, u"
         "$mainMod, down, movefocus, d"
 
-        # Special workspaces
+        # Special workspaces - Discord
         "$mainMod, S, togglespecialworkspace, discord"
         "$mainMod Control_L&Control_R, S, movetoworkspace, special:discord"
 
@@ -192,7 +188,7 @@ in
             let ws = i + 1;
             in [
               "$mainMod, ${toString ws}, workspace, ${toString ws}"
-              "$mainMod Control_L&Control_R, ${toString ws}, movetoworkspace, ${toString ws}"
+              "$mainMod CONTROL, ${toString ws}, movetoworkspace, ${toString ws}"
             ]
           )
           9
@@ -202,7 +198,7 @@ in
       [
         # Workspace 10 for 0 key
         "$mainMod, 0, workspace, 10"
-        "$mainMod Control_L&Control_R, 0, movetoworkspace, 10"
+        "$mainMod CONTROL, 0, movetoworkspace, 10"
       ];
       bindm = [
         # Window manip
@@ -220,39 +216,72 @@ in
         "$mainMod, XF86AudioRaiseVolume, exec, hyprctl hyprsunset gamma +10"
       ];
 
-      windowrulev2 = [
-        # Vesktop
-        "workspace special:discord silent, class:^(vesktop)$"
-
-        # Firefox pip
-        "float, class:^(firefox)$, title:^(Picture-in-Picture)$"
-        "pin, class:^(firefox)$, title:^(Picture-in-Picture)$"
-        "size 480 270, class:^(firefox)$, title:^(Picture-in-Picture)$"
-        "move 1410 70, class:^(firefox)$, title:^(Picture-in-Picture)$"
-
-        # Jetbrains stuff stealing focus
-        "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
-        "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
-        "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
-        "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
-        "tag +jb, class:^jetbrains-.+$,floating:1"
-        "stayfocused, tag:jb"
-        "noinitialfocus, tag:jb"
-
-        # Sober (Roblox)
-        "float, class:^(sober_services)$"
-        "tile, class:^(org\.vinegarhq\.Sober)$, title:^(Sober)$"
-
-        # Wayland boomer
-        "float, title:^wayland-boomer$"
-        "monitor 1, title:^wayland-boomer$"
-        "move 0 0, title:^wayland-boomer$"
-        "noanim, title:^wayland-boomer$"
-        "rounding 0, title:^wayland-boomer$"
-      ];
       windowrule = [
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-        "suppressevent maximize, class:.*"
+        {
+           name = "vesktop special";
+           "match:class" = "vesktop|discord";
+           workspace = "special:discord";
+        }
+        {
+           name = "browser pip";
+           "match:class" = "^(${config.home.sessionVariables.BROWSER})$";
+           "match:title" = "^(Picture-in-Picture)$";
+           float = true;
+           pin = true;
+           size = "480 270";
+           move = "1410 70";
+         }
+         {
+           name = "jetbrains no initial focus windows";
+           "match:class" = "^(.*jetbrains.*)$";
+           "match:title" = "^(win.*)$";
+           no_initial_focus = "on";
+           no_focus = "on";
+         }
+         {
+           name = "jetbrains no initial focus blank";
+           "match:class" = "^(.*jetbrains.*)$";
+           "match:title" = "^\\s$";
+           no_initial_focus = "on";
+           no_focus = "on";
+         }
+         {
+           name = "jetbrains floating tag";
+           "match:class" = "^jetbrains-.+$";
+           "match:float" = "1";
+           tag = "+jb";
+         }
+         {
+           name = "jetbrains stay focused";
+           "match:tag" = "jb";
+           stay_focused = "on";
+           no_initial_focus = "on";
+         }
+         {
+           name = "sober services float";
+           "match:class" = "^(sober_services)$";
+           float = "on";
+         }
+         {
+           name = "sober tile";
+           "match:class" = "^(org\\.vinegarhq\\.Sober)$";
+           "match:title" = "^(Sober)$";
+           tile = "on";
+         }
+         {
+           name = "wayland boomer";
+           "match:title" = "^wayland-boomer$";
+           float = "on";
+           monitor = "1";
+           move = "0 0";
+           no_anim = "on";
+           rounding = "0";
+         }
+         {
+           name = "global rules";
+           no_focus = "on";
+           suppress_event = "maximize";
+         }
       ];
     };
     home.packages = [

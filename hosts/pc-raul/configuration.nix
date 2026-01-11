@@ -78,10 +78,7 @@
     ntfs3g
   ];
 
-  programs.java = {
-    enable = true;
-    package = pkgs.javaPackages.compiler.temurin-bin.jdk-25;
-  };
+  services.cloudflare-warp.enable = true;
 
   programs.hyprland = {
     enable = true;

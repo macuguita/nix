@@ -8,6 +8,7 @@ with lib;
 
 let
   cfg = config.myHome.hyprpaper;
+  wallpaper = ./../../hosts/pc-raul/wallpaper.jpg;
 in
 {
   options.myHome.hyprpaper = {
@@ -21,8 +22,11 @@ in
   config = mkIf cfg.enable {
 
     xdg.configFile."hypr/hyprpaper.conf".text = ''
-      preload = /etc/nixos/hosts/pc-raul/wallpaper.jpg
-      wallpaper =, /etc/nixos/hosts/pc-raul/wallpaper.jpg
+      wallpaper {
+        monitor =
+        path = ${wallpaper}
+      }
+      splash = false
     '';
 
     home.packages = [

@@ -30,9 +30,13 @@ in
       pkgs.vscodium
     ]
     ++ lib.optionals cfg.enableJetbrains [
-      pkgs.jetbrains.idea
-      pkgs.jetbrains.webstorm
+      pkgs.jetbrains-toolbox
     ];
+
+    programs.java = {
+      enable = true;
+      package = pkgs.jdk21;
+    };
 
     programs.git = {
       enable = true;
