@@ -11,6 +11,7 @@ let
   screenshot = import ./../../homeManagerModules/scripts/screenshot.nix { inherit pkgs; };
   screenTemperature = import ./../../homeManagerModules/scripts/screenTemperature.nix { inherit pkgs; };
   shittifyVideo = import ./../../homeManagerModules/scripts/shittifyVideo.nix { inherit pkgs; };
+  reallyShittifyVideo = import ./../../homeManagerModules/scripts/reallyShittifyVideo.nix { inherit pkgs; };
   toggleAutoclicker = import ./../../homeManagerModules/scripts/toggleAutoclicker.nix { inherit pkgs; };
   youtubeToMP3 = import ./../../homeManagerModules/scripts/youtubeToMP3.nix { inherit pkgs; };
   youtubeToMP4 = import ./../../homeManagerModules/scripts/youtubeToMP4.nix { inherit pkgs; };
@@ -64,6 +65,7 @@ in
     screenshot
     screenTemperature
     shittifyVideo
+    reallyShittifyVideo
     toggleAutoclicker
     youtubeToMP3
     youtubeToMP4
