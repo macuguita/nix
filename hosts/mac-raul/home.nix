@@ -14,6 +14,7 @@ in
   home.packages = [
     optimizeImage
     optimizeVideo
+    pkgs.packwiz
   ];
 
   programs.home-manager.enable = true;
