@@ -10,16 +10,16 @@ pkgs.writeShellScriptBin "reallyShittifyVideo" ''
   ${pkgs.ffmpeg}/bin/ffmpeg -y -i "$INPUT_VIDEO" \
     -c:v libx264 \
     -preset ultrafast \
-    -crf 51 \
-    -b:v 30k \
-    -r 5 \
-    -g 300 \
+    -x264-params qp=51:aq-mode=0:deblock=2,2 \
+    -r 3 \
+    -g 30 \
     -pix_fmt yuv420p \
-    -vf "scale=160:90,scale=1280:720:flags=neighbor,eq=contrast=2:brightness=-0.1:saturation=3" \
-    -c:a pcm_mulaw \
+    -vf "scale=144:-2:flags=neighbor,fps=3,eq=contrast=2.8:brightness=-0.2:saturation=3,scale=1280:-2:flags=neighbor" \
+    -c:a libopus \
+    -b:a 6k \
     -ar 8000 \
     -ac 1 \
+    -movflags +faststart \
     -map_metadata -1 \
     "$OUTPUT_VIDEO"
 ''
-

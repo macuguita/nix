@@ -70,6 +70,7 @@ in
     youtubeToMP3
     youtubeToMP4
     pkgs.aseprite
+    pkgs.kdePackages.kdenlive
     pkgs.btop
     pkgs.bluetui
     pkgs.ghostty
