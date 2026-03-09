@@ -44,6 +44,12 @@ in
           identityFile = [ "~/.sshKey/id_ed25519_uni" ];
         };
 
+        "codeberg.org" = {
+          hostname = "codeberg.org";
+          user = "git";
+          identityFile = [ "~/.sshKey/id_ed25519_personal" ];
+        };
+
         "opc" = {
           hostname = "158.179.210.199";
           user = "opc";
