@@ -28,6 +28,7 @@ in
       pkgs.git
       pkgs.direnv
       pkgs.vscodium
+      pkgs.packwiz
     ]
     ++ lib.optionals cfg.enableJetbrains [
       pkgs.jetbrains-toolbox
