@@ -8,6 +8,7 @@ with lib;
 
 let
   cfg = config.myHome.devel;
+  gitignoreFile = ./gitignore;
 in
 {
   options.myHome.devel = {
@@ -43,12 +44,12 @@ in
       enable = true;
       settings = {
         user.name = "macuguita";
-        user.email = "raulpripri@gmail.com";
+        user.email = "me@macuguita.com";
 
         user.signingkey = "${config.home.homeDirectory}/.sshKey/id_ed25519_personal";
 
         core = {
-          excludesFile = toString ./gitignore;
+          excludesFile = toString gitignoreFile;
           autocrlf = "input";
         };
 
