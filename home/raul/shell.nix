@@ -13,7 +13,7 @@
     rm = "rm -Iv";
     vi = "vim";
     p = "ps aux | grep $1";
-    ls = "ls -h --color=auto --group-directories-first";
+    ls = "ls -h --color=auto";
     la = "ls -lah --color=auto --group-directories-first";
     wget = "wget --hsts-file=${config.xdg.cacheHome}/wget-hsts";
     rebuild = "doas nixos-rebuild switch --flake $HOME/nix#desktop";

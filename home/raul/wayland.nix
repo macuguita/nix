@@ -27,17 +27,36 @@
       record
       ddcutil
       hyprpicker
-      nemo
+      nemo-with-extensions
     ];
 
-    services.hyprpolkitagent.enable = true;
-    # services.kdeconnect.enable = true;
+    # Nemo stuff
+    xdg.desktopEntries.nemo = {
+        name = "Nemo";
+        exec = "${pkgs.nemo-with-extensions}/bin/nemo";
+    };
+
+    dconf = {
+        settings = {
+          "org/nemo/preferences" = {
+            show-directories-first = false;
+            show-hidden-files = true;
+          };
+            "org/cinnamon/desktop/applications/terminal" = {
+                exec = "ghostty";
+                # exec-arg = ""; # argument
+            };
+        };
+    };
 
     xdg.mimeApps.enable = true;
     xdg.mimeApps.defaultApplications = lib.attrsets.genAttrs [
       "inode/directory"
-      # "application/x-gnome-saved-search"
+      "application/x-gnome-saved-search"
     ] (f: "nemo.desktop");
+
+    services.hyprpolkitagent.enable = true;
+    # services.kdeconnect.enable = true;
 
     # TODO: quickshell notis
     services.dunst.enable = true;
