@@ -112,7 +112,11 @@ buildDotnetModule rec {
     homepage = "https://ryujinx.app";
     description = "Nintendo Switch emulator (Ryubing Canary fork)";
     license = lib.licenses.mit;
-    platforms = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "aarch64-darwin"
+    ];
     mainProgram = "Ryujinx";
   };
 }

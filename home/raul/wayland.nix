@@ -32,21 +32,21 @@
 
     # Nemo stuff
     xdg.desktopEntries.nemo = {
-        name = "Nemo";
-        exec = "${pkgs.nemo-with-extensions}/bin/nemo";
+      name = "Nemo";
+      exec = "${pkgs.nemo-with-extensions}/bin/nemo";
     };
 
     dconf = {
-        settings = {
-          "org/nemo/preferences" = {
-            show-directories-first = false;
-            show-hidden-files = true;
-          };
-            "org/cinnamon/desktop/applications/terminal" = {
-                exec = "ghostty";
-                # exec-arg = ""; # argument
-            };
+      settings = {
+        "org/nemo/preferences" = {
+          show-directories-first = false;
+          show-hidden-files = true;
         };
+        "org/cinnamon/desktop/applications/terminal" = {
+          exec = "ghostty";
+          # exec-arg = ""; # argument
+        };
+      };
     };
 
     xdg.mimeApps.enable = true;
@@ -204,9 +204,9 @@
 
         windowrule = [
           {
-             name = "vesktop special";
-             "match:class" = "vesktop|discord";
-             workspace = "special:discord";
+            name = "vesktop special";
+            "match:class" = "vesktop|discord";
+            workspace = "special:discord";
           }
           {
             name = "jetbrains fix";

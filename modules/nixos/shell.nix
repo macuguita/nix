@@ -33,8 +33,8 @@
       enableSSHSupport = true;
 
       settings = {
-       default-cache-ttl = 86400;
-       max-cache-ttl = 604800;
+        default-cache-ttl = 86400;
+        max-cache-ttl = 604800;
       };
     };
 
