@@ -31,11 +31,11 @@
 }:
 buildDotnetModule rec {
   pname = "ryujinx-canary";
-  version = "1.3.279";
+  version = "1.3.284";
 
   src = fetchurl {
-    url = "https://git.ryujinx.app/projects/Ryubing/archive/Canary-1.3.279.tar.gz";
-    hash = "sha256-9NKlF0IsMmO27MufJYVEpBTGZn2wHSSa+/phzeYK7k0=";
+    url = "https://git.ryujinx.app/projects/Ryubing/archive/Canary-${version}.tar.gz";
+    hash = "sha256-m7pBgiMsoVH/1zdUkqghdj5PLWzgJqv/IaIWtvXD4BM=";
   };
 
   nativeBuildInputs =
@@ -51,10 +51,6 @@ buildDotnetModule rec {
   dotnet-sdk = dotnetCorePackages.sdk_10_0;
   dotnet-runtime = dotnetCorePackages.runtime_10_0;
   nugetDeps = ./deps-canary.json;
-
-  postPatch = ''
-    rm -f global.json
-  '';
 
   runtimeDeps = [
     libx11

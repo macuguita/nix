@@ -1,4 +1,3 @@
-# default.nix
 {
   lib,
   stdenv,
