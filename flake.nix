@@ -1,123 +1,66 @@
 {
+  description = "Personal NixOS flake";
   inputs = {
-    nixpkgs.url = "https://nixos.org/channels/nixpkgs-unstable/nixexprs.tar.xz";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur.url = "github:nix-community/NUR";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+
+    nur = {
+      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:nix-community/stylix";
+
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
+
+    catppuccin.url = "github:catppuccin/nix";
+    vicinae.url = "github:vicinaehq/vicinae";
   };
+
   outputs =
-    { nixpkgs
-    , home-manager
-    , nur
-    , nixos-wsl
-    , nix-darwin
-    , stylix
-    , ...
-    }:
+    inputs@{ nixpkgs, ... }:
     let
-      mkHost =
-        { hostname
-        , system
-        , user
-        , modules ? [ ]
-        , type ? "nixos" # nixos | wsl | darwin
-        }:
-        if type == "darwin" then
-          {
-            ${hostname} = nix-darwin.lib.darwinSystem {
-              inherit system;
-              specialArgs = { inherit hostname user; };
-              modules = [
-                ./hosts/${hostname}/darwin-configuration.nix
-                home-manager.darwinModules.home-manager
-                stylix.darwinModules.stylix
-                {
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.users.${user} = import ./hosts/${hostname}/home.nix;
-                }
-              ] ++ modules;
-            };
-          }
-        else
-          {
-            ${hostname} = nixpkgs.lib.nixosSystem {
-              inherit system;
-              specialArgs = { inherit hostname user; };
-              modules = [
-                ./hosts/${hostname}/configuration.nix
-                home-manager.nixosModules.home-manager
-                nur.modules.nixos.default
-                {
-                  home-manager = {
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    users.${user} = import ./hosts/${hostname}/home.nix;
-                  };
-                  nixpkgs.overlays = [
-                    nur.overlays.default
-                  ];
-                }
-                stylix.nixosModules.stylix
-              ] ++ (if type == "wsl" then [
-                nixos-wsl.nixosModules.default
-                {
-                  wsl.enable = true;
-                  system.stateVersion = "25.05";
-                }
-              ] else [ ]) ++ modules;
-            };
+      util = import ./util.nix (inputs // { lib = nixpkgs.lib; });
+      mkNixOSConfiguration =
+        name:
+        (nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit util;
+            inherit inputs;
           };
-      hosts = [
-        {
-          hostname = "pc-raul";
-          system = "x86_64-linux";
-          user = "raul";
-          type = "nixos";
-        }
-        {
-          hostname = "wsl-raul";
-          system = "x86_64-linux";
-          user = "raul";
-          type = "wsl";
-        }
-        {
-          hostname = "mac-raul";
-          system = "aarch64-darwin";
-          user = "raul";
-          type = "darwin";
-        }
-      ];
+
+          modules = [
+            ./hosts/${name}
+            ./modules/nixos
+            ./modules/packages
+          ];
+        });
     in
     {
-      nixosConfigurations =
-        nixpkgs.lib.foldl'
-          (acc: host:
-            if host.type == "darwin"
-            then acc
-            else acc // (mkHost host)
-          )
-          { }
-          hosts;
-      darwinConfigurations =
-        nixpkgs.lib.foldl'
-          (acc: host:
-            if host.type == "darwin"
-            then acc // (mkHost host)
-            else acc
-          )
-          { }
-          hosts;
+      nixosConfigurations = {
+        desktop = mkNixOSConfiguration "desktop";
+      };
+
+      devShells = util.eachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShellNoCC {
+            buildInputs = with pkgs; [
+              nixd
+              nixfmt
+            ];
+          };
+        }
+      );
     };
 }
