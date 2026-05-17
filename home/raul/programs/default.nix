@@ -32,6 +32,8 @@
       audacity
       pavucontrol
       pw-gui
+      vineflower
+      mcaselector
 
       renderdoc
       blockbench

@@ -1,6 +1,6 @@
 {
   lib,
-  stdenv,
+  stdenvNoCC,
   fetchurl,
   makeWrapper,
   imagemagick,
@@ -9,9 +9,10 @@
   libicns,
   jdk17,
   packwiz,
+  ...
 }:
 
-stdenv.mkDerivation (finalAttrs: {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pw-gui";
   version = "1.2.0";
 
@@ -32,10 +33,10 @@ stdenv.mkDerivation (finalAttrs: {
     makeWrapper
     imagemagick
   ]
-  ++ lib.optionals stdenv.hostPlatform.isLinux [ copyDesktopItems ]
-  ++ lib.optionals stdenv.hostPlatform.isDarwin [ libicns ];
+  ++ lib.optionals stdenvNoCC.hostPlatform.isLinux [ copyDesktopItems ]
+  ++ lib.optionals stdenvNoCC.hostPlatform.isDarwin [ libicns ];
 
-  desktopItems = lib.optional stdenv.hostPlatform.isLinux (makeDesktopItem {
+  desktopItems = lib.optional stdenvNoCC.hostPlatform.isLinux (makeDesktopItem {
     name = "pw-gui";
     exec = "pw-gui";
     icon = "pw-gui";
@@ -52,7 +53,7 @@ stdenv.mkDerivation (finalAttrs: {
     cp $src $out/share/pw-gui/app.jar
 
   ''
-  + lib.optionalString stdenv.hostPlatform.isLinux ''
+  + lib.optionalString stdenvNoCC.hostPlatform.isLinux ''
     for size in 16 32 48 64 128 256; do
       mkdir -p $out/share/icons/hicolor/"$size"x"$size"/apps
       magick ${finalAttrs.icon} -resize "$size"x"$size" \
@@ -64,7 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
       --prefix PATH : ${lib.makeBinPath [ packwiz ]}
 
   ''
-  + lib.optionalString stdenv.hostPlatform.isDarwin ''
+  + lib.optionalString stdenvNoCC.hostPlatform.isDarwin ''
     mkdir -p $out/Applications/PW-GUI.app/Contents/{MacOS,Resources}
 
     magick ${finalAttrs.icon} -background none -resize 16x16    /tmp/icon_16x16.png

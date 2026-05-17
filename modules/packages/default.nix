@@ -11,6 +11,8 @@
         changeVolume = pkgs.callPackage ./changeVolume { };
         record = pkgs.callPackage ./record { };
         pw-gui = pkgs.callPackage ./pw-gui { };
+        mcaselector = pkgs.callPackage ./mcaselector { };
+        vineflower = pkgs.callPackage ./vineflower { };
       }
     )
   ];
