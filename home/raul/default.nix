@@ -5,6 +5,7 @@
     ./nixpkgs.nix
     ./shell.nix
     ./wayland.nix
+    ./hyprland
     ./style
     ./programs
   ];

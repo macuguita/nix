@@ -44,7 +44,7 @@
 
               scale = lib.mkOption {
                 type = lib.types.float;
-                default = 1;
+                default = 1.0;
               };
             };
           }
