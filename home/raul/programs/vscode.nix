@@ -4,7 +4,7 @@
   ...
 }:
 {
-  programs.vscode = {
+  programs.vscodium = {
     enable = osConfig.macuguita.profiles.graphical.enable;
     package = pkgs.vscodium;
 

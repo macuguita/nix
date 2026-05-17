@@ -1,21 +1,20 @@
 { osConfig, ... }:
 {
-  programs.ghostty = {
+  programs.foot = {
     enable = osConfig.macuguita.profiles.graphical.enable;
 
     settings = {
-      term = "xterm-256color";
-      keybind = "ctrl+t=new_tab";
-      background = "121212";
-      foreground = "ffffff";
-      background-opacity = 0.75;
-      gtk-titlebar = false;
-      window-decoration = true;
-      confirm-close-surface = false;
+      main = {
+        term = "xterm-256color";
+        font = "monospace:size=14";
+      };
+      colors-dark = {
+        background = "121212";
+        foreground = "ffffff";
+        alpha = 0.75;
+      };
 
-      cursor-style = "bar";
-
-      font-size = 11;
+      cursor.style = "beam";
     };
   };
 }

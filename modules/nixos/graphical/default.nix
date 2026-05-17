@@ -89,7 +89,7 @@
 
     hardware.i2c.enable = true;
 
-    # programs.kdeconnect.enable = true;
+    programs.kdeconnect.enable = true;
 
     programs.steam = {
       enable = true;

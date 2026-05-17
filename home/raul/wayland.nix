@@ -42,9 +42,9 @@
           show-directories-first = false;
           show-hidden-files = true;
         };
-        "org/cinnamon/desktop/applications/terminal" = {
-          exec = "ghostty";
-          # exec-arg = ""; # argument
+        "org/cinnamon/desktop/default-applications/terminal" = {
+          exec = "foot";
+          exec-arg = "-e";
         };
       };
     };
@@ -56,13 +56,15 @@
     ] (f: "nemo.desktop");
 
     services.hyprpolkitagent.enable = true;
-    # services.kdeconnect.enable = true;
+    services.kdeconnect.enable = true;
 
     # TODO: quickshell notis
     services.dunst.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;
+      # TODO: Redo lua config
+      configType = "hyprlang";
 
       systemd = {
         enable = true;
@@ -146,7 +148,7 @@
         ];
 
         bind = [
-          "$mod, T, exec, ghostty"
+          "$mod, T, exec, foot"
           "$mod, Q, killactive"
           "$mod, F, exec, nemo"
           "$mod, B, exec, helium"

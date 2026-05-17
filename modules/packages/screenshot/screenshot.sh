@@ -1,5 +1,5 @@
 SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
-FILENAME="screenshot_$(date +%d_%m_%Y_%H_%M_%S).png"
+FILENAME="screenshot_$(date +%Y_%m_%d_%H_%M_%S).png"
 OUTPUT="$SCREENSHOT_DIR/$FILENAME"
 
 fullscreen() {
