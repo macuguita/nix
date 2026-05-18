@@ -416,6 +416,25 @@
           );
           window_rule = [
             (util.mkWindowRule {
+              name = "suppress-maximize-events";
+              match.class = ".*";
+              suppress_event = "maximize";
+            })
+
+            (util.mkWindowRule {
+              name = "fix-xwayland-drags";
+              match = {
+                class = "^$";
+                title = "^$";
+                xwayland = true;
+                float = true;
+                fullscreen = false;
+                pin = false;
+              };
+              no_focus = true;
+            })
+
+            (util.mkWindowRule {
               name = "vesktop special";
 
               match.class = "vesktop|discord";
@@ -431,6 +450,8 @@
                 float = true;
                 title = "^$|^\\s$|^win\\d+$";
               };
+
+              no_initial_focus = true;
             })
 
             (util.mkWindowRule {
