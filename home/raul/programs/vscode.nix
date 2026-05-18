@@ -24,6 +24,7 @@
 
           ms-vscode.hexeditor
           esbenp.prettier-vscode
+          svelte.svelte-vscode
         ])
         ++ (with pkgs.open-vsx; [
           theqtcompany.qt-qml
@@ -33,6 +34,9 @@
         ]);
 
       userSettings = {
+        "files.autoSave" = "afterDelay";
+        "files.autoSaveDelay" = 1000;
+
         "editor.minimap.enabled" = false;
 
         "workbench.productIconTheme" = "fluent-icons";
