@@ -10,9 +10,12 @@
     ./programs
   ];
 
-  xdg.userDirs = {
+  xdg = {
     enable = true;
-    setSessionVariables = true;
+    userDirs = {
+      enable = true;
+      setSessionVariables = true;
+    };
   };
 
   home.stateVersion = "26.05";
