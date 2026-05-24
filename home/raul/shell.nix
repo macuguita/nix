@@ -93,7 +93,7 @@
       enable = true;
       enableDefaultConfig = false;
 
-      matchBlocks = {
+      settings = {
         "mac" = {
           hostname = "192.168.1.151";
           user = "raul";
