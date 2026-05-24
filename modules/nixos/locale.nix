@@ -6,9 +6,14 @@
   };
 
   i18n = {
-    defaultLocale = "en_US.UTF-8";
+    defaultLocale = "es_ES.UTF-8";
+
     extraLocales = [
-      "es_ES.UTF-8/UTF-8"
+      "en_US.UTF-8/UTF-8"
     ];
+
+    extraLocaleSettings = {
+      LC_MESSAGES = "en_US.UTF-8";
+    };
   };
 }

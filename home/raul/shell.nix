@@ -136,7 +136,7 @@
       enable = true;
 
       signing = {
-        key = "DCAA89416994E924";
+        key = "A6D3F700CF1D28FA";
         signByDefault = true;
       };
 
