@@ -29,6 +29,7 @@ in
         "networkmanager"
         "libvirtd"
         "i2c"
+        "kvm"
       ];
 
       home = "/home/raul";
