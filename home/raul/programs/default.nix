@@ -12,6 +12,7 @@
     ./emulators.nix
     ./discord.nix
     ./jetbrains.nix
+    ./android.nix
     ./terminal.nix
     ./vicinae.nix
     ./vscode.nix
@@ -34,6 +35,8 @@
       pw-gui
       vineflower
       mcaselector
+
+      filezilla
 
       renderdoc
       blockbench
