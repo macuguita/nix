@@ -18,10 +18,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
+    nix-jetbrains-plugins = {
+      url = "github:nix-community/nix-jetbrains-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    catppuccin.url = "github:catppuccin/nix";
-    vicinae.url = "github:vicinaehq/vicinae";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

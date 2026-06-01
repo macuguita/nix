@@ -10,6 +10,7 @@
     accent = "blue";
     flavor = "mocha";
 
-    enable = osConfig.macuguita.profiles.graphical.enable;
+    autoEnable = osConfig.macuguita.profiles.graphical.enable;
+    enable = true;
   };
 }
