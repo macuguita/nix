@@ -146,6 +146,12 @@
           email = "me@macuguita.com";
           name = "macuguita";
         };
+        core = {
+          excludesFile = builtins.toString (pkgs.writeText "gitignore" ''
+            .jj
+            .env
+          '');
+        };
         diff = {
           algorithm = "histogram";
           colorMoved = "plain";

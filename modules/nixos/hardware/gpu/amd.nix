@@ -11,10 +11,12 @@
 
     hardware.i2c.enable = true;
 
-    # OpenCL
     hardware.graphics.extraPackages = with pkgs; [
+      # OpenCL
       rocmPackages.clr
       rocmPackages.clr.icd
+
+      vulkan-loader
     ];
   };
 }

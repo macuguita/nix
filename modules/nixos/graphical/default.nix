@@ -29,37 +29,7 @@
       hunspell
       hunspellDicts.en_US
       hunspellDicts.es-es
-
-      vulkan-tools
-      vulkan-validation-layers
-      vulkan-loader
     ];
-
-    environment.sessionVariables = {
-      LD_LIBRARY_PATH = map (pkg: "${pkg}/lib") (
-        with pkgs;
-        [
-          # required for lwjgl games
-          glfw
-          libpulseaudio
-          libGL
-          openal
-          stdenv.cc.cc
-
-          udev # oshi
-
-          libx11
-          libxext
-          libxcursor
-          libxrandr
-          libxxf86vm
-
-          vulkan-tools
-          vulkan-validation-layers
-          vulkan-loader
-        ]
-      );
-    };
 
     qt.enable = true;
 
@@ -81,9 +51,26 @@
     programs.nix-ld = {
       enable = true;
       libraries = with pkgs; [
-        renderdoc
-        libglvnd
+        libxcrypt
+        libdrm
+        libgbm
+        udev
+        libudev0-shim
+        libva
+
+        pipewire
+        openal-soft
+
         glfw
+        libGL
+        vulkan-loader
+        libx11
+        libxcursor
+        libxext
+        libxrandr
+        libxxf86vm
+
+        renderdoc
       ];
     };
 
