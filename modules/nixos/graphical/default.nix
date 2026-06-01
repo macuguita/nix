@@ -69,7 +69,6 @@
       accent = "blue";
       flavor = "mocha";
 
-      enableGlobal = true;
       enable = true;
     };
 
