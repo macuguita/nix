@@ -250,8 +250,7 @@
               "hyprland.start"
               (lib.generators.mkLuaInline ''
                 function()
-                  hl.exec_cmd("helium")
-                  hl.exec_cmd("vesktop")
+                -- hl.exec_cmd("vesktop")
                 end
               '')
             ];

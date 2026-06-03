@@ -77,6 +77,7 @@
         "[astro]" = {
           "editor.defaultFormatter" = "esbenp.prettier-vscode";
         };
+        "chat.disableAIFeatures" = "true";
         # TODO: figure this out
         # "nix.serverSettings" = {
         #   "nixd" = {
