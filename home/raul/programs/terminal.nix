@@ -2,6 +2,7 @@
 {
   programs.foot = {
     enable = osConfig.macuguita.profiles.graphical.enable;
+    server.enable = true;
 
     settings = {
       main = {

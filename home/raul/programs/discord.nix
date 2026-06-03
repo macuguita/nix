@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   osConfig,
   ...
 }:
@@ -104,7 +103,7 @@
           ]
         );
         themeLinks = [
-          "https://catppuccin.github.io/discord/dist/catppuccin-mocha-pink.theme.css"
+          "https://catppuccin.github.io/discord/dist/catppuccin-mocha-blue.theme.css"
           "https://codeberg.org/ridge/Discord-Adblock/raw/branch/main/discord-adblock.css"
           "https://raw.githubusercontent.com/Tnixc/discord-css/refs/heads/main/quickCss.css"
         ];

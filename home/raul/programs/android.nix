@@ -1,4 +1,7 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [ android-studio ];
+  home.packages = with pkgs; [
+    android-studio
+    android-tools
+  ];
 }

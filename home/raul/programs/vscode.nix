@@ -13,14 +13,8 @@
         (with pkgs.vscode-extensions; [
           jnoortheen.nix-ide
           mkhl.direnv
-          astro-build.astro-vscode
           ms-python.python
           github.vscode-github-actions
-
-          eamodio.gitlens
-          usernamehw.errorlens
-          christian-kohler.path-intellisense
-          k--kato.intellij-idea-keybindings
 
           ms-vscode.hexeditor
           esbenp.prettier-vscode
@@ -66,17 +60,12 @@
 
         "workbench.editorAssociations" = {
           "{hexdiff}:/**/*.*" = "hexEditor.hexedit";
-          "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.qrc" =
-            "default";
           "*.qrc" = "qt-core.qrcEditor";
         };
         "[typescript]" = {
           "editor.defaultFormatter" = "esbenp.prettier-vscode";
         };
 
-        "[astro]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
         "chat.disableAIFeatures" = "true";
         # TODO: figure this out
         # "nix.serverSettings" = {

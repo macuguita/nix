@@ -27,7 +27,7 @@
       ffmpeg-full
       yt-dlp
       vim
-      jujutsu
+      btop
     ]
     ++ (lib.optionals osConfig.macuguita.hardware.battery [
       pkgs.acpi
@@ -90,6 +90,35 @@
 
     nix-your-shell.enable = true;
 
+    jujutsu = {
+      enable = true;
+
+      settings = {
+        user = {
+          name = "macuguita";
+          email = "me@macuguita.com";
+        };
+        signing = {
+          behavior = "drop";
+          backend = "gpg";
+          key = "A6D3F700CF1D28FA";
+        };
+        git = {
+          sign-on-push = true;
+        };
+        # TODO: figure this out, doesn't work with nix
+        # "--scope" = [
+        #   {
+        #     "--when.repositories" = [ "~/Uni" ];
+        #     "user" = {
+        #       name = "removed";
+        #       email = "removed";
+        #     };
+        #   }
+        # ];
+      };
+    };
+
     ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -147,10 +176,12 @@
           name = "macuguita";
         };
         core = {
-          excludesFile = builtins.toString (pkgs.writeText "gitignore" ''
-            .jj
-            .env
-          '');
+          excludesFile = toString (
+            pkgs.writeText "gitignore" ''
+              .jj
+              .env
+            ''
+          );
         };
         diff = {
           algorithm = "histogram";
@@ -166,13 +197,6 @@
     };
 
     bat.enable = true;
-  };
-
-  xdg.configFile."jj/config.toml".source = pkgs.writers.writeTOML "config.toml" {
-    user = {
-      name = "macuguita";
-      email = "me@macuguita.com";
-    };
   };
 
   # fix ssh in fhs envs...

@@ -23,15 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    catppuccin = {
-      url = "github:catppuccin/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    catppuccin.url = "github:catppuccin/nix";
+    vicinae.url = "github:vicinaehq/vicinae";
   };
 
   outputs =

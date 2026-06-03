@@ -1,15 +1,30 @@
-{ lib, ... }:
+# hyprUtil.nix
+{ lib }:
+let
+  mkLua = lib.generators.mkLuaInline;
+  # Helper to strip null-valued keys from an attrset
+  compactAttrs = lib.filterAttrs (_: v: v != null);
+  # Wrap _args consistently
+  mkArgs = args: { _args = args; };
+in
 {
-  lua = lib.generators.mkLuaInline;
+  inherit mkLua;
 
-  mkBezier = name: p1: p2: {
-    _args = [
+  # --- Curves ---
+  # Both bezier and spring now take a name + attrset, unified shape
+  mkBezier =
+    name: p1: p2:
+    let
+      x1 = builtins.elemAt p1 0;
+      y1 = builtins.elemAt p1 1;
+      x2 = builtins.elemAt p2 0;
+      y2 = builtins.elemAt p2 1;
+    in
+    mkArgs [
       name
-      (lib.generators.mkLuaInline ''
-        { type = "bezier", points = { {${toString (builtins.elemAt p1 0)}, ${toString (builtins.elemAt p1 1)}}, {${toString (builtins.elemAt p2 0)}, ${toString (builtins.elemAt p2 1)}} } }
-      '')
+      (mkLua ''{ type = "bezier", points = { {${toString x1}, ${toString y1}}, {${toString x2}, ${toString y2}} } }'')
     ];
-  };
+
   mkSpring =
     name:
     {
@@ -17,15 +32,16 @@
       stiffness,
       dampening,
     }:
-    {
-      _args = [
-        name
-        {
-          type = "spring";
-          inherit mass stiffness dampening;
-        }
-      ];
-    };
+    mkArgs [
+      name
+      {
+        type = "spring";
+        inherit mass stiffness dampening;
+      }
+    ];
+
+  # --- Animations ---
+  # Use compactAttrs to drop nulls naturally instead of the ugly conditional keys
   mkAnimation =
     {
       leaf,
@@ -35,66 +51,73 @@
       spring ? null,
       style ? null,
     }:
-    {
-      _args = [
-        {
-          inherit leaf enabled speed;
-          ${if bezier != null then "bezier" else null} = if bezier != null then bezier else null;
-          ${if spring != null then "spring" else null} = if spring != null then spring else null;
-          ${if style != null then "style" else null} = if style != null then style else null;
-        }
-      ];
-    };
+    mkArgs [
+      (compactAttrs {
+        inherit
+          leaf
+          enabled
+          speed
+          bezier
+          spring
+          style
+          ;
+      })
+    ];
 
+  mkAnimations = anims: map (a: mkArgs [ (compactAttrs a) ]) anims;
+
+  # --- Binds ---
   mkBind =
     {
       key,
       action,
       opts ? { },
     }:
-    {
-      _args = [
+    mkArgs (
+      [
         key
         action
       ]
-      ++ lib.optional (opts != { }) opts;
-    };
+      ++ lib.optional (opts != { }) opts
+    );
 
-  dsp = {
-    exec = cmd: lib.generators.mkLuaInline ''hl.dsp.exec_cmd("${cmd}")'';
-
-    close = lib.generators.mkLuaInline "hl.dsp.window.close()";
-
-    toggleFloat = lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "toggle" })'';
-
-    toggleSplit = lib.generators.mkLuaInline ''hl.dsp.layout("togglesplit")'';
-
-    workspace = ws: lib.generators.mkLuaInline ''hl.dsp.focus({ workspace = "${toString ws}" })'';
-
-    moveToWorkspace =
-      ws: lib.generators.mkLuaInline ''hl.dsp.window.move({ workspace = "${toString ws}" })'';
-
-    special = name: lib.generators.mkLuaInline ''hl.dsp.workspace.toggle_special("${name}")'';
-  };
-
+  # --- Window Rules ---
+  # Explicit fields instead of passthrough — safer and more readable
   mkWindowRule =
     {
       name,
       match ? { },
-      ...
-    }@rule:
+      workspace ? null,
+      float ? null,
+      tile ? null,
+      no_focus ? null,
+      no_initial_focus ? null,
+      suppress_event ? null,
+    }:
+    mkArgs [
+      (compactAttrs {
+        inherit
+          name
+          match
+          workspace
+          float
+          tile
+          no_focus
+          no_initial_focus
+          suppress_event
+          ;
+      })
+    ];
 
-    {
-      _args = [
-        (
-          {
-            inherit name match;
-          }
-          // removeAttrs rule [
-            "name"
-            "match"
-          ]
-        )
-      ];
-    };
+  # --- Dispatcher ---
+  # All dsp values are now consistently functions (use dsp.close() if no args needed)
+  dsp = {
+    exec = cmd: mkLua ''hl.dsp.exec_cmd("${cmd}")'';
+    close = mkLua "hl.dsp.window.close()";
+    toggleFloat = mkLua ''hl.dsp.window.float({ action = "toggle" })'';
+    toggleSplit = mkLua ''hl.dsp.layout("togglesplit")'';
+    workspace = ws: mkLua ''hl.dsp.focus({ workspace = "${toString ws}" })'';
+    moveToWorkspace = ws: mkLua ''hl.dsp.window.move({ workspace = "${toString ws}" })'';
+    special = name: mkLua ''hl.dsp.workspace.toggle_special("${name}")'';
+  };
 }

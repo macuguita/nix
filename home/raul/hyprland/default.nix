@@ -104,28 +104,24 @@
           animation = [
             (util.mkAnimation {
               leaf = "global";
-              enabled = 1;
               speed = 10;
               bezier = "default";
             })
 
             (util.mkAnimation {
               leaf = "border";
-              enabled = 1;
               speed = 5.39;
               bezier = "easeOutQuint";
             })
 
             (util.mkAnimation {
               leaf = "windows";
-              enabled = 1;
               speed = 4.79;
               bezier = "easeOutQuint";
             })
 
             (util.mkAnimation {
               leaf = "windowsIn";
-              enabled = 1;
               speed = 4.1;
               bezier = "easeOutQuint";
               style = "popin 87%";
@@ -133,7 +129,6 @@
 
             (util.mkAnimation {
               leaf = "windowsOut";
-              enabled = 1;
               speed = 1.49;
               bezier = "linear";
               style = "popin 87%";
@@ -141,35 +136,30 @@
 
             (util.mkAnimation {
               leaf = "fadeIn";
-              enabled = 1;
               speed = 1.73;
               bezier = "almostLinear";
             })
 
             (util.mkAnimation {
               leaf = "fadeOut";
-              enabled = 1;
               speed = 1.46;
               bezier = "almostLinear";
             })
 
             (util.mkAnimation {
               leaf = "fade";
-              enabled = 1;
               speed = 3.03;
               bezier = "quick";
             })
 
             (util.mkAnimation {
               leaf = "layers";
-              enabled = 1;
               speed = 3.81;
               bezier = "easeOutQuint";
             })
 
             (util.mkAnimation {
               leaf = "layersIn";
-              enabled = 1;
               speed = 4;
               bezier = "easeOutQuint";
               style = "fade";
@@ -177,7 +167,6 @@
 
             (util.mkAnimation {
               leaf = "layersOut";
-              enabled = 1;
               speed = 1.5;
               bezier = "linear";
               style = "fade";
@@ -185,21 +174,18 @@
 
             (util.mkAnimation {
               leaf = "fadeLayersIn";
-              enabled = 1;
               speed = 1.79;
               bezier = "almostLinear";
             })
 
             (util.mkAnimation {
               leaf = "fadeLayersOut";
-              enabled = 1;
               speed = 1.39;
               bezier = "almostLinear";
             })
 
             (util.mkAnimation {
               leaf = "workspaces";
-              enabled = 1;
               speed = 2.23;
               bezier = "easeInOutCubic";
               style = "slide";
@@ -207,7 +193,6 @@
 
             (util.mkAnimation {
               leaf = "workspacesIn";
-              enabled = 1;
               speed = 2.21;
               bezier = "easeInOutCubic";
               style = "slide";
@@ -215,7 +200,6 @@
 
             (util.mkAnimation {
               leaf = "workspacesOut";
-              enabled = 1;
               speed = 2.47;
               bezier = "easeInOutCubic";
               style = "slide";
@@ -223,7 +207,6 @@
 
             (util.mkAnimation {
               leaf = "specialWorkspace";
-              enabled = 1;
               speed = 1.94;
               bezier = "almostLinear";
               style = "fade";
@@ -231,7 +214,6 @@
 
             (util.mkAnimation {
               leaf = "specialWorkspaceIn";
-              enabled = 1;
               speed = 1.21;
               bezier = "almostLinear";
               style = "fade";
@@ -239,7 +221,6 @@
 
             (util.mkAnimation {
               leaf = "specialWorkspaceOut";
-              enabled = 1;
               speed = 1.94;
               bezier = "almostLinear";
               style = "fade";
@@ -248,7 +229,7 @@
           on = {
             _args = [
               "hyprland.start"
-              (lib.generators.mkLuaInline ''
+              (util.mkLua ''
                 function()
                 -- hl.exec_cmd("vesktop")
                 end
@@ -330,14 +311,14 @@
             # Mouse move window
             (util.mkBind {
               key = "${mod} + mouse:272";
-              action = util.lua "hl.dsp.window.drag()";
+              action = util.mkLua "hl.dsp.window.drag()";
               opts.mouse = true;
             })
 
             # Mouse resize window
             (util.mkBind {
               key = "${mod} + mouse:273";
-              action = util.lua "hl.dsp.window.resize()";
+              action = util.mkLua "hl.dsp.window.resize()";
               opts.mouse = true;
             })
 
