@@ -39,6 +39,7 @@
       accent = "blue";
       flavor = "mocha";
 
+      autoEnable = true;
       enable = true;
     };
 
