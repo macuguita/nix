@@ -18,10 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-jetbrains-plugins = {
-      url = "github:nix-community/nix-jetbrains-plugins";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
 
     catppuccin.url = "github:catppuccin/nix";
     vicinae.url = "github:vicinaehq/vicinae";

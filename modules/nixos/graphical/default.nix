@@ -29,6 +29,10 @@
       hunspell
       hunspellDicts.en_US
       hunspellDicts.es-es
+
+      vulkan-tools
+      vulkan-validation-layers
+      vulkan-tools-lunarg
     ];
 
     qt.enable = true;
