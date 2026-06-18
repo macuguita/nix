@@ -3,6 +3,7 @@
   imports = [
     ./direnv.nix
     ./nixpkgs.nix
+    ./ollama.nix
     ./shell.nix
     ./wayland.nix
     ./hyprland

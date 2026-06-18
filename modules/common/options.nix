@@ -1,6 +1,8 @@
 { lib, ... }:
 {
   options.macuguita = {
+    localAi = lib.mkEnableOption "Local AI";
+
     profiles = {
       graphical.enable = lib.mkEnableOption "Graphical";
       server.enable = lib.mkEnableOption "Server";

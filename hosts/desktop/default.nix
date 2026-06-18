@@ -14,6 +14,8 @@
       wifi = false;
     };
 
+    localAi.enable = true;
+
     monitors = {
       HDMI-A-1 = {
         width = 1920;
