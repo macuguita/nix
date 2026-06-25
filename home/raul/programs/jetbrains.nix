@@ -16,6 +16,10 @@
         ];
 
         extraLibs = with pkgs; [
+          libpulseaudio
+          glfw3-minecraft
+          openal
+          stdenv.cc.cc.lib
           libGL
           mesa
           libglvnd
