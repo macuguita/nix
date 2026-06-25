@@ -1,10 +1,10 @@
-{ inputs, osConfig, ... }:
+{ inputs, osConfig, lib, ... }:
 {
   imports = [
     inputs.vicinae.homeManagerModules.default
   ];
 
-  services.vicinae = {
+  programs.vicinae = {
     enable = osConfig.macuguita.profiles.graphical.enable;
 
     systemd = {
@@ -15,7 +15,7 @@
     settings = {
       theme = {
         light = {
-          name = "catppuccin-latte";
+          name = lib.mkForce "catppuccin-latte";
           icon_theme = "default";
         };
         dark = {

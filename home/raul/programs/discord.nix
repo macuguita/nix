@@ -72,7 +72,6 @@
                 "MentionAvatars"
                 "NoDevtoolsWarning"
                 "NoOnboardingDelay"
-                "NoReplyMention"
                 "NormalizeMessageLinks"
                 "NoTypingAnimation"
                 "NoUnblockToJunp"

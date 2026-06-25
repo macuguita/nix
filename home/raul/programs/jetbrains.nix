@@ -10,9 +10,8 @@
     home.packages =
       let
         ideaWithPlugins = inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs "idea" [
-          "com.github.catppuccin.jetbrains"
-          "com.github.catppuccin.jetbrains_icons"
           "com.demonwav.minecraft-dev"
+          "dev.kikugie.stonecutter"
           "GLSL"
         ];
 
