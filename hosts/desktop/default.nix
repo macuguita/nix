@@ -11,6 +11,8 @@
       gpu = "amd";
 
       bluetooth = true;
+      qmk = true;
+      qmkKeychron = true;
       wifi = false;
     };
 

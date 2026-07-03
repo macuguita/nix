@@ -7,6 +7,7 @@
     ./wifi.nix
     ./disc.nix
     ./laptop.nix
+    ./qmk.nix
     ./audio.nix
   ];
 

@@ -51,7 +51,9 @@
 
       onlyoffice-desktopeditors
       krita
+      kdePackages.kdenlive
       blender
+      qbittorrent
     ];
   };
 }
