@@ -105,6 +105,9 @@
         git = {
           sign-on-push = true;
         };
+        revset-aliases = {
+          "immutable_heads()" = "builtin_immutable_heads() | remote_bookmarks()";
+        };
         # TODO: figure this out, doesn't work with nix
         # "--scope" = [
         #   {
