@@ -50,11 +50,33 @@
       };
     };
 
-    xdg.mimeApps.enable = true;
-    xdg.mimeApps.defaultApplications = lib.attrsets.genAttrs [
-      "inode/directory"
-      "application/x-gnome-saved-search"
-    ] (f: "nemo.desktop");
+    xdg.mimeApps = {
+      enable = true;
+
+      defaultApplications =
+        lib.genAttrs [
+          "inode/directory"
+          "application/x-gnome-saved-search"
+        ] (_: "nemo.desktop")
+        // lib.genAttrs [
+          "image/jpeg"
+          "image/png"
+          "image/webp"
+          "image/gif"
+          "image/bmp"
+          "image/tiff"
+          "image/x-portable-pixmap"
+          "image/x-portable-graymap"
+          "image/x-portable-bitmap"
+          "image/x-portable-anymap"
+          "image/x-tga"
+          "image/x-xbitmap"
+          "image/x-xpixmap"
+          "image/avif"
+          "image/heic"
+          "image/heif"
+        ] (_: "com.macuguita.Pluey.desktop");
+    };
 
     services.hyprpolkitagent.enable = true;
     services.kdeconnect.enable = true;

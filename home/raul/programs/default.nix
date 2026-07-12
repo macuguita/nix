@@ -1,5 +1,6 @@
 {
   osConfig,
+  inputs,
   lib,
   pkgs,
   ...
@@ -42,6 +43,7 @@
       blockbench
 
       aseprite
+      inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
 
       zenity
 
