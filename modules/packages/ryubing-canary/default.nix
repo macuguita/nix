@@ -4,7 +4,7 @@
   cctools,
   darwin,
   dotnetCorePackages,
-  fetchurl,
+  fetchzip,
   libx11,
   libgdiplus,
   moltenvk,
@@ -33,9 +33,9 @@ buildDotnetModule rec {
   pname = "ryujinx-canary";
   version = "1.3.338";
 
-  src = fetchurl {
+  src = fetchzip {
     url = "https://git.ryujinx.app/projects/Ryubing/archive/Canary-${version}.tar.gz";
-    hash = "sha256-AJJYbp/P8PYCm0TYkGHF6JWSQ9+enKT63iICFodJ7Pg=";
+    hash = "sha256-PrfT+5BKYIe4+3xRkQtIBloF4r20jXdepBJlyNqJS9I=";
   };
 
   nativeBuildInputs =

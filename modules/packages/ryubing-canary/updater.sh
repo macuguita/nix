@@ -3,11 +3,11 @@
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-# Make sure jq, curl, nix-prefetch-url, and update-source-version are available
-NEEDED_TOOLS=(jq curl nix-prefetch-url update-source-version)
+# Make sure jq, curl and nix-prefetch-url are available
+NEEDED_TOOLS=(jq curl nix-prefetch-url)
 for tool in "${NEEDED_TOOLS[@]}"; do
   if ! command -v "$tool" &>/dev/null; then
-    echo "missing required tool: $tool (try: nix shell nixpkgs#jq nixpkgs#curl nixpkgs#common-updater-scripts)" >&2
+    echo "missing required tool: $tool (try: nix shell nixpkgs#jq nixpkgs#curl)" >&2
     exit 1
   fi
 done
@@ -35,10 +35,11 @@ fi
 
 if [[ "${1-default}" != "--deps-only" ]]; then
     URL="https://git.ryujinx.app/projects/Ryubing/archive/Canary-${NEW_VERSION}.tar.gz"
-    SRI="$(nix-prefetch-url --unpack --type sha256 "$URL" 2>/dev/null | tail -n1 | xargs nix hash convert --hash-algo sha256 --to sri)"
+    SHA=$(nix-prefetch-url --unpack --type sha256 "$URL" --quiet)
+    SRI=$(nix --experimental-features nix-command hash to-sri --type sha256 "$SHA")
 
-    sed -i -E "s/version = \".*\";/version = \"${NEW_VERSION}\";/" ./default.nix
-    sed -i -E "s|hash = \"sha256-.*\";|hash = \"${SRI}\";|" ./default.nix
+    sed -i -E "s/version = \"[^\"]*\";/version = \"${NEW_VERSION}\";/" ./default.nix
+    sed -i -E "s#hash = \"sha256-[^\"]*\";#hash = \"${SRI}\";#" ./default.nix
 fi
 
 echo "building Nuget lockfile"
