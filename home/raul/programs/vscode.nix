@@ -14,6 +14,7 @@
           jnoortheen.nix-ide
           mkhl.direnv
           ms-python.python
+          rust-lang.rust-analyzer
           github.vscode-github-actions
 
           ms-vscode.hexeditor

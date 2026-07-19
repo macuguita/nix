@@ -64,7 +64,6 @@
               kb_layout = "es";
               kb_options = "lv3:lalt_switch";
 
-
               follow_mouse = true;
               float_switch_override_focus = 1;
 

@@ -31,11 +31,11 @@
 }:
 buildDotnetModule rec {
   pname = "ryujinx-canary";
-  version = "1.3.333";
+  version = "1.3.338";
 
   src = fetchurl {
     url = "https://git.ryujinx.app/projects/Ryubing/archive/Canary-${version}.tar.gz";
-    hash = "sha256-ckcdRfkQBy9hJF9kcJyiQausebqMIleN6WGmjOKpkwY=";
+    hash = "sha256-AJJYbp/P8PYCm0TYkGHF6JWSQ9+enKT63iICFodJ7Pg=";
   };
 
   nativeBuildInputs =
@@ -48,7 +48,7 @@ buildDotnetModule rec {
   enableParallelBuilding = false;
   dotnet-sdk = dotnetCorePackages.sdk_10_0;
   dotnet-runtime = dotnetCorePackages.runtime_10_0;
-  nugetDeps = ./deps-canary.json;
+  nugetDeps = ./deps.json;
 
   runtimeDeps = [
     libx11
@@ -99,16 +99,16 @@ buildDotnetModule rec {
     ${lib.optionalString stdenv.hostPlatform.isLinux ''
       mkdir -p $out/share/{applications,mime/packages}
       mkdir -p $out/share/icons/hicolor/512x512/apps
-  
+
       install -D ./distribution/linux/app.ryujinx.Ryujinx.desktop \
         $out/share/applications/app.ryujinx.Ryujinx.desktop
-  
+
       install -D ./distribution/linux/Ryujinx.sh \
         $out/bin/Ryujinx.sh
-  
+
       install -D ./distribution/linux/mime/Ryujinx.xml \
         $out/share/mime/packages/Ryujinx.xml
-  
+
       install -D ./distribution/misc/Logo.png \
         $out/share/icons/hicolor/512x512/apps/app.ryujinx.Ryujinx.png
     ''}

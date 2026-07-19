@@ -13,6 +13,7 @@
         pw-gui = pkgs.callPackage ./pw-gui { };
         mcaselector = pkgs.callPackage ./mcaselector { };
         vineflower = pkgs.callPackage ./vineflower { };
+        ryubing-canary = pkgs.callPackage ./ryubing-canary { };
       }
     )
   ];
