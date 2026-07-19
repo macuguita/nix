@@ -31,11 +31,11 @@
 }:
 buildDotnetModule rec {
   pname = "ryujinx-canary";
-  version = "1.3.338";
+  version = "1.3.284";
 
   src = fetchzip {
     url = "https://git.ryujinx.app/projects/Ryubing/archive/Canary-${version}.tar.gz";
-    hash = "sha256-PrfT+5BKYIe4+3xRkQtIBloF4r20jXdepBJlyNqJS9I=";
+    hash = "sha256-lFGNvG+LCi8aFGwBpmw7SZPUPDluU/YTZKgda+AlAjw=";
   };
 
   nativeBuildInputs =
@@ -97,11 +97,14 @@ buildDotnetModule rec {
 
   preFixup = ''
     ${lib.optionalString stdenv.hostPlatform.isLinux ''
-      mkdir -p $out/share/{applications,mime/packages}
-      mkdir -p $out/share/icons/hicolor/512x512/apps
+      # mkdir -p $out/share/{applications,icons/hicolor/512x512/apps,mime/packages}
+      mkdir -p $out/share/{applications,icons/hicolor/scalable/apps,mime/packages}
 
-      install -D ./distribution/linux/app.ryujinx.Ryujinx.desktop \
-        $out/share/applications/app.ryujinx.Ryujinx.desktop
+      # install -D ./distribution/linux/app.ryujinx.Ryujinx.desktop \
+      #   $out/share/applications/app.ryujinx.Ryujinx.desktop
+
+      install -D ./distribution/linux/Ryujinx.desktop \
+        $out/share/applications/Ryujinx.desktop
 
       install -D ./distribution/linux/Ryujinx.sh \
         $out/bin/Ryujinx.sh
@@ -109,8 +112,11 @@ buildDotnetModule rec {
       install -D ./distribution/linux/mime/Ryujinx.xml \
         $out/share/mime/packages/Ryujinx.xml
 
-      install -D ./distribution/misc/Logo.png \
-        $out/share/icons/hicolor/512x512/apps/app.ryujinx.Ryujinx.png
+      # install -D ./distribution/misc/Logo.png \
+      #   $out/share/icons/hicolor/512x512/apps/app.ryujinx.Ryujinx.png
+
+      install -D ./distribution/misc/Logo.svg \
+        $out/share/icons/hicolor/scalable/apps/Ryujinx.svg
     ''}
     ${lib.optionalString (!stdenv.hostPlatform.isDarwin) "ln -s $out/bin/Ryujinx $out/bin/ryujinx"}
   '';
