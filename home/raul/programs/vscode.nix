@@ -45,7 +45,7 @@
 
         "editor.formatOnSave" = true;
 
-        "editor.fontFamily" = "'Cartograph CF', 'Symbols Nerd Font Mono'";
+        "editor.fontFamily" = "'Maple Mono NL NF', 'Cartograph CF', 'Symbols Nerd Font Mono'";
         "editor.fontSize" = 15;
         "editor.lineHeight" = 1.5;
         "editor.fontLigatures" = true;
