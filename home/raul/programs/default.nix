@@ -44,6 +44,7 @@
 
       aseprite
       inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
+      mupdf
 
       zenity
 

@@ -75,7 +75,10 @@
           "image/avif"
           "image/heic"
           "image/heif"
-        ] (_: "com.macuguita.Pluey.desktop");
+        ] (_: "com.macuguita.Pluey.desktop")
+        // {
+          "application/pdf" = "mupdf.desktop";
+        };
     };
 
     services.hyprpolkitagent.enable = true;
