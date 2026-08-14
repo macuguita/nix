@@ -90,6 +90,7 @@
                 "ViewRaw"
                 "VoiceDownload"
                 "VoiceMessages"
+                "VolumeBooster"
                 "WebKeybinds"
                 "WebScreenShareFixes"
                 "WhoReacted"

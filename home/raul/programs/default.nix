@@ -42,7 +42,15 @@
       renderdoc
       blockbench
 
-      aseprite
+      # TODO: remove when fixed
+      (aseprite.overrideAttrs (old: {
+        cmakeFlags = builtins.map
+          (x:
+            if x == "-DUSE_SHARED_FMT=ON"
+            then "-DUSE_SHARED_FMT=OFF"
+            else x)
+          old.cmakeFlags;
+      }))
       inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
       mupdf
 
