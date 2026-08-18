@@ -62,11 +62,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786656209,
-        "narHash": "sha256-ybGtuwGKTUCefKYsplzvw4xcCqznto0c7BaiQhgILtA=",
+        "lastModified": 1786999651,
+        "narHash": "sha256-MTGMFlLDTklsXhCp4r5GXB4VAVadPdalXLvUjd/K7h0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c554d3441f725537854e877519f01cbd60680174",
+        "rev": "353742587cbaf079b3caee743115d037bc51fea6",
         "type": "github"
       },
       "original": {
@@ -82,11 +82,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1786271751,
-        "narHash": "sha256-bSU5qPVBXQV533pFX8oP6dNxxIfBluTeqoy8m6Kyxns=",
+        "lastModified": 1786782246,
+        "narHash": "sha256-D8uy48k++htZCZF13wZJ9jcxFmI6G7uId1pSj0wD7rw=",
         "owner": "nix-community",
         "repo": "nix-jetbrains-plugins",
-        "rev": "002578b48f2f7818a5b46cdbd3d898cedd0277e2",
+        "rev": "35359b4f515f165bb2a11c5de793a282daa78c03",
         "type": "github"
       },
       "original": {
@@ -102,11 +102,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786674499,
-        "narHash": "sha256-BaOwIPt78vGE5Gju7DduQzYYBnBvSdZkPBRaJESis7s=",
+        "lastModified": 1787016972,
+        "narHash": "sha256-6B98mtehXRht8nSiX+1tqm8WyeQvjCjhf8IjCKLh/dU=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "e175b5a56f828415b9e273e37fc15d780dcec8a0",
+        "rev": "596319216632f6e6da839787295a350c027d39be",
         "type": "github"
       },
       "original": {
@@ -162,11 +162,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1786599213,
-        "narHash": "sha256-yNJd40f11EzXBjSByCB7IPpeFFAdeoSKKM67dGkfFoU=",
+        "lastModified": 1787001381,
+        "narHash": "sha256-Ue1Yo8gfHdD4TMtNewhA4tkSYeFqXThju0nCyJc3ALo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0e251e24a4f24e036a084b6b4b2d2491af4167f4",
+        "rev": "ec2d622de0773551768cf98f3fc50cbcc003b9c5",
         "type": "github"
       },
       "original": {
@@ -232,11 +232,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786714840,
-        "narHash": "sha256-EGC2fruuzR0j1M0i0uzCjkIQoOgQbY4CM9IMLJU//pw=",
+        "lastModified": 1787091224,
+        "narHash": "sha256-F71BkpzdUv8ra/YnV/vmFbrsUaC0U5YtstCRQoOKxrE=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "a27d47d29ce08bb18d8d8985b4fdc125c3a56cff",
+        "rev": "c4c3c1dd9a943e1fd6bcd99a11e00fcbb701a952",
         "type": "github"
       },
       "original": {
@@ -252,15 +252,15 @@
       "locked": {
         "lastModified": 1786034358,
         "narHash": "sha256-fK1jvU7sBecvzae6MQNNoL+RXujYyp7hWpUHmEryB9Y=",
-        "owner": "macuguita",
-        "repo": "pluey",
+        "ref": "refs/heads/main",
         "rev": "ac5c4ee13cd828d4ae525ba5c85c8507d22f3435",
-        "type": "github"
+        "revCount": 8,
+        "type": "git",
+        "url": "https://tangled.org/macuguita.com/pluey"
       },
       "original": {
-        "owner": "macuguita",
-        "repo": "pluey",
-        "type": "github"
+        "type": "git",
+        "url": "https://tangled.org/macuguita.com/pluey"
       }
     },
     "root": {
@@ -331,11 +331,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1786694592,
-        "narHash": "sha256-BRPRqKxZAVZhINWFnGIA3ePFs5PdHyD9D7dTbmhYAvU=",
+        "lastModified": 1786962391,
+        "narHash": "sha256-Of1YU59mj9BZwQi7lbj/+XGaCs+MTGFCZ12bgcNbEu0=",
         "owner": "vicinaehq",
         "repo": "vicinae",
-        "rev": "9ccb58a92c72d7b904594a61478d318bb14b87e3",
+        "rev": "1f6de859a4142e24e73f7cc8a70df1a6e8d77a0e",
         "type": "github"
       },
       "original": {

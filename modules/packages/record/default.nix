@@ -3,7 +3,6 @@
   pulseaudio,
   easyeffects,
   wf-recorder,
-  ffmpeg_7,
   coreutils,
   bash,
   libnotify,
@@ -14,9 +13,7 @@ writeShellApplication {
   runtimeInputs = [
     pulseaudio
     easyeffects
-    (wf-recorder.override {
-      ffmpeg = ffmpeg_7;
-    })
+    wf-recorder
     coreutils
     bash
     libnotify

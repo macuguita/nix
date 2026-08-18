@@ -19,7 +19,7 @@ let
   );
 
   icon = fetchurl (
-    if stdenvNoCC.isDarwin then
+    if stdenvNoCC.hostPlatform.isDarwin then
       {
         url = "https://github.com/Querz/mcaselector/raw/refs/heads/master/installer/macos/icon.icns";
         hash = "sha256-deaXGq7z7Z/DF/+ABkqTCkajGDTPZKQLDT4dGWsOVjk=";

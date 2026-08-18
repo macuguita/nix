@@ -21,7 +21,7 @@
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
 
     catppuccin.url = "github:catppuccin/nix";
-    pluey.url = "github:macuguita/pluey";
+    pluey.url = "git+https://tangled.org/macuguita.com/pluey";
     vicinae.url = "github:vicinaehq/vicinae";
   };
 
