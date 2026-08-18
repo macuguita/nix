@@ -156,6 +156,12 @@
           identityFile = [ "~/.sshKey/id_ed25519_personal" ];
         };
 
+        "tangled.org" = {
+          hostname = "tangled.org";
+          user = "git";
+          identityFile = [ "~/.sshKey/id_ed25519_personal_tangled" ];
+        };
+
         "opc" = {
           hostname = "158.179.210.199";
           user = "opc";

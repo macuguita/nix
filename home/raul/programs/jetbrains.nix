@@ -13,6 +13,7 @@
           "com.demonwav.minecraft-dev"
           "dev.kikugie.stonecutter"
           "GLSL"
+          "IdeaVIM"
         ];
 
         extraLibs = with pkgs; [
