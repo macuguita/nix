@@ -14,6 +14,7 @@
     };
 
     cloudflare-warp.enable = true;
+    tailscale.enable = true;
 
     gvfs.enable = true;
 

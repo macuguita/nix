@@ -100,7 +100,7 @@
         signing = {
           behavior = "drop";
           backend = "gpg";
-          key = "A6D3F700CF1D28FA";
+          key = "DE0F62AEEC379198";
         };
         git = {
           sign-on-push = true;
