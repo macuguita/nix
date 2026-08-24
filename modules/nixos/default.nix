@@ -16,6 +16,7 @@
     ./locale.nix
     ./shell.nix
     ./security.nix
+    ./waydroid.nix
     inputs.nur.modules.nixos.default
   ];
 }
