@@ -21,7 +21,6 @@
   home.packages =
     with pkgs;
     [
-      brightnessctl
       jq
       ffmpeg-full
       yt-dlp
@@ -29,7 +28,10 @@
       btop
       ripgrep
     ]
-    ++ (lib.optionals osConfig.macuguita.hardware.battery [
+    ++ (lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+      brightnessctl
+    ])
+    ++ (lib.optionals (pkgs.stdenv.hostPlatform.isLinux && osConfig.macuguita.hardware.battery) [
       pkgs.acpi
     ]);
 
@@ -101,7 +103,7 @@
         signing = {
           behavior = "drop";
           backend = "gpg";
-          key = "DE0F62AEEC379198";
+          key = osConfig.macuguita.signingKey;
         };
         git = {
           sign-on-push = true;
@@ -175,7 +177,7 @@
       enable = true;
 
       signing = {
-        key = "A6D3F700CF1D28FA";
+        key = osConfig.macuguita.signingKey;
         signByDefault = true;
       };
 
@@ -189,6 +191,7 @@
             pkgs.writeText "gitignore" ''
               .jj
               .env
+              .DS_Store
             ''
           );
         };

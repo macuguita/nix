@@ -1,11 +1,5 @@
 { lib, config, ... }:
 {
-  options.macuguita.hardware = {
-    audio = lib.mkEnableOption "Audio" // {
-      default = true;
-    };
-  };
-
   config = lib.mkIf config.macuguita.hardware.audio {
     services.pipewire = {
       enable = true;

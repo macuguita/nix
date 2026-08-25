@@ -1,11 +1,5 @@
 { config, lib, ... }:
 {
-  options.macuguita.hardware = {
-    wifi = lib.mkEnableOption "Wi-Fi" // {
-      default = true;
-    };
-  };
-
   config = lib.mkIf config.macuguita.hardware.wifi {
     hardware.wirelessRegulatoryDatabase = true;
 

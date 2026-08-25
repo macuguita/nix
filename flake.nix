@@ -8,6 +8,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,11 +38,14 @@
     let
       util = import ./util.nix (inputs // { lib = nixpkgs.lib; });
       mkNixOSConfiguration =
-        name:
+        name: system:
         (nixpkgs.lib.nixosSystem {
+          inherit system;
+
           specialArgs = {
             inherit util;
             inherit inputs;
+            inherit system;
           };
 
           modules = [
@@ -46,10 +54,30 @@
             ./modules/packages
           ];
         });
+      mkDarwinConfiguration =
+        name: system:
+        (inputs.nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = {
+            inherit util;
+            inherit inputs;
+            inherit system;
+          };
+
+          modules = [
+            ./hosts/${name}
+            ./modules/darwin
+            ./modules/packages
+          ];
+        });
     in
     {
       nixosConfigurations = {
-        desktop = mkNixOSConfiguration "desktop";
+        desktop = mkNixOSConfiguration "desktop" "x86_64-linux";
+      };
+
+      darwinConfigurations = {
+        mac-raul = mkDarwinConfiguration "mac-raul" "aarch64-darwin";
       };
 
       devShells = util.eachSystem (

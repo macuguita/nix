@@ -1,14 +1,15 @@
 {
   osConfig,
   lib,
+  pkgs,
   ...
 }:
 {
   config = lib.mkIf osConfig.macuguita.localAi.enable {
-    services.ollama = {
+    programs.opencode.enable = true;
+
+    services.ollama = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       enable = true;
     };
-
-    programs.opencode.enable = true;
   };
 }

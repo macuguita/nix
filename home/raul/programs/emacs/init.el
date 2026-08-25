@@ -56,6 +56,13 @@
 (cua-mode 1) ;; Copy paste mode
 (setq select-enable-clipboard t)
 
+;; macOS: Command = Ctrl, Option = Meta.
+;; Right Option stays untouched so dead keys/accented chars still work.
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'control
+        mac-option-modifier 'meta
+        mac-right-option-modifier 'none))
+
 (defun macuguita/duplicate-line-or-region ()
   "Duplicate region if active, else duplicate the current line."
   (interactive)

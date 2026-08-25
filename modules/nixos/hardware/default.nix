@@ -11,12 +11,6 @@
     ./audio.nix
   ];
 
-  options.macuguita.hardware = {
-    video = lib.mkEnableOption "Video" // {
-      default = true;
-    };
-  };
-
   config = {
     services.fwupd.enable = true;
 

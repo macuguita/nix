@@ -1,10 +1,5 @@
 { lib, config, ... }:
 {
-  options.macuguita.hardware = {
-    battery = lib.mkEnableOption "Battery";
-    touchpad = lib.mkEnableOption "Touchpad";
-  };
-
   config = {
     services.upower = {
       enable = config.macuguita.hardware.battery;

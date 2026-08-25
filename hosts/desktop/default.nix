@@ -6,6 +6,10 @@
   ];
 
   macuguita = {
+    platform = "linux";
+
+    signingKey = "DE0F62AEEC379198";
+
     hardware = {
       cpu = "amd";
       gpu = "amd";

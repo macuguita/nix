@@ -2,6 +2,7 @@
   inputs,
   osConfig,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -12,7 +13,7 @@
   programs.vicinae = {
     enable = osConfig.macuguita.profiles.graphical.enable;
 
-    systemd = {
+    systemd = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       enable = true;
       autoStart = true;
     };

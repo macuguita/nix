@@ -1,7 +1,7 @@
-{ osConfig, ... }:
+{ osConfig, pkgs, ... }:
 {
   programs.foot = {
-    enable = osConfig.macuguita.profiles.graphical.enable;
+    enable = pkgs.stdenv.hostPlatform.isLinux && osConfig.macuguita.profiles.graphical.enable;
     server.enable = true;
 
     settings = {

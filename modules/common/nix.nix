@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   nix = {
     # fork of cppnix, many cool new features (also faster)
@@ -14,9 +14,6 @@
 
       auto-optimise-store = true;
 
-      auto-allocate-uids = true;
-      use-cgroups = true;
-
       max-jobs = "auto";
 
       # ALWAYS ask before accepting a configuration
@@ -29,7 +26,8 @@
       experimental-features = [
         "nix-command"
         "flakes"
-
+      ]
+      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
         "cgroups"
         "auto-allocate-uids"
       ];
@@ -47,6 +45,10 @@
       ];
 
       use-xdg-base-directories = true;
+    }
+    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+      auto-allocate-uids = true;
+      use-cgroups = true;
     };
   };
 }

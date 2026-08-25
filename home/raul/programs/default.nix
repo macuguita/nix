@@ -2,62 +2,73 @@
   osConfig,
   inputs,
   lib,
+  system,
   pkgs,
   ...
 }:
+let
+  isLinux = lib.strings.hasSuffix "-linux" system;
+in
 {
   imports = [
-    # ./firefox
     ./helium
-    ./quickshell
     ./emacs
-    ./emulators.nix
-    ./discord.nix
     ./jetbrains.nix
-    # ./android.nix # no more android classes
     ./terminal.nix
     ./vicinae.nix
     ./vscode.nix
+  ]
+  ++ lib.optionals isLinux [
+    ./quickshell
+    ./emulators.nix
+    ./discord.nix
   ];
 
   config = lib.mkIf osConfig.macuguita.profiles.graphical.enable {
-    home.packages = with pkgs; [
-      (prismlauncher.override {
-        jdks = [
-          jdk8
-          jdk17
-          jdk21
-          jdk25
-        ];
-      })
+    home.packages =
+      with pkgs;
+      [
+        (prismlauncher.override {
+          jdks = [
+            jdk8
+            jdk17
+            jdk21
+            jdk25
+          ];
+        })
 
-      mpv
-      audacity
-      pavucontrol
-      pw-gui
-      vineflower
-      mcaselector
+        mpv
+        audacity
 
-      filezilla
+        blockbench
 
-      renderdoc
-      blockbench
+        inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
+        mupdf
 
-      aseprite
-      inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
-      mupdf
+        python3
 
-      zenity
+        qbittorrent
+      ]
+      ++ lib.optionals isLinux [
+        # not available on darwin
+        filezilla
+        aseprite
+        krita
 
-      python3
+        pavucontrol
+        pw-gui
+        vineflower
+        mcaselector
 
-      wineWow64Packages.waylandFull
+        renderdoc
 
-      onlyoffice-desktopeditors
-      krita
-      kdePackages.kdenlive
-      blender
-      qbittorrent
-    ];
+        zenity
+
+        wineWow64Packages.waylandFull
+
+        onlyoffice-desktopeditors
+        kdePackages.kdenlive
+        blender
+      ];
   };
 }
