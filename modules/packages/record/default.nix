@@ -1,22 +1,20 @@
-{
-  writeShellApplication,
-  pulseaudio,
-  easyeffects,
-  wf-recorder,
-  coreutils,
-  bash,
-  libnotify,
-  ...
-}:
-writeShellApplication {
-  name = "record";
-  runtimeInputs = [
+{ pkgs, ... }:
+
+pkgs.python3Packages.buildPythonApplication {
+  pname = "record";
+  version = "0.1.0";
+
+  pyproject = false;
+
+  dontUnpack = true;
+
+  propagatedBuildInputs = with pkgs; [
     pulseaudio
-    easyeffects
     wf-recorder
-    coreutils
-    bash
     libnotify
   ];
-  text = builtins.readFile ./record.sh;
+
+  installPhase = ''
+    install -Dm755 ${./record.py} $out/bin/record
+  '';
 }
