@@ -27,6 +27,7 @@
       yt-dlp
       vim
       btop
+      ripgrep
     ]
     ++ (lib.optionals osConfig.macuguita.hardware.battery [
       pkgs.acpi

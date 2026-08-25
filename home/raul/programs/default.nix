@@ -10,6 +10,7 @@
     # ./firefox
     ./helium
     ./quickshell
+    ./emacs
     ./emulators.nix
     ./discord.nix
     ./jetbrains.nix
