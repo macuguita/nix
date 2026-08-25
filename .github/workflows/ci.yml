@@ -13,9 +13,21 @@ permissions:
   contents: read
 
 jobs:
-  nixos:
-    name: desktop (linux)
-    runs-on: ubuntu-latest
+  check:
+    name: Check configurations
+    strategy:
+      matrix:
+        include:
+          - name: desktop
+            system: x86_64-linux
+            attr: nixosConfigurations.desktop.config.system.build.toplevel.drvPath
+
+          - name: mac-raul
+            system: aarch64-darwin
+            attr: darwinConfigurations.mac-raul.system.drvPath
+
+    runs-on: ${{ matrix.system == 'aarch64-darwin' && 'macos-14' || 'ubuntu-latest' }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -23,18 +35,5 @@ jobs:
 
       - uses: DeterminateSystems/magic-nix-cache-action@v8
 
-      - name: Build desktop
-        run: nix build .#nixosConfigurations.desktop.config.system.build.toplevel --print-build-logs
-
-  darwin:
-    name: mac-raul (darwin)
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: DeterminateSystems/nix-installer-action@v16
-
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-
-      - name: Build mac-raul
-        run: nix build .#darwinConfigurations.mac-raul.system --print-build-logs
+      - name: Check configuration
+        run: nix eval .#${{ matrix.attr }}
