@@ -13,15 +13,15 @@ in
   imports = [
     ./helium
     ./emacs
+    ./discord.nix
     ./jetbrains.nix
     ./terminal.nix
-    ./vicinae.nix
     ./vscode.nix
   ]
   ++ lib.optionals isLinux [
+    ./vicinae.nix
     ./quickshell
     ./emulators.nix
-    ./discord.nix
   ];
 
   config = lib.mkIf osConfig.macuguita.profiles.graphical.enable {
@@ -39,15 +39,10 @@ in
 
         mpv
         audacity
-
         blockbench
-
-        inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
-        mupdf
+        qbittorrent
 
         python3
-
-        qbittorrent
       ]
       ++ lib.optionals isLinux [
         # not available on darwin
@@ -66,6 +61,8 @@ in
 
         wineWow64Packages.waylandFull
 
+        mupdf
+        inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
         onlyoffice-desktopeditors
         kdePackages.kdenlive
         blender
