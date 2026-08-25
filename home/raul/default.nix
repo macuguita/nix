@@ -14,7 +14,7 @@ in
     ./direnv.nix
     ./nixpkgs.nix
     ./ollama.nix
-    ./shell.nix
+    ./shell
     ./programs
   ]
   ++ lib.optionals isLinux [
