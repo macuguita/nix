@@ -34,6 +34,8 @@
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (show-paren-mode 1)
+(setq-default display-line-numbers-type 'relative)
+(global-display-line-numbers-mode 1)
 
 (use-package doom-themes
   :ensure t
@@ -80,21 +82,45 @@
 (global-set-key (kbd "C-d") #'macuguita/duplicate-line-or-region)
 
 
-
 (auto-save-visited-mode 1)
 (setq auto-save-visited-interval 5)
 
+(require 'whitespace)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq-default show-trailing-whitespace t)
+
+(setq whitespace-style '(face trailing))
+(add-hook 'prog-mode-hook 'whitespace-mode)
+
+(defun macuguita/fontify-leading-whitespace (limit)
+  (while (re-search-forward "^[ \t]+" limit t)
+    (let ((beg (match-beginning 0))
+          (end (match-end 0))
+          (color (or (face-foreground 'font-lock-comment-face nil t) "gray30")))
+      (save-excursion
+        (goto-char beg)
+        (while (< (point) end)
+          (let* ((c (char-after))
+                 (repl (if (eq c ?\t)
+                           (propertize "»\t" 'face `(:foreground ,color))
+                         (propertize "·" 'face `(:foreground ,color)))))
+            (put-text-property (point) (1+ (point)) 'display repl))
+          (forward-char 1)))))
+  nil)
+
+(defun macuguita/leading-whitespace-setup ()
+  (add-to-list 'font-lock-extra-managed-props 'display)
+  (font-lock-add-keywords nil '((macuguita/fontify-leading-whitespace)))
+  (font-lock-flush))
+
+(add-hook 'prog-mode-hook #'macuguita/leading-whitespace-setup)
 
 (use-package ido
   :init
   (ido-mode 1)
   :config
   (setq ido-everywhere t)
-
   (setq ido-enable-flex-matching t)
-
   (setq ido-ignore-files '("\\`#" "\\`.#" "\\`\\.\\." "\\`\\.")))
 
 ;; Ido for M-x
