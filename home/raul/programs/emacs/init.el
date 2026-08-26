@@ -62,6 +62,11 @@
           (lambda ()
             (setq-local tab-width 2)
             (setq-local nix-indent-offset 2)))
+;; C
+(use-package c-ts-mode
+  :ensure nil
+  :mode (("\\.c\\'" . c-ts-mode)
+         ("\\.h\\'" . c-ts-mode)))
 ;; Rust
 (use-package rust-ts-mode
   :ensure t
