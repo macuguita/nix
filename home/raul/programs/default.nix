@@ -70,6 +70,11 @@ in
       ]
       ++ lib.optionals isDarwin [
         caffeine
+        hidden-bar
+        shottr
+
+        whatsapp-for-mac
+        whisky
       ];
   };
 }
