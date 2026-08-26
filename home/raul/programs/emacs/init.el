@@ -53,6 +53,9 @@
 (use-package rust-mode
   :ensure t
   :mode "\\.rs\\'")
+(use-package nbt-mode
+  :vc (:url "https://tangled.org/macuguita.com/nbt-mode.el"
+            :rev :newest))
 
 ;; Keybinds
 (cua-mode 1) ;; Copy paste mode
