@@ -8,6 +8,7 @@
 }:
 let
   isLinux = lib.strings.hasSuffix "-linux" system;
+  isDarwin = lib.strings.hasSuffix "-darwin" system;
 in
 {
   imports = [
@@ -66,6 +67,9 @@ in
         onlyoffice-desktopeditors
         kdePackages.kdenlive
         blender
+      ]
+      ++ lib.optionals isDarwin [
+        caffeine
       ];
   };
 }
