@@ -48,16 +48,27 @@
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
-;; Modes
-(use-package nix-mode
+;;; Modes
+;; Nix
+(use-package nix-ts-mode
   :ensure t
   :mode "\\.nix\\'")
-(use-package rust-mode
+(add-hook 'nix-ts-mode-hook
+          (lambda ()
+            (setq-local tab-width 2)
+            (setq-local nix-indent-offset 2)))
+;; Rust
+(use-package rust-ts-mode
   :ensure t
   :mode "\\.rs\\'")
+;; NBT
 (use-package nbt-mode
   :vc (:url "https://tangled.org/macuguita.com/nbt-mode.el"
             :rev :newest))
+;; Typescript
+(use-package typescript-ts-mode
+  :ensure t
+  :mode ("\\.ts\\'" "\\.mts\\'"))
 
 ;; Keybinds
 (cua-mode 1) ;; Copy paste mode
@@ -85,6 +96,10 @@
       (move-to-column col))))
 
 (global-set-key (kbd "C-d") #'macuguita/duplicate-line-or-region)
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq-default c-basic-offset 4)
 
 
 (auto-save-visited-mode 1)
@@ -165,9 +180,17 @@
 
 (use-package eglot
   :config
-  (add-hook 'nix-mode-hook 'eglot-ensure)
-  (add-hook 'rust-mode-hook 'eglot-ensure)
-  (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
+
+  (defun macuguita/eglot-ensure ()
+    (condition-case nil
+        (let ((inhibit-message t))
+          (eglot-ensure))
+      (error nil)))
+
+  (add-hook 'prog-mode-hook #'macuguita/eglot-ensure)
+
+  (add-to-list 'eglot-server-programs
+               '(nix-mode . ("nixd")))
 
   (setq eglot-ignored-server-capabilities
         '(:hoverProvider                    ;; No hover documentation
@@ -178,6 +201,16 @@
           :inlayHintProvider))              ;; No inline type hints
 
   (add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1))))
+
+(with-eval-after-load 'eglot
+  (define-key eglot-mode-map (kbd "C-c C-r") #'eglot-rename))
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t)
+  :init
+  (global-corfu-mode))
 
 (global-set-key (kbd "<C-down-mouse-1>") 'ignore)
 (global-set-key (kbd "<C-mouse-1>") #'xref-find-definitions-at-mouse)
