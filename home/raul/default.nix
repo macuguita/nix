@@ -34,6 +34,7 @@ in
       enable = pkgs.stdenv.hostPlatform.isLinux;
       setSessionVariables = pkgs.stdenv.hostPlatform.isLinux;
     };
+    autostart.enable = true;
   };
 
   # copy .app bundles from home.packages into ~/Applications/Home Manager Apps

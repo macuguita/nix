@@ -29,7 +29,7 @@ in
     home.packages =
       with pkgs;
       [
-        (prismlauncher.override {
+        (pandora-launcher.override {
           jdks = [
             jdk8
             jdk17
@@ -76,5 +76,14 @@ in
         whatsapp-for-mac
         whisky
       ];
+
+    programs.keepassxc = lib.mkIf isLinux {
+      enable = true;
+      autostart = true;
+
+      settings = {
+        FdoSecrets.Enabled = true;
+      };
+    };
   };
 }
