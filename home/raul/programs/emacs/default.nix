@@ -17,15 +17,16 @@ let
   # services.emacs hardcodes `${package}/bin/emacs --fg-daemon` for its launchd
   # agent; shim it so the daemon actually runs the Emacs.app binary and frames
   # get a real app identity (dock icon, menu bar, activatable via AppleScript)
-  emacsDaemonPkg = pkgs.runCommand "emacs-daemon-${lib.getVersion emacsPkg}"
-    {
-      passthru.version = lib.getVersion emacsPkg;
-    }
-    ''
-      mkdir -p $out/bin
-      ln -s '${emacsPkg}/Applications/Emacs.app/Contents/MacOS/Emacs' $out/bin/emacs
-      ln -s '${emacsPkg}/bin/emacsclient' $out/bin/emacsclient
-    '';
+  emacsDaemonPkg =
+    pkgs.runCommand "emacs-daemon-${lib.getVersion emacsPkg}"
+      {
+        passthru.version = lib.getVersion emacsPkg;
+      }
+      ''
+        mkdir -p $out/bin
+        ln -s '${emacsPkg}/Applications/Emacs.app/Contents/MacOS/Emacs' $out/bin/emacs
+        ln -s '${emacsPkg}/bin/emacsclient' $out/bin/emacsclient
+      '';
 
   # macOS-only .app that talks to the daemon instead of spawning a second
   # standalone instance like the real Emacs.app does.

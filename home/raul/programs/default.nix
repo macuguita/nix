@@ -9,7 +9,7 @@
 let
   isLinux = lib.strings.hasSuffix "-linux" system;
   isDarwin = lib.strings.hasSuffix "-darwin" system;
-  pkgs-pandora = import inputs.macuguita-nixpkgs { inherit system; };
+  pkgs-pandora = import inputs.nixpkgs-pandora { inherit system; };
 in
 {
   imports = [

@@ -75,22 +75,6 @@
         "type": "github"
       }
     },
-    "macuguita-nixpkgs": {
-      "locked": {
-        "lastModified": 1788028241,
-        "narHash": "sha256-EpUb4VaMCp+RDNCE3S5YnWV1mbyCxgjXDqJ78JSsAgA=",
-        "owner": "macuguita",
-        "repo": "nixpkgs",
-        "rev": "3fa82c1602c2f86a43c4d99a880202598cfcde03",
-        "type": "github"
-      },
-      "original": {
-        "owner": "macuguita",
-        "ref": "pandora-launcher-macos-app",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -176,6 +160,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-pandora": {
+      "locked": {
+        "lastModified": 1788030799,
+        "narHash": "sha256-7unnhujPBykS79IxD08Q3AKRmC9SDHMWq5pQ12AKD6Q=",
+        "owner": "macuguita",
+        "repo": "nixpkgs",
+        "rev": "8bcc2df504b9bcfb6b58b0e7c88c43a41137c7e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "macuguita",
+        "ref": "pandora-launcher-macos-app",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -295,11 +295,11 @@
       "inputs": {
         "catppuccin": "catppuccin",
         "home-manager": "home-manager",
-        "macuguita-nixpkgs": "macuguita-nixpkgs",
         "nix-darwin": "nix-darwin",
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-pandora": "nixpkgs-pandora",
         "nur": "nur",
         "pluey": "pluey",
         "vicinae": "vicinae"
