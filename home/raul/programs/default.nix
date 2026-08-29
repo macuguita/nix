@@ -50,17 +50,17 @@ in
         filezilla
         aseprite
         krita
-
         pavucontrol
+
         pw-gui
         vineflower
         mcaselector
 
         renderdoc
+        wineWow64Packages.waylandFull
 
         zenity
-
-        wineWow64Packages.waylandFull
+        seahorse
 
         mupdf
         inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
@@ -76,14 +76,5 @@ in
         whatsapp-for-mac
         whisky
       ];
-
-    programs.keepassxc = lib.mkIf isLinux {
-      enable = true;
-      autostart = true;
-
-      settings = {
-        FdoSecrets.Enabled = true;
-      };
-    };
   };
 }
