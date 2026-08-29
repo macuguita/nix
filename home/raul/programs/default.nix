@@ -9,6 +9,7 @@
 let
   isLinux = lib.strings.hasSuffix "-linux" system;
   isDarwin = lib.strings.hasSuffix "-darwin" system;
+  pkgs-pandora = import inputs.macuguita-nixpkgs { inherit system; };
 in
 {
   imports = [
@@ -29,7 +30,7 @@ in
     home.packages =
       with pkgs;
       [
-        (pandora-launcher.override {
+        (pkgs-pandora.pandora-launcher.override {
           jdks = [
             jdk8
             jdk17

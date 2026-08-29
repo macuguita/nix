@@ -75,6 +75,22 @@
         "type": "github"
       }
     },
+    "macuguita-nixpkgs": {
+      "locked": {
+        "lastModified": 1788028241,
+        "narHash": "sha256-EpUb4VaMCp+RDNCE3S5YnWV1mbyCxgjXDqJ78JSsAgA=",
+        "owner": "macuguita",
+        "repo": "nixpkgs",
+        "rev": "3fa82c1602c2f86a43c4d99a880202598cfcde03",
+        "type": "github"
+      },
+      "original": {
+        "owner": "macuguita",
+        "ref": "pandora-launcher-macos-app",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -279,6 +295,7 @@
       "inputs": {
         "catppuccin": "catppuccin",
         "home-manager": "home-manager",
+        "macuguita-nixpkgs": "macuguita-nixpkgs",
         "nix-darwin": "nix-darwin",
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
         "nix-vscode-extensions": "nix-vscode-extensions",
