@@ -5,7 +5,7 @@
   ...
 }:
 let
-  baseEmacs = if pkgs.stdenv.hostPlatform.isLinux then pkgs.emacs30-pgtk else pkgs.emacs30;
+  baseEmacs = if pkgs.stdenv.hostPlatform.isLinux then pkgs.emacs31-pgtk else pkgs.emacs31;
 
   emacsPkg = (pkgs.emacsPackagesFor baseEmacs).emacsWithPackages (epkgs: [
     epkgs.treesit-grammars.with-all-grammars
