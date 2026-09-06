@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (setq custom-file "~/.config/emacs/custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
