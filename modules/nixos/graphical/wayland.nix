@@ -22,6 +22,14 @@
       withUWSM = true;
     };
 
+    # Extra compositor to ease the hyprland -> niri transition; pick it from the
+    # display manager like any other session. Hyprland stays available.
+    programs.niri = {
+      enable = true;
+      # We use the GTK file chooser, not Nautilus.
+      useNautilus = false;
+    };
+
     services.gnome.gnome-keyring.enable = true;
 
     xdg.portal = {
