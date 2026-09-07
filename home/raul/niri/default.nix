@@ -125,10 +125,6 @@
             };
 
             # Floating (keyboard and back button, mirroring Mod + mouse:275)
-            "Mod+V" = {
-              _props.repeat = false;
-              toggle-window-floating = { };
-            };
             "Mod+MouseBack" = {
               _props.repeat = false;
               toggle-window-floating = { };
@@ -176,26 +172,6 @@
               spawn = [
                 "${pkgs.changeVolume}/bin/changeVolume"
                 "mute"
-              ];
-            };
-
-            # Brightness (external monitor via DDC)
-            "Mod+XF86AudioRaiseVolume" = {
-              _props."allow-when-locked" = true;
-              spawn = [
-                "ddcutil"
-                "setvcp"
-                "10"
-                "+ 10"
-              ];
-            };
-            "Mod+XF86AudioLowerVolume" = {
-              _props."allow-when-locked" = true;
-              spawn = [
-                "ddcutil"
-                "setvcp"
-                "10"
-                "- 10"
               ];
             };
 
@@ -271,23 +247,6 @@
             "Mod+Shift+R" = {
               _props.repeat = false;
               switch-preset-column-width-back = { };
-            };
-
-            # Fill the whole screen without fullscreen:
-            # Mod+M      - maximize the column (keeps gaps/borders)
-            # Mod+Shift+M - classic maximize to the screen edges
-            # Mod+Shift+F is real fullscreen (games, video).
-            "Mod+M" = {
-              _props.repeat = false;
-              maximize-column = { };
-            };
-            "Mod+Shift+M" = {
-              _props.repeat = false;
-              maximize-window-to-edges = { };
-            };
-            "Mod+Shift+F" = {
-              _props.repeat = false;
-              fullscreen-window = { };
             };
           };
 
