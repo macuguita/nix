@@ -27,7 +27,7 @@ Scope {
             }
 
             margins {
-                right: 20 - 20 // - 20 for hyprland gaps
+                right: 0 // the bar only hugs the left edge
                 left: 20
                 top: 20
                 bottom: 20

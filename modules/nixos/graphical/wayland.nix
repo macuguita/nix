@@ -17,13 +17,6 @@
       };
     };
 
-    programs.hyprland = {
-      enable = true;
-      withUWSM = true;
-    };
-
-    # Extra compositor to ease the hyprland -> niri transition; pick it from the
-    # display manager like any other session. Hyprland stays available.
     programs.niri = {
       enable = true;
       # We use the GTK file chooser, not Nautilus.
@@ -35,20 +28,13 @@
     xdg.portal = {
       enable = true;
 
+      # The niri module adds xdg-desktop-portal-gnome for screencasts and sets
+      # up the "niri" portal config; gtk remains as the generic fallback.
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
-        xdg-desktop-portal-hyprland
       ];
 
-      # xdgOpenUsePortal = true;
-
-      config = {
-        common.default = [ "gtk" ];
-        hyprland.default = [
-          "gtk"
-          "hyprland"
-        ];
-      };
+      config.common.default = [ "gtk" ];
     };
   };
 }

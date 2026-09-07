@@ -1,14 +1,51 @@
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
+import Quickshell.Io
 import qs
 
 Rectangle {
     id: root
 
     required property ShellScreen screen
-    readonly property HyprlandMonitor monitor: Hyprland.monitorFor(screen)
-    property bool focusedMonitor: Hyprland.focusedMonitor?.id == root.monitor.id
+
+    // All workspaces, parsed from `niri msg --json workspaces`.
+    property var workspaces: []
+
+    function workspaceAt(index) {
+        const list = root.workspaces;
+        for (let i = 0; i < list.length; ++i) {
+            const ws = list[i];
+            if (ws.output === root.screen.name && ws.idx === index) {
+                return ws;
+            }
+        }
+        return null;
+    }
+
+    Process {
+        id: refreshProc
+
+        command: ["niri", "msg", "--json", "workspaces"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const text = this.text.trim();
+                if (text === "") return;
+                try {
+                    root.workspaces = JSON.parse(text);
+                } catch (e) {
+                    // niri not ready yet, keep the old list
+                }
+            }
+        }
+    }
+
+    Timer {
+        interval: 500
+        running: true
+        repeat: true
+        onTriggered: refreshProc.running = true
+    }
 
     implicitHeight: pills.implicitHeight + 20
     implicitWidth: 30
@@ -30,30 +67,27 @@ Rectangle {
 
                 required property int index
 
-                property HyprlandWorkspace workspace: Hyprland.workspaces.values.find(w => {
-                    return w?.id === index + 1;
-                }) ?? null // ?? null shuts up a warning by telling qml that yes, i do actually want this to be null
-
-                property bool onCurrentMonitor: root.monitor == workspace?.monitor
-                property bool focused: onCurrentMonitor && (workspace?.active || false)
-                property bool occupied: workspace?.lastIpcObject.windows > 0 || false
-                property bool active: workspace?.active || false
+                readonly property var workspace: root.workspaceAt(index + 1)
+                readonly property bool exists: pill.workspace !== null
+                readonly property bool focused: pill.exists && pill.workspace.is_focused
+                readonly property bool active: pill.exists && pill.workspace.is_active
+                readonly property bool occupied: pill.exists && !pill.workspace.is_active
+                readonly property bool urgent: pill.exists && pill.workspace.is_urgent
 
                 width: 10
                 radius: 20
 
-                color: active ? (onCurrentMonitor ? Colors.text : Colors.overlay0) : (occupied ? Colors.overlay0 : Colors.surface0)
+                color: pill.focused ? Colors.text
+                     : (pill.active || pill.occupied) ? Colors.overlay0
+                     : Colors.surface0
 
                 states: [
                     State {
                         name: "WARNING"
-                        when: pill.workspace?.urgent || false
+                        when: pill.urgent
 
                         PropertyChanges {
                             target: pill
-
-                            // setting anything here makes the color change back when the animation stops
-                            // why? i have no fucking clue
                             color: Colors.peach
                         }
                     }
@@ -69,7 +103,6 @@ Rectangle {
                             ColorAnimation {
                                 target: pill
                                 property: "color"
-
                                 from: pill.color
                                 to: Colors.peach
                                 easing.type: Easing.InOutSine
@@ -78,7 +111,6 @@ Rectangle {
                             ColorAnimation {
                                 target: pill
                                 property: "color"
-
                                 from: Colors.peach
                                 to: pill.color
                                 easing.type: Easing.InOutSine
@@ -88,7 +120,7 @@ Rectangle {
                     }
                 ]
 
-                height: active ? 20 : 10
+                height: pill.active ? 20 : 10
                 Behavior on height {
                     NumberAnimation {
                         duration: 1000
@@ -103,12 +135,16 @@ Rectangle {
                     }
                 }
 
+                Process {
+                    id: focusProc
+
+                    command: ["niri", "msg", "action", "focus-workspace", (index + 1).toString()]
+                }
+
                 MouseArea {
                     anchors.fill: pill
-                    cursorShape: parent.focused ? Qt.ArrowCursor : Qt.PointingHandCursor
-                    onClicked: if (!parent.focused) {
-                        Hyprland.dispatch(`workspace ${parent.index + 1}`);
-                    }
+                    cursorShape: pill.focused ? Qt.ArrowCursor : Qt.PointingHandCursor
+                    onClicked: if (!pill.focused) focusProc.running = true
                 }
             }
         }

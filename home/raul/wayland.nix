@@ -81,7 +81,20 @@
         };
     };
 
-    services.hyprpolkitagent.enable = true;
+    # generic polkit auth agent (hyprpolkitagent only worked under Hyprland)
+    systemd.user.services.polkit-gnome = {
+      Unit = {
+        Description = "polkit-gnome authentication agent";
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+
     services.kdeconnect.enable = true;
 
     # TODO: quickshell notis

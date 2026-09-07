@@ -77,6 +77,17 @@
                 ];
               };
             }
+
+            # Don't let apps restore a "maximized" state when they open (some
+            # clients remember it and then look like they started fullscreen).
+            # Mirrors the old suppress-maximize-events rule; maximize manually.
+            {
+              window-rule = {
+                _children = [
+                  { "open-maximized-to-edges" = false; }
+                ];
+              };
+            }
           ];
 
           # hyprland's split toggle (Mod + A) has no niri equivalent;
@@ -262,13 +273,21 @@
               switch-preset-column-width-back = { };
             };
 
+            # Fill the whole screen without fullscreen:
+            # Mod+M      - maximize the column (keeps gaps/borders)
+            # Mod+Shift+M - classic maximize to the screen edges
+            # Mod+Shift+F is real fullscreen (games, video).
+            "Mod+M" = {
+              _props.repeat = false;
+              maximize-column = { };
+            };
+            "Mod+Shift+M" = {
+              _props.repeat = false;
+              maximize-window-to-edges = { };
+            };
             "Mod+Shift+F" = {
               _props.repeat = false;
               fullscreen-window = { };
-            };
-            "Mod+M" = {
-              _props.repeat = false;
-              maximize-window-to-edges = { };
             };
           };
 

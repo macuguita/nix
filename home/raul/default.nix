@@ -19,7 +19,6 @@ in
   ]
   ++ lib.optionals isLinux [
     ./wayland.nix
-    ./hyprland
     ./niri
     ./style
   ];
