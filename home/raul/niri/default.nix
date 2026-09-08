@@ -289,22 +289,6 @@
               focus-column-left = { };
             };
           };
-
-          numberBinds = builtins.foldl' (
-            acc: i:
-            let
-              ws = toString i;
-            in
-            acc
-            // {
-              "Mod+${ws}" = {
-                focus-workspace = i;
-              };
-              "Mod+Ctrl+${ws}" = {
-                move-column-to-workspace = i;
-              };
-            }
-          ) { } (lib.genList (i: i + 1) 9);
         in
         {
           input = {
@@ -319,6 +303,10 @@
 
           layout = {
             gaps = 12;
+
+            # always keep an empty workspace above the first one, so scrolling
+            # up from workspace 1 keeps going somewhere
+            "empty-workspace-above-first" = { };
 
             border = {
               off = { };
@@ -387,7 +375,7 @@
 
           _children = monitorNodes ++ windowRuleNodes;
 
-          binds = coreBinds // layoutBinds // workspaceBinds // numberBinds;
+          binds = coreBinds // layoutBinds // workspaceBinds;
         };
     };
   };

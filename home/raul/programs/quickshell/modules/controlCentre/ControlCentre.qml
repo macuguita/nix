@@ -99,8 +99,6 @@ Scope {
                     NightLightWidget {}
                 }
 
-                BrightnessSlider {}
-
                 BigSlider {
                     id: volumeSlider
 

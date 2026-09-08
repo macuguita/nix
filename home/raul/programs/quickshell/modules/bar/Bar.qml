@@ -51,16 +51,6 @@ Scope {
                 }
 
                 Item {
-                    anchors.centerIn: parent
-                    height: parent.height / parent.children.length
-
-                    Workspaces {
-                        screen: window.screen
-                        anchors.centerIn: parent
-                    }
-                }
-
-                Item {
                     anchors.bottom: parent.bottom
                     width: parent.width
                     height: parent.height / parent.children.length
