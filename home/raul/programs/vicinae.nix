@@ -32,6 +32,7 @@
 
       launcher_window = {
         opacity = 1.0;
+        layer_shell.layer = "overlay";
       };
     };
   };
