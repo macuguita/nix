@@ -90,47 +90,37 @@
             }
           ];
 
-          # hyprland's split toggle (Mod + A) has no niri equivalent;
-          # the column-based layout is controlled by consume/expel and width binds.
-
           coreBinds = {
-            # Terminal
             "Mod+T" = {
               _props.repeat = false;
               spawn = [ terminal ];
             };
 
-            # Close
             "Mod+Q" = {
               _props.repeat = false;
               close-window = { };
             };
 
-            # File manager
             "Mod+F" = {
               _props.repeat = false;
               spawn = [ fileManager ];
             };
 
-            # Browser
             "Mod+B" = {
               _props.repeat = false;
               spawn = [ browser ];
             };
 
-            # Launcher
             "Mod+Space" = {
               _props.repeat = false;
               spawn = launcher;
             };
 
-            # Floating (keyboard and back button, mirroring Mod + mouse:275)
             "Mod+MouseBack" = {
               _props.repeat = false;
               toggle-window-floating = { };
             };
 
-            # Screenshots
             "Mod+Shift+3" = {
               _props.repeat = false;
               spawn = [
@@ -146,13 +136,11 @@
               ];
             };
 
-            # Recording
             "Mod+Shift+5" = {
               _props.repeat = false;
               spawn = [ "${pkgs.record}/bin/record" ];
             };
 
-            # Volume
             "XF86AudioRaiseVolume" = {
               _props."allow-when-locked" = true;
               spawn = [
@@ -175,25 +163,21 @@
               ];
             };
 
-            # Overview
             "Mod+O" = {
               _props.repeat = false;
               toggle-overview = { };
             };
 
-            # Escape hatch for apps that inhibit niri's shortcuts
             "Mod+Escape" = {
               toggle-keyboard-shortcuts-inhibit = { };
             };
 
-            # Quit
             "Mod+Shift+E" = {
               _props.repeat = false;
               quit = { };
             };
           };
 
-          # Window layout / column binds
           layoutBinds = {
             "Mod+Left" = {
               focus-column-left = { };
@@ -233,24 +217,25 @@
               move-column-to-last = { };
             };
 
-            "Mod+BracketLeft" = {
-              consume-or-expel-window-left = { };
+            "Mod+Shift+WheelScrollDown" = {
+              _props.cooldown-ms = 150;
+              focus-column-right = { };
             };
-            "Mod+BracketRight" = {
-              consume-or-expel-window-right = { };
+            "Mod+Shift+WheelScrollUp" = {
+              _props.cooldown-ms = 150;
+              focus-column-left = { };
             };
 
-            "Mod+R" = {
-              _props.repeat = false;
-              switch-preset-column-width = { };
+            "Mod+Ctrl+Shift+WheelScrollDown" = {
+              _props.cooldown-ms = 150;
+              move-column-right = { };
             };
-            "Mod+Shift+R" = {
-              _props.repeat = false;
-              switch-preset-column-width-back = { };
+            "Mod+Ctrl+Shift+WheelScrollUp" = {
+              _props.cooldown-ms = 150;
+              move-column-left = { };
             };
           };
 
-          # Workspace binds
           workspaceBinds = {
             "Mod+Page_Down" = {
               focus-workspace-down = { };
@@ -280,13 +265,6 @@
             "Mod+Ctrl+WheelScrollUp" = {
               _props."cooldown-ms" = 150;
               move-column-to-workspace-up = { };
-            };
-
-            "Mod+WheelScrollRight" = {
-              focus-column-right = { };
-            };
-            "Mod+WheelScrollLeft" = {
-              focus-column-left = { };
             };
           };
         in
