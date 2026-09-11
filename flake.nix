@@ -39,10 +39,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Disabling the follows nixpkgs because it'll miss the caches and take really long to build
+    vicinae.url = "github:vicinaehq/vicinae";
 
     pluey = {
       url = "git+https://tangled.org/macuguita.com/pluey";
