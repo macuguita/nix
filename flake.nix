@@ -1,6 +1,30 @@
 {
   description = "Personal NixOS flake";
 
+  nixConfig = {
+    experimental-features = [
+      "cgroups"
+      "flakes"
+      "nix-command"
+      "pipe-operators"
+      "auto-allocate-uids"
+    ];
+
+    builders-use-substitutes = true;
+    flake-registry = "";
+    http-connections = 50;
+    show-trace = true;
+    trusted-users = [
+      "root"
+      "@build"
+      "@wheel"
+      "@admin"
+    ];
+    use-cgroups = true;
+    use-xdg-base-directories = true;
+    warn-dirty = false;
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-pandora.url = "github:macuguita/nixpkgs/pandora-launcher-macos-app";

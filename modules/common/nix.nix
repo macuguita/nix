@@ -5,9 +5,6 @@ let
 in
 {
   nix = {
-    # fork of cppnix, many cool new features (also faster)
-    package = pkgs.lixPackageSets.stable.lix;
-
     gc.automatic = true;
     channel.enable = false;
 
@@ -30,9 +27,7 @@ in
       experimental-features = [
         "nix-command"
         "flakes"
-        "pipe-operator"
-      ]
-      ++ optionals pkgs.stdenv.hostPlatform.isLinux [
+        "pipe-operators"
         "cgroups"
         "auto-allocate-uids"
       ];
