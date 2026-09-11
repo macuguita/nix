@@ -28,6 +28,7 @@ in
     ./vicinae.nix
     ./quickshell
     ./emulators.nix
+    ./steam.nix
   ];
 
   config = mkIf osConfig.macuguita.profiles.graphical.enable {
