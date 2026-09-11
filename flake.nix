@@ -48,6 +48,11 @@
       url = "git+https://tangled.org/macuguita.com/pluey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    bedrock-on-linux = {
+      url = "github:Wyze3306/BedrockOnLinux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

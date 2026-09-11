@@ -65,6 +65,7 @@ in
 
         mupdf
         inputs.pluey.packages.${stdenv.hostPlatform.system}.pluey
+        inputs.bedrock-on-linux.packages.${stdenv.hostPlatform.system}.default
         onlyoffice-desktopeditors
         kdePackages.kdenlive
         blender
