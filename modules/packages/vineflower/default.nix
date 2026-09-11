@@ -6,7 +6,10 @@
   jdk17,
   ...
 }:
-
+let
+  inherit (lib.meta) getExe;
+  inherit (lib.sources) sourceTypes;
+in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "vineflower";
   version = "1.12.0";
@@ -29,14 +32,14 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     mkdir -p $out/share/vineflower
     cp $src $out/share/vineflower/app.jar
 
-    makeWrapper ${lib.getExe jdk17} $out/bin/vineflower \
+    makeWrapper ${getExe jdk17} $out/bin/vineflower \
       --add-flags "-jar $out/share/vineflower/app.jar"
 
     runHook postInstall
   '';
 
   meta = {
-    sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
+    sourceProvenance = with sourceTypes; [ binaryBytecode ];
     mainProgram = "vineflower";
     platforms = [
       "x86_64-linux"

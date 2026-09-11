@@ -5,6 +5,12 @@
   pkgs,
   ...
 }:
+let
+  inherit (lib.modules)
+    mkForce
+    mkIf
+    ;
+in
 {
   imports = [
     inputs.vicinae.homeManagerModules.default
@@ -13,7 +19,7 @@
   programs.vicinae = {
     enable = osConfig.macuguita.profiles.graphical.enable;
 
-    systemd = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+    systemd = mkIf pkgs.stdenv.hostPlatform.isLinux {
       enable = true;
       autoStart = true;
     };
@@ -21,7 +27,7 @@
     settings = {
       theme = {
         light = {
-          name = lib.mkForce "catppuccin-latte";
+          name = mkForce "catppuccin-latte";
           icon_theme = "default";
         };
         dark = {

@@ -1,111 +1,123 @@
 { lib, ... }:
+let
+  inherit (lib.options)
+    mkOption
+    mkEnableOption
+    ;
+  inherit (lib.types)
+    enum
+    strMatching
+    nullOr
+    attrsOf
+    submodule
+    int
+    bool
+    float
+    ;
+in
 {
   options.macuguita = {
-    platform = lib.mkOption {
+    platform = mkOption {
       description = "The platform this configuration targets.";
-      type = lib.types.enum [
+      type = enum [
         "linux"
         "darwin"
       ];
     };
 
-    localAi.enable = lib.mkEnableOption "Local AI";
+    localAi.enable = mkEnableOption "Local AI";
 
-    signingKey = lib.mkOption {
+    signingKey = mkOption {
       description = "GPG key used to sign commits (git and jujutsu) on this system.";
 
-      type = lib.types.strMatching "[0-9A-F]{16}";
+      type = strMatching "[0-9A-F]{16}";
     };
 
     hardware = {
-      video = lib.mkEnableOption "Video" // {
+      video = mkEnableOption "Video" // {
         default = true;
       };
 
-      audio = lib.mkEnableOption "Audio" // {
+      audio = mkEnableOption "Audio" // {
         default = true;
       };
 
-      wifi = lib.mkEnableOption "Wi-Fi" // {
+      wifi = mkEnableOption "Wi-Fi" // {
         default = true;
       };
 
-      bluetooth = lib.mkEnableOption "Bluetooth" // {
+      bluetooth = mkEnableOption "Bluetooth" // {
         default = true;
       };
 
-      battery = lib.mkEnableOption "Battery";
+      battery = mkEnableOption "Battery";
 
-      touchpad = lib.mkEnableOption "Touchpad";
+      touchpad = mkEnableOption "Touchpad";
 
-      qmk = lib.mkEnableOption "QMK";
-      qmkKeychron = lib.mkEnableOption "QMK Keychron";
+      qmk = mkEnableOption "QMK";
+      qmkKeychron = mkEnableOption "QMK Keychron";
 
-      cpu = lib.mkOption {
-        type = lib.types.nullOr (
-          lib.types.enum [
-            "amd"
-            "intel"
-          ]
-        );
+      cpu = mkOption {
+        type = nullOr (enum [
+          "amd"
+          "intel"
+        ]);
 
         default = null;
       };
 
-      gpu = lib.mkOption {
-        type = lib.types.nullOr (
-          lib.types.enum [
-            "amd"
-          ]
-        );
+      gpu = mkOption {
+        type = nullOr (enum [
+          "amd"
+        ]);
 
         default = null;
       };
     };
 
     profiles = {
-      graphical.enable = lib.mkEnableOption "Graphical";
-      server.enable = lib.mkEnableOption "Server";
+      graphical.enable = mkEnableOption "Graphical";
+      server.enable = mkEnableOption "Server";
     };
 
-    monitors = lib.mkOption {
+    monitors = mkOption {
       description = "The set of monitors expected to be plugged in.";
 
-      type = lib.types.attrsOf (
-        lib.types.submodule (
+      type = attrsOf (
+        submodule (
           { ... }:
           {
             options = {
-              width = lib.mkOption {
-                type = lib.types.int;
+              width = mkOption {
+                type = int;
               };
 
-              height = lib.mkOption {
-                type = lib.types.int;
+              height = mkOption {
+                type = int;
               };
 
-              primary = lib.mkOption {
-                type = lib.types.bool;
+              primary = mkOption {
+                type = bool;
                 default = false;
               };
 
-              refreshRate = lib.mkOption {
-                type = lib.types.float;
+              refreshRate = mkOption {
+                type = float;
                 default = 60.0;
               };
 
-              offsetX = lib.mkOption {
-                type = lib.types.int;
+              offsetX = mkOption {
+                type = int;
                 default = 0;
               };
 
-              offsetY = lib.mkOption {
-                type = lib.types.int;
+              offsetY = mkOption {
+                type = int;
                 default = 0;
               };
 
-              scale = lib.mkOption {
-                type = lib.types.float;
+              scale = mkOption {
+                type = float;
                 default = 1.0;
               };
             };

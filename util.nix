@@ -1,6 +1,9 @@
 { lib, ... }:
+let
+  inherit (lib.attrsets) genAttrs;
+in
 {
-  eachSystem = lib.genAttrs [
+  eachSystem = genAttrs [
     "x86_64-linux"
     "aarch64-darwin"
   ];
@@ -9,13 +12,13 @@
   toBase64 =
     text:
     let
-      inherit (lib)
-        sublist
-        mod
-        stringToCharacters
+      inherit (lib.lists) sublist;
+      inherit (lib.strings)
+        charToInt
         concatMapStrings
+        stringToCharacters
         ;
-      inherit (lib.strings) charToInt;
+      inherit (lib.trivial) mod;
       inherit (builtins)
         substring
         foldl'

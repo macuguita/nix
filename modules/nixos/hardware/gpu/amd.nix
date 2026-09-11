@@ -4,8 +4,11 @@
   pkgs,
   ...
 }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf (config.macuguita.hardware.gpu == "amd") {
+  config = mkIf (config.macuguita.hardware.gpu == "amd") {
     services.xserver.videoDrivers = [ "amdgpu" ];
     boot.kernelModules = [ "amdgpu" ];
     nixpkgs.config.rocmSupport = true;

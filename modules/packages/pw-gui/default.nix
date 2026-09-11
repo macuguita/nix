@@ -11,7 +11,18 @@
   packwiz,
   ...
 }:
-
+let
+  inherit (lib.lists)
+    optional
+    optionals
+    ;
+  inherit (lib.meta) getExe;
+  inherit (lib.sources) sourceTypes;
+  inherit (lib.strings)
+    makeBinPath
+    optionalString
+    ;
+in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pw-gui";
   version = "1.2.0";
@@ -33,10 +44,10 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     makeWrapper
     imagemagick
   ]
-  ++ lib.optionals stdenvNoCC.hostPlatform.isLinux [ copyDesktopItems ]
-  ++ lib.optionals stdenvNoCC.hostPlatform.isDarwin [ libicns ];
+  ++ optionals stdenvNoCC.hostPlatform.isLinux [ copyDesktopItems ]
+  ++ optionals stdenvNoCC.hostPlatform.isDarwin [ libicns ];
 
-  desktopItems = lib.optional stdenvNoCC.hostPlatform.isLinux (makeDesktopItem {
+  desktopItems = optional stdenvNoCC.hostPlatform.isLinux (makeDesktopItem {
     name = "pw-gui";
     exec = "pw-gui";
     icon = "pw-gui";
@@ -53,19 +64,19 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     cp $src $out/share/pw-gui/app.jar
 
   ''
-  + lib.optionalString stdenvNoCC.hostPlatform.isLinux ''
+  + optionalString stdenvNoCC.hostPlatform.isLinux ''
     for size in 16 32 48 64 128 256; do
       mkdir -p $out/share/icons/hicolor/"$size"x"$size"/apps
       magick ${finalAttrs.icon} -resize "$size"x"$size" \
         $out/share/icons/hicolor/"$size"x"$size"/apps/pw-gui.png
     done
 
-    makeWrapper ${lib.getExe jdk17} $out/bin/pw-gui \
+    makeWrapper ${getExe jdk17} $out/bin/pw-gui \
       --add-flags "-jar $out/share/pw-gui/app.jar" \
-      --prefix PATH : ${lib.makeBinPath [ packwiz ]}
+      --prefix PATH : ${makeBinPath [ packwiz ]}
 
   ''
-  + lib.optionalString stdenvNoCC.hostPlatform.isDarwin ''
+  + optionalString stdenvNoCC.hostPlatform.isDarwin ''
     mkdir -p $out/Applications/PW-GUI.app/Contents/{MacOS,Resources}
 
     magick ${finalAttrs.icon} -background none -resize 16x16    /tmp/icon_16x16.png
@@ -100,12 +111,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     </plist>
     EOF
 
-    makeWrapper ${lib.getExe jdk17} \
+    makeWrapper ${getExe jdk17} \
       $out/Applications/PW-GUI.app/Contents/MacOS/pw-gui \
       --add-flags "-Xdock:name=PW-GUI" \
       --add-flags "-Xdock:icon=$out/Applications/PW-GUI.app/Contents/Resources/pw-gui.icns" \
       --add-flags "-jar $out/share/pw-gui/app.jar" \
-      --prefix PATH : ${lib.makeBinPath [ packwiz ]}
+      --prefix PATH : ${makeBinPath [ packwiz ]}
 
     ln -s $out/Applications/PW-GUI.app/Contents/MacOS/pw-gui $out/bin/pw-gui
 
@@ -115,7 +126,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   meta = {
-    sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
+    sourceProvenance = with sourceTypes; [ binaryBytecode ];
     mainProgram = "pw-gui";
     platforms = [
       "x86_64-linux"

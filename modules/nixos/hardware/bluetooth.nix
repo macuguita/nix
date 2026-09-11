@@ -1,6 +1,9 @@
 { config, lib, ... }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf config.macuguita.hardware.bluetooth {
+  config = mkIf config.macuguita.hardware.bluetooth {
     hardware.bluetooth = {
       enable = true;
 

@@ -9,11 +9,16 @@
 }:
 
 let
+  inherit (lib.attrsets) optionalAttrs;
+  inherit (lib.meta) getExe;
+  inherit (lib.sources) sourceTypes;
+  inherit (lib.strings) optionalString;
+
   jdkWithJFX = openjdk21.override (
     {
       enableJavaFX = true;
     }
-    // lib.optionalAttrs stdenvNoCC.hostPlatform.isLinux {
+    // optionalAttrs stdenvNoCC.hostPlatform.isLinux {
       openjfx_jdk = openjfx21.override { withWebKit = true; };
     }
   );
@@ -57,10 +62,10 @@ stdenvNoCC.mkDerivation rec {
     cp ${src} $out/share/mcaselector/app.jar
 
   ''
-  + lib.optionalString stdenvNoCC.hostPlatform.isLinux ''
+  + optionalString stdenvNoCC.hostPlatform.isLinux ''
     cp ${icon} $out/share/mcaselector/icon.png
 
-    makeWrapper ${lib.getExe jdkWithJFX} $out/bin/mcaselector \
+    makeWrapper ${getExe jdkWithJFX} $out/bin/mcaselector \
       --add-flags "-jar $out/share/mcaselector/app.jar"
 
     install -Dm644 ${desktopFile} $out/share/applications/mcaselector.desktop
@@ -70,7 +75,7 @@ stdenvNoCC.mkDerivation rec {
       $out/share/applications/mcaselector.desktop
 
   ''
-  + lib.optionalString stdenvNoCC.hostPlatform.isDarwin ''
+  + optionalString stdenvNoCC.hostPlatform.isDarwin ''
     mkdir -p $out/Applications/MCASelector.app/Contents/{MacOS,Resources}
 
     cp ${icon} $out/Applications/MCASelector.app/Contents/Resources/mcaselector.icns
@@ -93,7 +98,7 @@ stdenvNoCC.mkDerivation rec {
     </plist>
     EOF
 
-    makeWrapper ${lib.getExe jdkWithJFX} \
+    makeWrapper ${getExe jdkWithJFX} \
       $out/Applications/MCASelector.app/Contents/MacOS/mcaselector \
       --add-flags "-Xdock:name=MCASelector" \
       --add-flags "-Xdock:icon=$out/Applications/MCASelector.app/Contents/Resources/mcaselector.icns" \
@@ -107,7 +112,7 @@ stdenvNoCC.mkDerivation rec {
   '';
 
   meta = {
-    sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
+    sourceProvenance = with sourceTypes; [ binaryBytecode ];
     mainProgram = "mcaselector";
     platforms = [
       "x86_64-linux"

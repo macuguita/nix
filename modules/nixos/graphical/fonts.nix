@@ -4,8 +4,11 @@
   pkgs,
   ...
 }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf config.macuguita.profiles.graphical.enable {
+  config = mkIf config.macuguita.profiles.graphical.enable {
     environment.variables.FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
 
     fonts = {

@@ -1,6 +1,9 @@
 { lib, config, ... }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf config.macuguita.hardware.audio {
+  config = mkIf config.macuguita.hardware.audio {
     services.pipewire = {
       enable = true;
 

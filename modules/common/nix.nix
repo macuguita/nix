@@ -1,4 +1,8 @@
 { pkgs, lib, ... }:
+let
+  inherit (lib.attrsets) optionalAttrs;
+  inherit (lib.lists) optionals;
+in
 {
   nix = {
     # fork of cppnix, many cool new features (also faster)
@@ -26,8 +30,9 @@
       experimental-features = [
         "nix-command"
         "flakes"
+        "pipe-operator"
       ]
-      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+      ++ optionals pkgs.stdenv.hostPlatform.isLinux [
         "cgroups"
         "auto-allocate-uids"
       ];
@@ -46,7 +51,7 @@
 
       use-xdg-base-directories = true;
     }
-    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+    // optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       auto-allocate-uids = true;
       use-cgroups = true;
     };

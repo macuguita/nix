@@ -1,5 +1,6 @@
 {
   description = "Personal NixOS flake";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-pandora.url = "github:macuguita/nixpkgs/pandora-launcher-macos-app";
@@ -56,10 +57,30 @@
   outputs =
     inputs@{ nixpkgs, ... }:
     let
+      inherit (inputs.nix-darwin.lib) darwinSystem;
+      inherit (nixpkgs.lib) nixosSystem;
+
       util = import ./util.nix (inputs // { lib = nixpkgs.lib; });
+      mkTreefmt =
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        pkgs.treefmt.withConfig {
+          runtimeInputs = [ pkgs.nixfmt ];
+
+          settings = {
+            excludes = [ ".jj/**" ];
+
+            formatter.nixfmt = {
+              command = "nixfmt";
+              includes = [ "*.nix" ];
+            };
+          };
+        };
       mkNixOSConfiguration =
         name: system:
-        (nixpkgs.lib.nixosSystem {
+        (nixosSystem {
           inherit system;
 
           specialArgs = {
@@ -76,7 +97,7 @@
         });
       mkDarwinConfiguration =
         name: system:
-        (inputs.nix-darwin.lib.darwinSystem {
+        (darwinSystem {
           inherit system;
           specialArgs = {
             inherit util;
@@ -100,6 +121,8 @@
         mac-raul = mkDarwinConfiguration "mac-raul" "aarch64-darwin";
       };
 
+      formatter = util.eachSystem mkTreefmt;
+
       devShells = util.eachSystem (
         system:
         let
@@ -110,6 +133,7 @@
             buildInputs = with pkgs; [
               nixd
               nixfmt
+              (mkTreefmt system)
             ];
           };
         }

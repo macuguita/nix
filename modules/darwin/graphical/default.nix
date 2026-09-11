@@ -5,13 +5,16 @@
   config,
   ...
 }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
   imports = [
     inputs.catppuccin.darwinModules.catppuccin
     ./fonts.nix
   ];
 
-  config = lib.mkIf config.macuguita.profiles.graphical.enable {
+  config = mkIf config.macuguita.profiles.graphical.enable {
     nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
 
     catppuccin = {

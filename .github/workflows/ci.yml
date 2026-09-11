@@ -36,4 +36,4 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v8
 
       - name: Check configuration
-        run: nix eval .#${{ matrix.attr }}
+        run: nix eval --accept-flake-config .#${{ matrix.attr }}

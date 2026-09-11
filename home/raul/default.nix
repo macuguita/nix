@@ -5,9 +5,12 @@
   ...
 }:
 let
+  inherit (lib.lists) optionals;
+  inherit (lib.strings) hasSuffix;
+
   # `pkgs` must not be used in `imports` (infinite recursion), so gate on the
   # plain `system` string threaded through from the flake instead.
-  isLinux = lib.strings.hasSuffix "-linux" system;
+  isLinux = system |> hasSuffix "-linux";
 in
 {
   imports = [
@@ -17,7 +20,7 @@ in
     ./shell
     ./programs
   ]
-  ++ lib.optionals isLinux [
+  ++ optionals isLinux [
     ./wayland.nix
     ./niri
     ./style

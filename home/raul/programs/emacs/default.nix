@@ -5,6 +5,13 @@
   ...
 }:
 let
+  inherit (lib.lists) optionals;
+  inherit (lib.modules) mkIf;
+  inherit (lib.strings)
+    concatStringsSep
+    getVersion
+    ;
+
   baseEmacs = if pkgs.stdenv.hostPlatform.isLinux then pkgs.emacs31-pgtk else pkgs.emacs31;
 
   emacsPkg = (pkgs.emacsPackagesFor baseEmacs).emacsWithPackages (epkgs: [
@@ -18,9 +25,9 @@ let
   # agent; shim it so the daemon actually runs the Emacs.app binary and frames
   # get a real app identity (dock icon, menu bar, activatable via AppleScript)
   emacsDaemonPkg =
-    pkgs.runCommand "emacs-daemon-${lib.getVersion emacsPkg}"
+    pkgs.runCommand "emacs-daemon-${getVersion emacsPkg}"
       {
-        passthru.version = lib.getVersion emacsPkg;
+        passthru.version = getVersion emacsPkg;
       }
       ''
         mkdir -p $out/bin
@@ -42,7 +49,7 @@ let
 
     meta.mainProgram = "Emacs Client";
     passthru.pname = "Emacs Client";
-    passthru.version = lib.getVersion emacsPkg;
+    passthru.version = getVersion emacsPkg;
 
     installPhase = ''
       app="$out/Applications/Emacs Client.app"
@@ -126,8 +133,8 @@ in
   # launchd agents get a minimal PATH (/usr/bin:/bin:...), which hides nix
   # packages from the daemon: dired fails on BSD ls (no --group-directories-first),
   # git/magit and friends misbehave. Give it the full system PATH.
-  launchd.agents.emacs.config.EnvironmentVariables.PATH = lib.mkIf isDarwin (
-    lib.concatStringsSep ":" [
+  launchd.agents.emacs.config.EnvironmentVariables.PATH = mkIf isDarwin (
+    [
       "/etc/profiles/per-user/${config.home.username}/bin"
       "/run/current-system/sw/bin"
       "/run/current-system/sw/sbin"
@@ -137,16 +144,17 @@ in
       "/usr/sbin"
       "/sbin"
     ]
+    |> concatStringsSep ":"
   );
 
-  home.packages = lib.optionals isDarwin [ emacsClientApp ];
+  home.packages = optionals isDarwin [ emacsClientApp ];
 
   xdg = {
     configFile."emacs" = {
       source = ./.;
       recursive = true;
     };
-    mimeApps = lib.mkIf (!isDarwin) {
+    mimeApps = mkIf (!isDarwin) {
       enable = true;
       defaultApplications = {
         "text/plain" = "emacsclient.desktop";

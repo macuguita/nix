@@ -3,6 +3,12 @@
   osConfig,
   ...
 }:
+let
+  inherit (lib.attrsets)
+    genAttrs
+    mergeAttrsList
+    ;
+in
 {
   programs.vesktop = {
     enable = osConfig.macuguita.profiles.graphical.enable;
@@ -31,8 +37,8 @@
 
       settings = {
         enabledThemes = [ "font.css" ];
-        plugins = (
-          lib.mergeAttrsList [
+        plugins =
+          [
             {
               FakeNitro = {
                 enabled = true;
@@ -49,7 +55,7 @@
                 disableEmbedPermissionCheck = false;
               };
             }
-            (lib.genAttrs
+            (genAttrs
               [
                 "BetterUploadButton"
                 "BiggerStreamPreview"
@@ -101,7 +107,7 @@
               })
             )
           ]
-        );
+          |> mergeAttrsList;
         themeLinks = [
           "https://catppuccin.github.io/discord/dist/catppuccin-mocha-blue.theme.css"
           "https://codeberg.org/ridge/Discord-Adblock/raw/branch/main/discord-adblock.css"

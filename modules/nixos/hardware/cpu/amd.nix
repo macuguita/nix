@@ -1,6 +1,9 @@
 { lib, config, ... }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf (config.macuguita.hardware.cpu == "amd") {
+  config = mkIf (config.macuguita.hardware.cpu == "amd") {
     hardware.cpu.amd.updateMicrocode = true;
 
     boot = {

@@ -1,10 +1,13 @@
 { lib, config, ... }:
+let
+  inherit (lib.attrsets) filterAttrs;
+in
 {
   services = {
     fstrim.enable = true;
 
     btrfs.autoScrub = {
-      enable = (lib.filterAttrs (_: fs: fs.fsType == "btrfs") config.fileSystems) != { }; # if any filesystems are of type btrfs
+      enable = (config.fileSystems |> filterAttrs (_: fs: fs.fsType == "btrfs")) != { }; # if any filesystems are of type btrfs
 
       # fileSystems is set automatically
     };

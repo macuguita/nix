@@ -4,11 +4,14 @@
   pkgs,
   ...
 }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf osConfig.macuguita.localAi.enable {
+  config = mkIf osConfig.macuguita.localAi.enable {
     programs.opencode.enable = true;
 
-    services.ollama = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+    services.ollama = mkIf pkgs.stdenv.hostPlatform.isLinux {
       enable = true;
     };
   };

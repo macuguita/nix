@@ -29,6 +29,14 @@
   gtk3,
   wrapGAppsHook3,
 }:
+let
+  inherit (lib.licenses) mit;
+  inherit (lib.lists)
+    optional
+    optionals
+    ;
+  inherit (lib.strings) optionalString;
+in
 buildDotnetModule rec {
   pname = "ryujinx-canary";
   version = "1.3.284";
@@ -39,8 +47,8 @@ buildDotnetModule rec {
   };
 
   nativeBuildInputs =
-    lib.optional stdenv.hostPlatform.isLinux wrapGAppsHook3
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    optional stdenv.hostPlatform.isLinux wrapGAppsHook3
+    ++ optionals stdenv.hostPlatform.isDarwin [
       cctools
       darwin.sigtool
     ];
@@ -70,11 +78,11 @@ buildDotnetModule rec {
     libGL
     SDL2
   ]
-  ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [
+  ++ optionals (!stdenv.hostPlatform.isDarwin) [
     udev
     pulseaudio
   ]
-  ++ lib.optional stdenv.hostPlatform.isDarwin moltenvk;
+  ++ optional stdenv.hostPlatform.isDarwin moltenvk;
 
   projectFile = "Ryujinx.sln";
   testProjectFile = "src/Ryujinx.Tests/Ryujinx.Tests.csproj";
@@ -86,17 +94,17 @@ buildDotnetModule rec {
 
   executables = [ "Ryujinx" ];
 
-  makeWrapperArgs = lib.optional stdenv.hostPlatform.isLinux [
+  makeWrapperArgs = optional stdenv.hostPlatform.isLinux [
     "--set SDL_VIDEODRIVER x11"
   ];
 
-  preInstall = lib.optionalString stdenv.hostPlatform.isLinux ''
+  preInstall = optionalString stdenv.hostPlatform.isLinux ''
     mkdir -p $out/lib/sndio-6
     ln -s ${sndio}/lib/libsndio.so $out/lib/sndio-6/libsndio.so.6
   '';
 
   preFixup = ''
-    ${lib.optionalString stdenv.hostPlatform.isLinux ''
+    ${optionalString stdenv.hostPlatform.isLinux ''
       # mkdir -p $out/share/{applications,icons/hicolor/512x512/apps,mime/packages}
       mkdir -p $out/share/{applications,icons/hicolor/scalable/apps,mime/packages}
 
@@ -118,13 +126,13 @@ buildDotnetModule rec {
       install -D ./distribution/misc/Logo.svg \
         $out/share/icons/hicolor/scalable/apps/Ryujinx.svg
     ''}
-    ${lib.optionalString (!stdenv.hostPlatform.isDarwin) "ln -s $out/bin/Ryujinx $out/bin/ryujinx"}
+    ${optionalString (!stdenv.hostPlatform.isDarwin) "ln -s $out/bin/Ryujinx $out/bin/ryujinx"}
   '';
 
   meta = {
     homepage = "https://ryujinx.app";
     description = "Nintendo Switch emulator (Ryubing Canary fork)";
-    license = lib.licenses.mit;
+    license = mit;
     platforms = [
       "x86_64-linux"
       "aarch64-linux"

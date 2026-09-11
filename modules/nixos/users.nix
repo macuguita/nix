@@ -5,7 +5,10 @@
   ...
 }:
 let
-  # filterExistingGroups = groups: lib.filter (group: lib.hasAttr group config.users.groups) groups;
+  inherit (lib.attrsets) hasAttr;
+  inherit (lib.lists) filter;
+
+  # filterExistingGroups = groups: filter (group: hasAttr group config.users.groups) groups;
 in
 {
   imports = [

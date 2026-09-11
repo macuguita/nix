@@ -5,8 +5,11 @@
   osConfig,
   ...
 }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf osConfig.macuguita.profiles.graphical.enable {
+  config = mkIf osConfig.macuguita.profiles.graphical.enable {
     home.sessionVariables.GTK_USE_PORTAL = "1";
 
     dconf = {

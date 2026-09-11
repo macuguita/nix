@@ -5,6 +5,10 @@
   osConfig,
   ...
 }:
+let
+  inherit (lib.hm.dag) entryAfter;
+  inherit (lib.lists) optionals;
+in
 {
   home.shellAliases = {
     cat = "bat";
@@ -27,10 +31,10 @@
       btop
       ripgrep
     ]
-    ++ (lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+    ++ (optionals pkgs.stdenv.hostPlatform.isLinux [
       brightnessctl
     ])
-    ++ (lib.optionals (pkgs.stdenv.hostPlatform.isLinux && osConfig.macuguita.hardware.battery) [
+    ++ (optionals (pkgs.stdenv.hostPlatform.isLinux && osConfig.macuguita.hardware.battery) [
       pkgs.acpi
     ]);
 
@@ -151,13 +155,13 @@
           name = "macuguita";
         };
         core = {
-          excludesFile = toString (
+          excludesFile =
             pkgs.writeText "gitignore" ''
               .jj
               .env
               .DS_Store
             ''
-          );
+            |> toString;
         };
         diff = {
           algorithm = "histogram";
@@ -183,7 +187,7 @@
 
   home.activation = {
     # https://github.com/nix-community/home-manager/issues/322
-    fixSshPermissions = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    fixSshPermissions = entryAfter [ "linkGeneration" ] ''
       run install -d -m 0700 "$HOME/.ssh"
       if [ -L "$HOME/.ssh/config" ]; then
         src="$(readlink -f "$HOME/.ssh/config")"

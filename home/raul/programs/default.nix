@@ -7,8 +7,12 @@
   ...
 }:
 let
-  isLinux = lib.strings.hasSuffix "-linux" system;
-  isDarwin = lib.strings.hasSuffix "-darwin" system;
+  inherit (lib.lists) optionals;
+  inherit (lib.modules) mkIf;
+  inherit (lib.strings) hasSuffix;
+
+  isLinux = system |> hasSuffix "-linux";
+  isDarwin = system |> hasSuffix "-darwin";
   pkgs-pandora = import inputs.nixpkgs-pandora { inherit system; };
 in
 {
@@ -20,13 +24,13 @@ in
     ./terminal.nix
     ./vscode.nix
   ]
-  ++ lib.optionals isLinux [
+  ++ optionals isLinux [
     ./vicinae.nix
     ./quickshell
     ./emulators.nix
   ];
 
-  config = lib.mkIf osConfig.macuguita.profiles.graphical.enable {
+  config = mkIf osConfig.macuguita.profiles.graphical.enable {
     home.packages =
       with pkgs;
       [
@@ -46,7 +50,7 @@ in
 
         python3
       ]
-      ++ lib.optionals isLinux [
+      ++ optionals isLinux [
         # not available on darwin
         filezilla
         aseprite
@@ -70,7 +74,7 @@ in
         kdePackages.kdenlive
         blender
       ]
-      ++ lib.optionals isDarwin [
+      ++ optionals isDarwin [
         caffeine
         hidden-bar
         shottr

@@ -4,8 +4,15 @@
   pkgs,
   ...
 }:
+let
+  inherit (lib.attrsets)
+    mapAttrsToList
+    optionalAttrs
+    ;
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf osConfig.macuguita.profiles.graphical.enable {
+  config = mkIf osConfig.macuguita.profiles.graphical.enable {
     wayland.windowManager.niri = {
       enable = true;
 
@@ -26,19 +33,23 @@
           accent = "#89b4fa";
           inactive = "#585b70";
 
-          monitorNodes = lib.mapAttrsToList (name: monitor: {
-            output = {
-              _args = [ name ];
-              mode = "${toString monitor.width}x${toString monitor.height}@${toString monitor.refreshRate}";
-              scale = monitor.scale;
-            }
-            // lib.optionalAttrs (monitor.offsetX != 0 || monitor.offsetY != 0) {
-              position._props = {
-                x = monitor.offsetX;
-                y = monitor.offsetY;
-              };
-            };
-          }) osConfig.macuguita.monitors;
+          monitorNodes =
+            osConfig.macuguita.monitors
+            |> mapAttrsToList (
+              name: monitor: {
+                output = {
+                  _args = [ name ];
+                  mode = "${toString monitor.width}x${toString monitor.height}@${toString monitor.refreshRate}";
+                  scale = monitor.scale;
+                }
+                // optionalAttrs (monitor.offsetX != 0 || monitor.offsetY != 0) {
+                  position._props = {
+                    x = monitor.offsetX;
+                    y = monitor.offsetY;
+                  };
+                };
+              }
+            );
 
           windowRuleNodes = [
             # JetBrains helper popups have empty/technical titles and float.

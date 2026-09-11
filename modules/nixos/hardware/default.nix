@@ -1,4 +1,7 @@
 { lib, config, ... }:
+let
+  inherit (lib.modules) mkIf;
+in
 {
   imports = [
     ./cpu
@@ -17,7 +20,7 @@
     hardware = {
       enableRedistributableFirmware = true;
 
-      graphics = lib.mkIf config.macuguita.hardware.video {
+      graphics = mkIf config.macuguita.hardware.video {
         enable = true;
         enable32Bit = true;
       };

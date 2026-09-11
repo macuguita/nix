@@ -4,8 +4,12 @@
   pkgs,
   ...
 }:
+let
+  inherit (lib.attrsets) genAttrs;
+  inherit (lib.modules) mkIf;
+in
 {
-  config = lib.mkIf osConfig.macuguita.profiles.graphical.enable {
+  config = mkIf osConfig.macuguita.profiles.graphical.enable {
 
     catppuccin.cursors = {
       enable = true;
@@ -54,11 +58,11 @@
       enable = true;
 
       defaultApplications =
-        lib.genAttrs [
+        genAttrs [
           "inode/directory"
           "application/x-gnome-saved-search"
         ] (_: "nemo.desktop")
-        // lib.genAttrs [
+        // genAttrs [
           "image/jpeg"
           "image/png"
           "image/webp"

@@ -5,14 +5,22 @@
   osConfig,
   ...
 }:
+let
+  inherit (lib.lists) optionals;
+  inherit (lib.modules) mkIf;
+  inherit (lib.strings)
+    makeLibraryPath
+    optionalString
+    ;
+in
 {
-  config = lib.mkIf osConfig.macuguita.profiles.graphical.enable {
+  config = mkIf osConfig.macuguita.profiles.graphical.enable {
     home.packages =
       let
         isLinux = pkgs.stdenv.hostPlatform.isLinux;
         isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
 
-        extraLibs = lib.optionals isLinux (
+        extraLibs = optionals isLinux (
           with pkgs;
           [
             libpulseaudio
@@ -37,22 +45,22 @@
             "IdeaVIM"
           ]).overrideAttrs
           (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ lib.optionals isLinux [ pkgs.makeWrapper ];
+            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ optionals isLinux [ pkgs.makeWrapper ];
 
             # upstream `addPlugins` misses the darwin `open -na` launcher when
             # rewriting paths, tripping its own disallowedReferences check
             # (appending to buildPhase since it overrides the stdenv hooks)
             buildPhase =
               (old.buildPhase or "")
-              + lib.optionalString isDarwin ''
+              + optionalString isDarwin ''
                 substituteInPlace "$out/bin/idea" --replace-quiet '${old.src}' "$out"
               '';
 
             postFixup =
               (old.postFixup or "")
-              + lib.optionalString isLinux ''
+              + optionalString isLinux ''
                 wrapProgram $out/bin/idea \
-                  --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extraLibs}"
+                  --prefix LD_LIBRARY_PATH : "${makeLibraryPath extraLibs}"
               '';
           })
         )
