@@ -47,6 +47,7 @@ in
         mpv
         audacity
         blockbench
+        aseprite
         qbittorrent
 
         python3
@@ -54,7 +55,6 @@ in
       ++ optionals isLinux [
         # not available on darwin
         filezilla
-        aseprite
         krita
         pavucontrol
 
