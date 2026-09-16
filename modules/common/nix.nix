@@ -10,11 +10,8 @@ in
 
     settings = {
       connect-timeout = 50000;
-
       warn-dirty = false;
-
       auto-optimise-store = true;
-
       max-jobs = "auto";
 
       # ALWAYS ask before accepting a configuration
@@ -25,9 +22,8 @@ in
       keep-outputs = true;
 
       experimental-features = [
-        "nix-command"
         "flakes"
-        "pipe-operators"
+        "nix-command"
         "cgroups"
         "auto-allocate-uids"
       ];

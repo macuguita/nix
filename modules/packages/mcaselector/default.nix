@@ -19,7 +19,7 @@ let
       enableJavaFX = true;
     }
     // optionalAttrs stdenvNoCC.hostPlatform.isLinux {
-      openjfx_jdk = openjfx21.override { withWebKit = true; };
+      openjfx_jdk = openjfx21;
     }
   );
 

@@ -3,26 +3,10 @@
 
   nixConfig = {
     experimental-features = [
-      "cgroups"
       "flakes"
       "nix-command"
       "pipe-operators"
-      "auto-allocate-uids"
     ];
-
-    builders-use-substitutes = true;
-    flake-registry = "";
-    http-connections = 50;
-    show-trace = true;
-    trusted-users = [
-      "root"
-      "@build"
-      "@wheel"
-      "@admin"
-    ];
-    use-cgroups = true;
-    use-xdg-base-directories = true;
-    warn-dirty = false;
   };
 
   inputs = {
