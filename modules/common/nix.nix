@@ -24,6 +24,7 @@ in
       experimental-features = [
         "flakes"
         "nix-command"
+        "pipe-operators"
         "cgroups"
         "auto-allocate-uids"
       ];

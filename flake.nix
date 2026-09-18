@@ -3,9 +3,11 @@
 
   nixConfig = {
     experimental-features = [
-      "flakes"
-      "nix-command"
-      "pipe-operators"
+        "flakes"
+        "nix-command"
+        "pipe-operators"
+        "cgroups"
+        "auto-allocate-uids"
     ];
   };
 
