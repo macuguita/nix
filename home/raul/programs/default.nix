@@ -29,6 +29,8 @@ in
     ./quickshell
     ./emulators.nix
     ./steam.nix
+  ] ++ optionals isDarwin [
+    ./dotnet.nix
   ];
 
   config = mkIf osConfig.macuguita.profiles.graphical.enable {

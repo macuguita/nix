@@ -26,6 +26,11 @@
           theqtcompany.qt-core
 
           slevesque.shader
+        ])
+        ++ (with pkgs.vscode-marketplace; [
+          # Dotnet c#
+          ms-dotnettools.csharp
+          ms-dotnettools.dotnet-maui
         ]);
 
       userSettings = {
