@@ -11,8 +11,8 @@
     usePredictableInterfaceNames = true;
 
     nameservers = [
-      "1.1.1.1"
-      "1.0.0.1"
+      "1.1.1.2"
+      "2606:4700:4700::1112"
     ];
 
     enableIPv6 = true;

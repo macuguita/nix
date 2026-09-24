@@ -7,6 +7,7 @@
     ./locale.nix
     ./services.nix
     ./graphical
+    ./networking
     inputs.nur.modules.darwin.default
   ];
 }
