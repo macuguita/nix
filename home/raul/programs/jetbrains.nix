@@ -37,7 +37,8 @@ in
 {
   config = mkIf osConfig.macuguita.profiles.graphical.enable {
     home.file =
-      (mkJdkLinks ".jdks") // optionalAttrs pkgs.stdenv.hostPlatform.isDarwin (mkJdkLinks "Library/Java/JavaVirtualMachines");
+      (mkJdkLinks ".jdks")
+      // optionalAttrs pkgs.stdenv.hostPlatform.isDarwin (mkJdkLinks "Library/Java/JavaVirtualMachines");
 
     home.packages =
       let
@@ -65,7 +66,8 @@ in
             "GLSL"
           ]).overrideAttrs
             (old: {
-              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.makeWrapper ];
+              nativeBuildInputs =
+                (old.nativeBuildInputs or [ ]) ++ optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.makeWrapper ];
 
               # upstream `addPlugins` misses the darwin `open -na` launcher when
               # rewriting paths, tripping its own disallowedReferences check

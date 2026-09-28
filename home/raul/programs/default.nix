@@ -29,7 +29,8 @@ in
     ./quickshell
     ./emulators.nix
     ./steam.nix
-  ] ++ optionals isDarwin [
+  ]
+  ++ optionals isDarwin [
     ./dotnet.nix
   ];
 
