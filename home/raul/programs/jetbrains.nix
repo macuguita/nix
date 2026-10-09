@@ -81,7 +81,7 @@ in
               postFixup =
                 (old.postFixup or "")
                 + optionalString pkgs.stdenv.hostPlatform.isLinux ''
-                  wrapProgram $out/bin/idea \
+                  wrapProgram $out/intellij-idea/bin/idea \
                     --prefix LD_LIBRARY_PATH : "${makeLibraryPath extraLibs}"
                 '';
             })
