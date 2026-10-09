@@ -19,6 +19,9 @@ in
   programs.vicinae = {
     enable = osConfig.macuguita.profiles.graphical.enable;
 
+    # TODO: remove when it is fixed <https://github.com/vicinaehq/vicinae/issues/2040>
+    package = pkgs.vicinae;
+
     systemd = mkIf pkgs.stdenv.hostPlatform.isLinux {
       enable = true;
       autoStart = true;
