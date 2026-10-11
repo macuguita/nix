@@ -43,11 +43,11 @@ let
 in
 stdenvNoCC.mkDerivation rec {
   pname = "mcaselector";
-  version = "2.8";
+  version = "2.9";
 
   src = fetchurl {
     url = "https://github.com/Querz/mcaselector/releases/download/${version}/mcaselector-${version}.jar";
-    hash = "sha256-ZFBfOe35ybXUfmZpgfgePDqInU8SKzBlr34mn0jlNCM=";
+    hash = "sha256-jjXqpqURnOcRtTUwwiqqxTEzLo/f/aI1fRbrb1Iycmc=";
   };
 
   dontUnpack = true;

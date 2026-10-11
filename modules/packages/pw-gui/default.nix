@@ -25,11 +25,11 @@ let
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pw-gui";
-  version = "1.2.0";
+  version = "1.3.0";
 
   src = fetchurl {
-    url = "https://github.com/AmberIsFrozen/PW-GUI/releases/download/v${finalAttrs.version}/PW-GUI-${finalAttrs.version}-all.jar";
-    hash = "sha256-oHCkqThiljZ7O2C2thHhJOCft33x03EBODlMCv4Td+I=";
+    url = "https://github.com/AmberIsFrozen/PW-GUI/releases/download/v${finalAttrs.version}/PW-GUI-v${finalAttrs.version}.jar";
+    hash = "sha256-S7ls/SuLrzKs2gVWt/Ca7fYyA0N9wSJmuo4ugb01Qi8=";
   };
 
   icon = fetchurl {
