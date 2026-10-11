@@ -53,6 +53,10 @@ in
         aseprite
         qbittorrent
 
+        pw-gui
+        vineflower
+        mcaselector
+        
         python3
       ]
       ++ optionals isLinux [
@@ -60,10 +64,6 @@ in
         filezilla
         krita
         pavucontrol
-
-        pw-gui
-        vineflower
-        mcaselector
 
         renderdoc
         wineWow64Packages.waylandFull
