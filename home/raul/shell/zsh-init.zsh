@@ -31,3 +31,8 @@ if [ "$(uname)" = "Linux" ]; then
   uptime=$(awk '{d=int($1/86400); h=int(($1%86400)/3600); m=int(($1%3600)/60); if(d>0) printf "%d days ",d; if(h>0) printf "%d hours ",h; if(m>0) printf "%d minutes",m; print ""}' /proc/uptime)
   echo -e "${NEWLINE}\033[48;2;46;52;64;38;2;216;222;233m $0 \033[0m \033[48;2;59;66;82;38;2;216;222;233m $uptime \033[0m \033[48;2;76;86;106;38;2;216;222;233m $(uname -r) \033[0m"
 fi
+
+# TODO: remove
+if [ "$(uname)" = "Darwin" ]; then
+    export PATH="/usr/local/share/dotnet:$PATH"
+fi
