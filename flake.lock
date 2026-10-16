@@ -211,22 +211,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-pandora": {
-      "locked": {
-        "lastModified": 1788044029,
-        "narHash": "sha256-SJir2xf0mzB+86uJRnAeffq8j0L4V3m+fBrAzGYVh5o=",
-        "owner": "macuguita",
-        "repo": "nixpkgs",
-        "rev": "cbc247791b41a42711a5ba3ba4c1ebf75fdaf4d2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "macuguita",
-        "ref": "pandora-launcher-macos-app",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1791734076,
@@ -316,7 +300,6 @@
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-pandora": "nixpkgs-pandora",
         "nur": "nur",
         "pluey": "pluey",
         "vicinae": "vicinae"

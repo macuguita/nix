@@ -13,7 +13,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-pandora.url = "github:macuguita/nixpkgs/pandora-launcher-macos-app";
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin";

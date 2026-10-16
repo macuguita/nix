@@ -1,6 +1,5 @@
 {
   osConfig,
-  inputs,
   lib,
   system,
   pkgs,
@@ -13,8 +12,6 @@ let
 
   isLinux = system |> hasSuffix "-linux";
   isDarwin = system |> hasSuffix "-darwin";
-  pkgs-pandora = import inputs.nixpkgs-pandora { inherit system; };
-  pandora-launcher = if isDarwin then pkgs-pandora.pandora-launcher else pkgs.pandora-launcher;
 in
 {
   imports = [
