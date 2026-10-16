@@ -1,4 +1,5 @@
 {
+  inputs,
   osConfig,
   lib,
   system,
@@ -27,6 +28,7 @@ in
     ./quickshell
     ./emulators.nix
     ./steam.nix
+    ./music.nix
   ];
 
   config = mkIf osConfig.macuguita.profiles.graphical.enable {

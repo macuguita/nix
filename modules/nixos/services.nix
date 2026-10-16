@@ -18,6 +18,7 @@
 
     gvfs.enable = true;
 
+    # remote desktop
     sunshine = {
       enable = config.macuguita.profiles.graphical.enable;
       autoStart = config.macuguita.profiles.graphical.enable;
