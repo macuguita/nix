@@ -17,6 +17,7 @@ in
     ./direnv.nix
     ./nixpkgs.nix
     ./ollama.nix
+    ./default-apps
     ./shell
     ./programs
   ]

@@ -13,18 +13,18 @@ let
     getVersion
     ;
 
-  baseEmacs = if pkgs.stdenv.hostPlatform.isLinux then pkgs.emacs31-pgtk else pkgs.emacs31;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+
+  baseEmacs = if isLinux then pkgs.emacs31-pgtk else pkgs.emacs31;
 
   emacsPkg = (pkgs.emacsPackagesFor baseEmacs).emacsWithPackages (epkgs: [
     epkgs.treesit-grammars.with-all-grammars
     epkgs.vterm
   ]);
 
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-
-  # services.emacs hardcodes `${package}/bin/emacs --fg-daemon` for its launchd
-  # agent; shim it so the daemon actually runs the Emacs.app binary and frames
-  # get a real app identity (dock icon, menu bar, activatable via LaunchServices)
+  # Shim the package's `emacs` binary to the Emacs.app one so the daemon gets a
+  # real app identity (dock icon, menu bar, activatable via LaunchServices).
   emacsDaemonPkg =
     pkgs.runCommand "emacs-daemon-${getVersion emacsPkg}"
       {
@@ -40,12 +40,15 @@ let
   # after forwarding a request.
   emacsBundleId = "org.gnu.Emacs";
 
+  # Bundle identifier of the client .app.
+  emacsClientBundleId = (import ../../default-apps/associations.nix).apps.emacs.bundleId;
+
   # Info.plist for the client app; the whole bundle description lives here.
   emacsClientInfoPlist = pkgs.writeText "EmacsClient-Info.plist" (
     lib.generators.toPlist { escape = true; } {
       CFBundleDevelopmentRegion = "English";
       CFBundleExecutable = "EmacsClient";
-      CFBundleIdentifier = "com.macuguita.emacs-client";
+      CFBundleIdentifier = emacsClientBundleId;
       CFBundleInfoDictionaryVersion = "6.0";
       CFBundleName = "Emacs Client";
       CFBundleDisplayName = "Emacs Client";
@@ -82,7 +85,7 @@ let
   );
 
   # macOS-only .app that forwards Finder/Spotlight/Dock/URL requests to the
-  # running daemon via emacsclient (see ./emacsclient.m), then exits.
+  # running daemon via emacsclient, then exits.
   emacsClientApp = pkgs.stdenv.mkDerivation {
     pname = "emacs-client-app";
     version = getVersion emacsPkg;
@@ -135,9 +138,8 @@ let
     '';
   };
 
-  # Home Manager never restarts the daemon on switch (so it doesn't kill unsaved
-  # buffers), which leaves it running the previous generation's binary and init.
-  # Restart it here, saving file-visiting buffers first.
+  # The daemon keeps running the previous generation's binary and init after a
+  # switch, so restart it, saving file-visiting buffers first.
   restartEmacsDaemon =
     if isDarwin then
       ''
@@ -159,6 +161,7 @@ let
           run "$systemctl" --user restart emacs.service
         fi
       '';
+
 in
 {
   programs.emacs = {
@@ -170,6 +173,9 @@ in
     enable = true;
     package = if isDarwin then emacsDaemonPkg else emacsPkg;
     startWithUserSession = !isDarwin;
+    # Installs share/applications/emacsclient.desktop, used for XDG file
+    # associations.
+    client.enable = isLinux;
   };
 
   # Runs after the platform service manager has been reloaded so the daemon
@@ -198,19 +204,9 @@ in
 
   home.packages = optionals isDarwin [ emacsClientApp ];
 
-  xdg = {
-    configFile."emacs" = {
-      source = ./.;
-      recursive = true;
-    };
-    mimeApps = mkIf (!isDarwin) {
-      enable = true;
-      defaultApplications = {
-        "text/plain" = "emacsclient.desktop";
-        "text/markdown" = "emacsclient.desktop";
-        "application/json" = "emacsclient.desktop";
-      };
-    };
+  xdg.configFile."emacs" = {
+    source = ./.;
+    recursive = true;
   };
 
   home.sessionVariables = {
