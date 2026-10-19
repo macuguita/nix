@@ -29,15 +29,17 @@
 
   systemd.services.tailscale-serve-navidrome = {
     description = "Expose Navidrome over the tailnet via Tailscale Serve";
-    after = [ "tailscaled.service" ];
+    after = [
+      "tailscaled.service"
+      "tailscaled-autoconnect.service"
+    ];
     wants = [ "tailscaled.service" ];
     wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.tailscale}/bin/tailscale serve 4533";
-      Restart = "on-failure";
-      RestartSec = 5;
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg 4533";
     };
   };
 }
