@@ -81,6 +81,10 @@
 (use-package typescript-ts-mode
   :ensure t
   :mode ("\\.ts\\'" "\\.mts\\'"))
+;; Markdown
+(use-package markdown-ts-mode
+  :ensure nil
+  :mode ("\\.md\\'" "\\.markdown\\'"))
 
 ;; Keybinds
 (cua-mode 1) ;; Copy paste mode

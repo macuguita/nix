@@ -5,6 +5,7 @@
   ...
 }:
 let
+  inherit (lib.hm.dag) entryAfter;
   inherit (lib.lists) optionals;
   inherit (lib.modules) mkIf;
   inherit (lib.strings)
@@ -23,7 +24,7 @@ let
 
   # services.emacs hardcodes `${package}/bin/emacs --fg-daemon` for its launchd
   # agent; shim it so the daemon actually runs the Emacs.app binary and frames
-  # get a real app identity (dock icon, menu bar, activatable via AppleScript)
+  # get a real app identity (dock icon, menu bar, activatable via LaunchServices)
   emacsDaemonPkg =
     pkgs.runCommand "emacs-daemon-${getVersion emacsPkg}"
       {
@@ -35,88 +36,129 @@ let
         ln -s '${emacsPkg}/bin/emacsclient' $out/bin/emacsclient
       '';
 
-  # macOS-only .app that talks to the daemon instead of spawning a second
-  # standalone instance like the real Emacs.app does.
-  #
-  # Built with osacompile (like emacs-plus' Emacs Client.app) so it can receive
-  # AppleEvents: `on run` from Spotlight/Dock, `on open` for Finder "Open
-  # With"/drag & drop and `on open location` for org-protocol:// URLs.
-  # Each handler activates Emacs afterwards so new frames take focus.
+  # Bundle identifier shared by the daemon's Emacs.app; used to raise its frames
+  # after forwarding a request.
+  emacsBundleId = "org.gnu.Emacs";
+
+  # Info.plist for the client app; the whole bundle description lives here.
+  emacsClientInfoPlist = pkgs.writeText "EmacsClient-Info.plist" (
+    lib.generators.toPlist { escape = true; } {
+      CFBundleDevelopmentRegion = "English";
+      CFBundleExecutable = "EmacsClient";
+      CFBundleIdentifier = "com.macuguita.emacs-client";
+      CFBundleInfoDictionaryVersion = "6.0";
+      CFBundleName = "Emacs Client";
+      CFBundleDisplayName = "Emacs Client";
+      CFBundlePackageType = "APPL";
+      CFBundleIconFile = "EmacsClient";
+      CFBundleShortVersionString = getVersion emacsPkg;
+      CFBundleVersion = getVersion emacsPkg;
+      LSMinimumSystemVersion = "11.0";
+      LSApplicationCategoryType = "public.app-category.productivity";
+      # No Dock icon: it is a transient event forwarder, not a real app window.
+      LSUIElement = true;
+      NSHighResolutionCapable = true;
+      CFBundleDocumentTypes = [
+        {
+          CFBundleTypeName = "Text";
+          CFBundleTypeRole = "Editor";
+          LSItemContentTypes = [
+            "public.text"
+            "public.plain-text"
+            "public.source-code"
+            "public.script"
+            "public.shell-script"
+            "public.data"
+          ];
+        }
+      ];
+      CFBundleURLTypes = [
+        {
+          CFBundleURLName = "org-protocol";
+          CFBundleURLSchemes = [ "org-protocol" ];
+        }
+      ];
+    }
+  );
+
+  # macOS-only .app that forwards Finder/Spotlight/Dock/URL requests to the
+  # running daemon via emacsclient (see ./emacsclient.m), then exits.
   emacsClientApp = pkgs.stdenv.mkDerivation {
-    name = "emacs-client-app";
+    pname = "emacs-client-app";
+    version = getVersion emacsPkg;
 
     dontUnpack = true;
+
+    # Stripping after install would invalidate the ad-hoc bundle signature.
+    dontStrip = true;
+
+    buildInputs = [ pkgs.apple-sdk ];
 
     meta.mainProgram = "Emacs Client";
     passthru.pname = "Emacs Client";
     passthru.version = getVersion emacsPkg;
 
+    buildPhase = ''
+      runHook preBuild
+
+      # The preprocessor needs the emacsclient store path as an ObjC string
+      # literal, hence the nested quoting.
+      $CC -fobjc-arc -O2 -Wno-deprecated-declarations \
+        -framework Cocoa -framework AppKit -framework Foundation \
+        -DEMACSCLIENT="@\"${emacsPkg}/bin/emacsclient\"" \
+        -DEMACS_BUNDLE_ID="@\"${emacsBundleId}\"" \
+        -o EmacsClient ${./emacsclient.m}
+
+      runHook postBuild
+    '';
+
     installPhase = ''
+      runHook preInstall
+
       app="$out/Applications/Emacs Client.app"
-      mkdir -p "$out/Applications"
+      mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 
-      cat > client.applescript <<ASEOF
-      on run
-        do shell script "${emacsPkg}/bin/emacsclient -c -a ''' -n"
-        tell application "Emacs" to activate
-      end run
+      install -m755 EmacsClient "$app/Contents/MacOS/EmacsClient"
+      install -m644 ${emacsClientInfoPlist} "$app/Contents/Info.plist"
+      install -m644 \
+        ${emacsPkg}/Applications/Emacs.app/Contents/Resources/Emacs.icns \
+        "$app/Contents/Resources/EmacsClient.icns"
 
-      on open theDropped
-        repeat with oneDrop in theDropped
-          set dropPath to quoted form of POSIX path of oneDrop
-          do shell script "${emacsPkg}/bin/emacsclient -c -a ''' -n " & dropPath
-        end repeat
-        tell application "Emacs" to activate
-      end open
+      # The linker already ad-hoc signs the Mach-O; sign the whole bundle too so
+      # the signature also seals Info.plist and Resources. Best-effort: some
+      # sandboxes don't expose codesign.
+      if [ -x /usr/bin/codesign ]; then
+        /usr/bin/codesign --force --deep --sign - "$app" >/dev/null 2>&1 || true
+      fi
 
-      on open location this_URL
-        do shell script "${emacsPkg}/bin/emacsclient -n " & quoted form of this_URL
-        tell application "Emacs" to activate
-      end open location
-      ASEOF
-
-      /usr/bin/osacompile -o compiled.app client.applescript
-      cp -R compiled.app "$app"
-
-      res="$app/Contents/Resources"
-      cp ${emacsPkg}/Applications/Emacs.app/Contents/Resources/Emacs.icns \
-        "$res/applet.icns"
-      rm -f "$res/droplet.icns" "$res/droplet.rsrc" "$res/Assets.car"
-
-      plist="$app/Contents/Info.plist"
-      /usr/bin/plutil -replace CFBundleIconFile -string applet "$plist"
-      /usr/bin/plutil -replace CFBundleIdentifier -string com.macuguita.emacs-client "$plist"
-      /usr/bin/plutil -replace CFBundleName -string "Emacs Client" "$plist"
-      /usr/bin/plutil -replace CFBundleDisplayName -string "Emacs Client" "$plist"
-      /usr/bin/plutil -remove LSApplicationCategoryType "$plist" 2>/dev/null || true
-      /usr/bin/plutil -insert LSApplicationCategoryType \
-        -string public.app-category.productivity "$plist"
-      /usr/bin/plutil -remove CFBundleDocumentTypes "$plist" 2>/dev/null || true
-      /usr/bin/plutil -insert CFBundleDocumentTypes -xml '<array>
-        <dict>
-          <key>CFBundleTypeName</key><string>Text</string>
-          <key>CFBundleTypeRole</key><string>Editor</string>
-          <key>LSItemContentTypes</key><array>
-            <string>public.text</string>
-            <string>public.plain-text</string>
-            <string>public.source-code</string>
-            <string>public.script</string>
-            <string>public.shell-script</string>
-            <string>public.data</string>
-          </array>
-        </dict>
-      </array>' "$plist"
-      /usr/bin/plutil -remove CFBundleURLTypes "$plist" 2>/dev/null || true
-      /usr/bin/plutil -insert CFBundleURLTypes -xml '<array>
-        <dict>
-          <key>CFBundleURLName</key><string>org-protocol</string>
-          <key>CFBundleURLSchemes</key><array>
-            <string>org-protocol</string>
-          </array>
-        </dict>
-      </array>' "$plist"
+      runHook postInstall
     '';
   };
+
+  # Home Manager never restarts the daemon on switch (so it doesn't kill unsaved
+  # buffers), which leaves it running the previous generation's binary and init.
+  # Restart it here, saving file-visiting buffers first.
+  restartEmacsDaemon =
+    if isDarwin then
+      ''
+        label="org.nix-community.home.emacs"
+        domain="gui/$(id -u)"
+
+        if /bin/launchctl print "$domain/$label" >/dev/null 2>&1; then
+          ${emacsPkg}/bin/emacsclient -e '(save-some-buffers t (lambda () t))' >/dev/null 2>&1 || true
+          run /bin/launchctl kickstart -k "$domain/$label"
+        fi
+      ''
+    else
+      ''
+        systemctl="${config.systemd.user.systemctlPath}"
+        export XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+        if "$systemctl" --user is-active --quiet emacs.service; then
+          ${emacsPkg}/bin/emacsclient -e '(save-some-buffers t (lambda () t))' >/dev/null 2>&1 || true
+          run "$systemctl" --user restart emacs.service
+        fi
+      '';
 in
 {
   programs.emacs = {
@@ -129,6 +171,13 @@ in
     package = if isDarwin then emacsDaemonPkg else emacsPkg;
     startWithUserSession = !isDarwin;
   };
+
+  # Runs after the platform service manager has been reloaded so the daemon
+  # picks up the new generation.
+  home.activation.restartEmacsDaemon = entryAfter [
+    "reloadSystemd"
+    "setupLaunchAgents"
+  ] restartEmacsDaemon;
 
   # launchd agents get a minimal PATH (/usr/bin:/bin:...), which hides nix
   # packages from the daemon: dired fails on BSD ls (no --group-directories-first),
