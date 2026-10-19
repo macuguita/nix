@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   services = {
     avahi = {
@@ -24,6 +24,20 @@
       autoStart = config.macuguita.profiles.graphical.enable;
       capSysAdmin = config.macuguita.profiles.graphical.enable;
       openFirewall = config.macuguita.profiles.graphical.enable;
+    };
+  };
+
+  systemd.services.tailscale-serve-navidrome = {
+    description = "Expose Navidrome over the tailnet via Tailscale Serve";
+    after = [ "tailscaled.service" ];
+    wants = [ "tailscaled.service" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg 4533";
+      ExecStop = "${pkgs.tailscale}/bin/tailscale serve --https=443 off";
     };
   };
 }
