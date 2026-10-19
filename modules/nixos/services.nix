@@ -34,10 +34,10 @@
     wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg 4533";
-      ExecStop = "${pkgs.tailscale}/bin/tailscale serve --https=443 off";
+      Type = "simple";
+      ExecStart = "${pkgs.tailscale}/bin/tailscale serve 4533";
+      Restart = "on-failure";
+      RestartSec = 5;
     };
   };
 }
