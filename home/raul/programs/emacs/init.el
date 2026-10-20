@@ -73,6 +73,16 @@
 (use-package rust-ts-mode
   :ensure t
   :mode "\\.rs\\'")
+;; Lex/Yacc
+;; bison-mode's docstrings trip the byte-compiler on (re)install, and it has no
+;; lexical-binding cookie; silence both while ensuring it.
+(require 'bytecomp)
+(let ((byte-compile-warnings '(not docstrings))
+      (bytecomp--inhibit-lexical-cookie-warning t))
+  (use-package bison-mode
+    :ensure t
+    :mode (("\\.y\\'" . bison-mode)
+           ("\\.l\\'" . flex-mode))))
 ;; NBT
 (use-package nbt-mode
   :vc (:url "https://tangled.org/macuguita.com/nbt-mode.el"

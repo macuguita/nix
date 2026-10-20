@@ -23,6 +23,9 @@
         "public.python-script"
         "public.ruby-script"
         "public.perl-script"
+        "public.lex-source"
+        "public.yacc-source"
+        "com.microsoft.bat"
         "public.json"
         "public.xml"
         "public.yaml"
@@ -64,6 +67,12 @@
         "hh"
         "m"
         "mm"
+        "l"
+        "lex"
+        "flex"
+        "y"
+        "yacc"
+        "yy"
         "cs"
         "swift"
         "sh"
@@ -146,6 +155,8 @@
         "text/x-objcsrc"
         "text/x-objc++src"
         "text/x-csharp"
+        "text/x-lex"
+        "text/x-yacc"
         "text/x-shellscript"
         "text/x-emacs-lisp"
         "text/x-common-lisp"
@@ -254,6 +265,24 @@
       mimeType = "text/x-kotlin";
       comment = "Kotlin source";
       extensions = [ "kts" ];
+    }
+    {
+      mimeType = "text/x-lex";
+      comment = "Lex/Flex source";
+      extensions = [
+        "l"
+        "lex"
+        "flex"
+      ];
+    }
+    {
+      mimeType = "text/x-yacc";
+      comment = "Yacc/Bison source";
+      extensions = [
+        "y"
+        "yacc"
+        "yy"
+      ];
     }
     {
       mimeType = "text/plain";
