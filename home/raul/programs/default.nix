@@ -63,6 +63,7 @@ in
         mcaselector
 
         python3
+        rlwrap
       ]
       ++ optionals isLinux [
         # not available on darwin

@@ -1,4 +1,4 @@
-{pkgs, lib, ...}:
+{ pkgs, lib, ... }:
 {
   xdg.configFile."navidrome/navidrome.toml".text = ''
     MusicFolder = "/home/raul/Music"
@@ -41,26 +41,26 @@
     touch "$nicotine_cfg"
 
     ${pkgs.python3}/bin/python3 - "$nicotine_cfg" <<'PY'
-import configparser
-import sys
+    import configparser
+    import sys
 
-path = sys.argv[1]
-parser = configparser.ConfigParser(
-    strict=False, interpolation=None, delimiters=("=",), comment_prefixes=None
-)
-parser.read(path)
+    path = sys.argv[1]
+    parser = configparser.ConfigParser(
+        strict=False, interpolation=None, delimiters=("=",), comment_prefixes=None
+    )
+    parser.read(path)
 
-if not parser.has_section("server"):
-    parser.add_section("server")
+    if not parser.has_section("server"):
+        parser.add_section("server")
 
-parser.set("server", "server", '("localhost", 5000)')
-parser.set("server", "interface", "lo")
-parser.set("server", "portrange", "(2234, 2234)")
-parser.set("server", "upnp", "False")
+    parser.set("server", "server", '("localhost", 5000)')
+    parser.set("server", "interface", "lo")
+    parser.set("server", "portrange", "(2234, 2234)")
+    parser.set("server", "upnp", "False")
 
-with open(path, "w", encoding="utf-8") as handle:
-    parser.write(handle)
-PY
+    with open(path, "w", encoding="utf-8") as handle:
+        parser.write(handle)
+    PY
   '';
 
   home.packages = with pkgs; [

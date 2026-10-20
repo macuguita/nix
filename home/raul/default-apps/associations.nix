@@ -131,6 +131,7 @@
         "dat_old"
         "mcfunction"
         "mcmeta"
+        "mca"
       ];
 
       linux = [
@@ -259,6 +260,7 @@
         "nbt"
         "dat"
         "dat_old"
+        "mca"
       ];
     }
     {

@@ -43,7 +43,12 @@
 
             nativeBuildInputs =
               lib.filter (
-                p: !(builtins.elem p [ super.copyDesktopItems super.imagemagick super.patchelf ])
+                p:
+                !(builtins.elem p [
+                  super.copyDesktopItems
+                  super.imagemagick
+                  super.patchelf
+                ])
               ) old.nativeBuildInputs
               ++ lib.optionals isLinux [
                 super.copyDesktopItems
@@ -96,6 +101,16 @@
                 ln -s $out/bin/pandora_launcher $out/Applications/PandoraLauncher.app/Contents/MacOS/pandora_launcher
               fi
             '';
+        });
+
+        whatsapp-for-mac = super.whatsapp-for-mac.overrideAttrs (old: rec {
+          version = "2.26.41.28";
+          src = super.fetchzip {
+            extension = "zip";
+            name = "WhatsApp.app";
+            url = "https://web.whatsapp.com/desktop/mac_native/release/?version=${version}&extension=zip&configuration=Release&branch=master";
+            hash = "sha256-JyIXe5uU2KuDz2rCXuN2tcvo03bRuqmoWhxov8+/Se8=";
+          };
         });
       }
     )
