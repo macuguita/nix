@@ -103,6 +103,7 @@
             '';
         });
 
+        # TODO: remove when it is updated upstream
         whatsapp-for-mac = super.whatsapp-for-mac.overrideAttrs (old: rec {
           version = "2.26.41.28";
           src = super.fetchzip {
@@ -111,6 +112,13 @@
             url = "https://web.whatsapp.com/desktop/mac_native/release/?version=${version}&extension=zip&configuration=Release&branch=master";
             hash = "sha256-JyIXe5uU2KuDz2rCXuN2tcvo03bRuqmoWhxov8+/Se8=";
           };
+        });
+
+        # TODO: remove when it is fixed upstream
+        audacity = super.audacity.overrideAttrs (old: {
+          cmakeFlags = (old.cmakeFlags or []) ++ [
+            "-DQT_QML_NO_CACHEGEN=ON"
+          ];
         });
       }
     )
