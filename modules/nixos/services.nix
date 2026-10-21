@@ -30,7 +30,10 @@
   systemd.services.tailscale-serve-navidrome = {
     description = "Expose Navidrome over the tailnet via Tailscale Serve";
 
-    after = [ "tailscaled.service" "network-online.target" ];
+    after = [
+      "tailscaled.service"
+      "network-online.target"
+    ];
     wants = [ "network-online.target" ];
     requires = [ "tailscaled.service" ];
 
