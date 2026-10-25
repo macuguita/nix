@@ -211,6 +211,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-raddebugger": {
+      "locked": {
+        "lastModified": 1790963907,
+        "narHash": "sha256-YrhpyK7n5JSttMi5/feqG1MBfk5r6Fd1B1EIxi+fZnI=",
+        "owner": "MithicSpirit",
+        "repo": "nixpkgs",
+        "rev": "2ce1eca88f17297f18679f1de78a2fcc08e6d2bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MithicSpirit",
+        "ref": "raddbg",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1792094642,
@@ -300,6 +316,7 @@
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-raddebugger": "nixpkgs-raddebugger",
         "nur": "nur",
         "pluey": "pluey",
         "vicinae": "vicinae"

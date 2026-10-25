@@ -1,20 +1,47 @@
-{ pkgs, ... }:
-
-pkgs.python3Packages.buildPythonApplication {
+{
+  rustPlatform,
+  lib,
+  makeBinaryWrapper,
+  pulseaudio,
+  wf-recorder,
+}:
+let
+  fs = lib.fileset;
+in
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "record";
-  version = "0.1.0";
+  inherit (finalAttrs.passthru.cargoToml.package) version;
 
-  pyproject = false;
+  src = fs.toSource {
+    root = ./.;
+    fileset = fs.unions [
+      ./src
+      ./Cargo.lock
+      ./Cargo.toml
+    ];
+  };
 
-  dontUnpack = true;
+  cargoLock = {
+    lockFile = ./Cargo.lock;
+  };
 
-  propagatedBuildInputs = with pkgs; [
-    pulseaudio
-    wf-recorder
-    libnotify
-  ];
+  passthru = {
+    cargoToml = lib.importTOML ./Cargo.toml;
+  };
 
-  installPhase = ''
-    install -Dm755 ${./record.py} $out/bin/record
+  nativeBuildInputs = [ makeBinaryWrapper ];
+
+  postFixup = ''
+    wrapProgram $out/bin/${finalAttrs.meta.mainProgram} \
+      --prefix PATH : ${lib.makeBinPath [ pulseaudio wf-recorder ]}
   '';
-}
+
+  meta = {
+    description = "Script for recording";
+    mainProgram = finalAttrs.pname;
+    license = lib.licenses.eupl12;
+    sourceProvenance = with lib.sourceTypes; [
+      fromSource
+    ];
+  };
+})

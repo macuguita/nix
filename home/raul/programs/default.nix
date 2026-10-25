@@ -13,6 +13,7 @@ let
 
   isLinux = system |> hasSuffix "-linux";
   isDarwin = system |> hasSuffix "-darwin";
+  pkgs-raddebugger = import inputs.nixpkgs-raddebugger { inherit system; };
 in
 {
   imports = [
@@ -83,6 +84,7 @@ in
         onlyoffice-desktopeditors
         kdePackages.kdenlive
         blender
+        pkgs-raddebugger.raddebugger
       ]
       ++ optionals isDarwin [
         caffeine
