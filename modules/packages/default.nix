@@ -29,6 +29,7 @@
               CFBundleExecutable = "pandora_launcher";
               CFBundleIconFile = "mac.icns";
               CFBundleIdentifier = "com.moulberry.pandoralauncher";
+
               CFBundleInfoDictionaryVersion = "6.0";
               CFBundleName = "Pandora Launcher";
               CFBundlePackageType = "APPL";
@@ -113,23 +114,6 @@
             hash = "sha256-JyIXe5uU2KuDz2rCXuN2tcvo03bRuqmoWhxov8+/Se8=";
           };
         });
-
-        # TODO: remove when it is fixed upstream
-        # audacity = super.audacity.overrideAttrs (old: {
-        #   cmakeFlags = (old.cmakeFlags or [ ]) ++ [
-        #     "-DQT_QML_NO_CACHEGEN=ON"
-        #   ];
-        # });
-
-        # qbittorrent = super.qbittorrent.overrideAttrs (old: {
-        #   postPatch = (old.postPatch or "") + ''
-        #     substituteInPlace src/gui/log/loglistview.cpp \
-        #       --replace-fail '#ifdef Q_OS_MAC' '#ifdef Q_OS_MACOS'
-
-        #     substituteInPlace src/gui/optionsdialog.cpp \
-        #       --replace-fail '#ifdef Q_OS_MAC' '#ifdef Q_OS_MACOS'
-        #     '';
-        # });
       }
     )
   ];

@@ -7,6 +7,7 @@
   copyDesktopItems,
   makeDesktopItem,
   libicns,
+  writeText,
   jdk17,
   packwiz,
   ...
@@ -22,6 +23,7 @@ let
     makeBinPath
     optionalString
     ;
+  inherit (lib.generators) toPlist;
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pw-gui";
@@ -33,9 +35,23 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   };
 
   icon = fetchurl {
-    url = "https://raw.githubusercontent.com/AmberIsFrozen/PW-GUI/dev/assets/pwgui_icon.ico";
+    url = "https://raw.githubusercontent.com/AmberIsFrozen/PW-GUI/refs/heads/dev/assets/pwgui_icon.ico";
     hash = "sha256-1tlnuiPDJshRtQB5qjqGsw9r5XgtZyyqA4hghbR34Ow=";
   };
+
+  infoPlist = writeText "Info.plist" (
+    toPlist { escape = true; } {
+      CFBundleName = "PW-GUI";
+      CFBundleDisplayName = "PW-GUI";
+      CFBundleIdentifier = "com.amberisfrozen.pw-gui";
+      CFBundleVersion = finalAttrs.version;
+      CFBundleShortVersionString = finalAttrs.version;
+      CFBundlePackageType = "APPL";
+      CFBundleExecutable = "pw-gui";
+      CFBundleIconFile = "pw-gui.icns";
+      NSHighResolutionCapable = true;
+    }
+  );
 
   dontUnpack = true;
   dontBuild = true;
@@ -67,7 +83,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   + optionalString stdenvNoCC.hostPlatform.isLinux ''
     for size in 16 32 48 64 128 256; do
       mkdir -p $out/share/icons/hicolor/"$size"x"$size"/apps
-      magick ${finalAttrs.icon} -resize "$size"x"$size" \
+      magick '${finalAttrs.icon}[0]' -background none -resize "$size"x"$size" \
         $out/share/icons/hicolor/"$size"x"$size"/apps/pw-gui.png
     done
 
@@ -77,48 +93,25 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   ''
   + optionalString stdenvNoCC.hostPlatform.isDarwin ''
-    mkdir -p $out/Applications/PW-GUI.app/Contents/{MacOS,Resources}
+    app=$out/Applications/PW-GUI.app
+    mkdir -p $app/Contents/{MacOS,Resources}
 
-    magick ${finalAttrs.icon} -background none -resize 16x16    /tmp/icon_16x16.png
-    magick ${finalAttrs.icon} -background none -resize 32x32    /tmp/icon_16x16@2x.png
-    magick ${finalAttrs.icon} -background none -resize 32x32    /tmp/icon_32x32.png
-    magick ${finalAttrs.icon} -background none -resize 64x64    /tmp/icon_32x32@2x.png
-    magick ${finalAttrs.icon} -background none -resize 128x128  /tmp/icon_128x128.png
-    magick ${finalAttrs.icon} -background none -resize 256x256  /tmp/icon_128x128@2x.png
-    magick ${finalAttrs.icon} -background none -resize 256x256  /tmp/icon_256x256.png
-    magick ${finalAttrs.icon} -background none -resize 512x512  /tmp/icon_256x256@2x.png
-    magick ${finalAttrs.icon} -background none -resize 512x512  /tmp/icon_512x512.png
-    magick ${finalAttrs.icon} -background none -resize 1024x1024 /tmp/icon_512x512@2x.png
-    png2icns $out/Applications/PW-GUI.app/Contents/Resources/pw-gui.icns \
-      /tmp/icon_16x16.png /tmp/icon_32x32.png /tmp/icon_128x128.png \
-      /tmp/icon_256x256.png /tmp/icon_512x512.png
+    iconsDir=$(mktemp -d)
+    for size in 16 32 128 256 512; do
+      magick '${finalAttrs.icon}[0]' -background none -resize "$size"x"$size" \
+        $iconsDir/icon_"$size"x"$size".png
+    done
+    png2icns $app/Contents/Resources/pw-gui.icns $iconsDir/icon_*.png
 
-    cat > $out/Applications/PW-GUI.app/Contents/Info.plist << EOF
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-      <key>CFBundleName</key><string>PW-GUI</string>
-      <key>CFBundleDisplayName</key><string>PW-GUI</string>
-      <key>CFBundleIdentifier</key><string>com.amberisfrozen.pw-gui</string>
-      <key>CFBundleVersion</key><string>${finalAttrs.version}</string>
-      <key>CFBundleShortVersionString</key><string>${finalAttrs.version}</string>
-      <key>CFBundlePackageType</key><string>APPL</string>
-      <key>CFBundleExecutable</key><string>pw-gui</string>
-      <key>CFBundleIconFile</key><string>pw-gui.icns</string>
-      <key>NSHighResolutionCapable</key><true/>
-    </dict>
-    </plist>
-    EOF
+    cp ${finalAttrs.infoPlist} $app/Contents/Info.plist
 
-    makeWrapper ${getExe jdk17} \
-      $out/Applications/PW-GUI.app/Contents/MacOS/pw-gui \
+    makeWrapper ${getExe jdk17} $app/Contents/MacOS/pw-gui \
       --add-flags "-Xdock:name=PW-GUI" \
-      --add-flags "-Xdock:icon=$out/Applications/PW-GUI.app/Contents/Resources/pw-gui.icns" \
+      --add-flags "-Xdock:icon=$app/Contents/Resources/pw-gui.icns" \
       --add-flags "-jar $out/share/pw-gui/app.jar" \
       --prefix PATH : ${makeBinPath [ packwiz ]}
 
-    ln -s $out/Applications/PW-GUI.app/Contents/MacOS/pw-gui $out/bin/pw-gui
+    ln -s $app/Contents/MacOS/pw-gui $out/bin/pw-gui
 
   ''
   + ''
