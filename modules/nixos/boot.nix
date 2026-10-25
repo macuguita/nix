@@ -10,9 +10,5 @@
       };
     };
     kernelPackages = pkgs.linuxPackages_latest;
-
-    initrd = {
-      verbose = false;
-    };
   };
 }

@@ -1,6 +1,5 @@
 { ... }:
 {
-  boot.initrd.systemd.enable = true; # bashless initrd
   services.userborn.enable = true; # fully declaritive users
 
   system = {
