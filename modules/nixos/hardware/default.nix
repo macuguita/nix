@@ -6,6 +6,7 @@ in
   imports = [
     ./cpu
     ./gpu
+    ./ram.nix
     ./bluetooth.nix
     ./wifi.nix
     ./disc.nix
