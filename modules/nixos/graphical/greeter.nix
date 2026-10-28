@@ -1,4 +1,8 @@
-{ pkgs, config, ... }:
+{ inputs, ... }:
 {
-  services.displayManager.ly.enable = true;
+  dendritic.nixosModules."nixos/graphical/greeter" =
+    { pkgs, config, ... }:
+    {
+      services.displayManager.ly.enable = true;
+    };
 }

@@ -1,4 +1,8 @@
-{ ... }:
+{ inputs, ... }:
 {
-  services.tailscale.enable = true;
+  dendritic.darwinModules."darwin/services" =
+    { ... }:
+    {
+      services.tailscale.enable = true;
+    };
 }

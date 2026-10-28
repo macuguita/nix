@@ -1,43 +1,53 @@
-{ ... }:
-{
-  imports = [
-    ./hardware-configuration.nix
-    ./btrfs.nix
-  ];
+{ config, inputs, ... }:
+let
+  hostModule =
+    { ... }:
+    {
+      macuguita = {
+        platform = "linux";
 
-  macuguita = {
-    platform = "linux";
+        signingKey = "DE0F62AEEC379198";
 
-    signingKey = "DE0F62AEEC379198";
+        hardware = {
+          cpu = "amd";
+          gpu = "amd";
 
-    hardware = {
-      cpu = "amd";
-      gpu = "amd";
+          bluetooth = true;
+          qmk = true;
+          qmkKeychron = true;
+          wifi = false;
+        };
 
-      bluetooth = true;
-      qmk = true;
-      qmkKeychron = true;
-      wifi = false;
-    };
+        localAi.enable = true;
 
-    localAi.enable = true;
+        monitors = {
+          HDMI-A-1 = {
+            width = 1920;
+            height = 1080;
 
-    monitors = {
-      HDMI-A-1 = {
-        width = 1920;
-        height = 1080;
+            primary = true;
 
-        primary = true;
+            refreshRate = 74.97300;
+          };
+        };
 
-        refreshRate = 74.97300;
+        profiles = {
+          graphical.enable = true;
+        };
       };
-    };
 
-    profiles = {
-      graphical.enable = true;
+      system.stateVersion = "26.05";
+      networking.hostName = "pc-raul";
     };
+in
+{
+  flake.nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      config.flake.nixosModules.all
+      config.dendritic.nixosModules."hosts/desktop/hardware-configuration"
+      config.dendritic.nixosModules."hosts/desktop/btrfs"
+      hostModule
+    ];
   };
-
-  system.stateVersion = "26.05";
-  networking.hostName = "pc-raul";
 }

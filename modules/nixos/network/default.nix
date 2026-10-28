@@ -1,35 +1,34 @@
-{ ... }:
+{ inputs, ... }:
 {
-  imports = [
-    ./ssh.nix
-    ./firewall.nix
-  ];
+  dendritic.nixosModules."nixos/network" =
+    { ... }:
+    {
+      networking = {
+        useNetworkd = true;
 
-  networking = {
-    useNetworkd = true;
+        usePredictableInterfaceNames = true;
 
-    usePredictableInterfaceNames = true;
+        nameservers = [
+          "1.1.1.2"
+          "1.0.0.2"
+          "2606:4700:4700::1112"
+        ];
 
-    nameservers = [
-      "1.1.1.2"
-      "1.0.0.2"
-      "2606:4700:4700::1112"
-    ];
+        enableIPv6 = true;
+      };
 
-    enableIPv6 = true;
-  };
+      services.resolved.enable = true;
 
-  services.resolved.enable = true;
+      systemd = {
+        network.wait-online.enable = false;
 
-  systemd = {
-    network.wait-online.enable = false;
+        services = {
+          NetworkManager-wait-online.enable = false;
 
-    services = {
-      NetworkManager-wait-online.enable = false;
-
-      # stop networkd and resolved from being restarted when config changes
-      systemd-networkd.stopIfChanged = false;
-      systemd-resolved.stopIfChanged = false;
+          # stop networkd and resolved from being restarted when config changes
+          systemd-networkd.stopIfChanged = false;
+          systemd-resolved.stopIfChanged = false;
+        };
+      };
     };
-  };
 }

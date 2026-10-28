@@ -1,25 +1,16 @@
+{ config, inputs, ... }:
 {
-  inputs,
-  config,
-  lib,
-  ...
-}:
-let
-  inherit (lib.attrsets) hasAttr;
-  inherit (lib.lists) filter;
+  dendritic.nixosModules."nixos/users" = {
+    imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-  # filterExistingGroups = groups: filter (group: hasAttr group config.users.groups) groups;
-in
-{
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-    ../../home
-  ];
+    home-manager = {
+      useUserPackages = true;
+      useGlobalPkgs = true;
+      backupFileExtension = "homemanager.bak";
+      users.raul = config.dendritic.homeProfiles."raul-linux";
+    };
 
-  users = {
-    # mutableUsers = false;
-
-    users.raul = {
+    users.users.raul = {
       isNormalUser = true;
       extraGroups = [
         "wheel"

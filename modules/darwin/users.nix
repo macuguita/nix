@@ -1,14 +1,22 @@
-{ inputs, pkgs, ... }:
+{ config, inputs, ... }:
 {
-  imports = [
-    inputs.home-manager.darwinModules.home-manager
-    ../../home
-  ];
+  dendritic.darwinModules."darwin/users" =
+    { pkgs, ... }:
+    {
+      imports = [ inputs.home-manager.darwinModules.home-manager ];
 
-  users.users.raul = {
-    home = "/Users/raul";
-    shell = pkgs.zsh;
-  };
+      home-manager = {
+        useUserPackages = true;
+        useGlobalPkgs = true;
+        backupFileExtension = "homemanager.bak";
+        users.raul = config.dendritic.homeProfiles."raul-darwin";
+      };
 
-  system.primaryUser = "raul";
+      users.users.raul = {
+        home = "/Users/raul";
+        shell = pkgs.zsh;
+      };
+
+      system.primaryUser = "raul";
+    };
 }

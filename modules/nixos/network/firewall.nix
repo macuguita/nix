@@ -1,15 +1,19 @@
-{ ... }:
+{ inputs, ... }:
 {
-  networking = {
-    nftables.enable = true;
-    firewall = {
-      enable = true;
+  dendritic.nixosModules."nixos/network/firewall" =
+    { ... }:
+    {
+      networking = {
+        nftables.enable = true;
+        firewall = {
+          enable = true;
 
-      allowPing = false;
+          allowPing = false;
 
-      logReversePathDrops = true;
-      logRefusedConnections = false;
-      checkReversePath = false;
+          logReversePathDrops = true;
+          logRefusedConnections = false;
+          checkReversePath = false;
+        };
+      };
     };
-  };
 }

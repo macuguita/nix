@@ -1,4 +1,8 @@
-{ ... }:
+{ inputs, ... }:
 {
-  virtualisation.waydroid.enable = true;
+  dendritic.nixosModules."nixos/waydroid" =
+    { ... }:
+    {
+      virtualisation.waydroid.enable = true;
+    };
 }

@@ -1,4 +1,8 @@
-{ ... }:
+{ inputs, ... }:
 {
-  time.timeZone = "Europe/Madrid";
+  dendritic.darwinModules."darwin/locale" =
+    { ... }:
+    {
+      time.timeZone = "Europe/Madrid";
+    };
 }

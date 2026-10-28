@@ -1,30 +1,22 @@
-{ lib, config, ... }:
-let
-  inherit (lib.modules) mkIf;
-in
+{ inputs, ... }:
 {
-  imports = [
-    ./cpu
-    ./gpu
-    ./ram.nix
-    ./bluetooth.nix
-    ./wifi.nix
-    ./disc.nix
-    ./laptop.nix
-    ./qmk.nix
-    ./audio.nix
-  ];
+  dendritic.nixosModules."nixos/hardware" =
+    { lib, config, ... }:
+    let
+      inherit (lib.modules) mkIf;
+    in
+    {
+      config = {
+        services.fwupd.enable = true;
 
-  config = {
-    services.fwupd.enable = true;
+        hardware = {
+          enableRedistributableFirmware = true;
 
-    hardware = {
-      enableRedistributableFirmware = true;
-
-      graphics = mkIf config.macuguita.hardware.video {
-        enable = true;
-        enable32Bit = true;
+          graphics = mkIf config.macuguita.hardware.video {
+            enable = true;
+            enable32Bit = true;
+          };
+        };
       };
     };
-  };
 }

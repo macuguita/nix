@@ -41,7 +41,12 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   postFixup = ''
     wrapProgram $out/bin/${finalAttrs.meta.mainProgram} \
-      --prefix PATH : ${makeBinPath [ pulseaudio wf-recorder ]}
+      --prefix PATH : ${
+        makeBinPath [
+          pulseaudio
+          wf-recorder
+        ]
+      }
   '';
 
   meta = {

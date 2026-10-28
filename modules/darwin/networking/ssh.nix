@@ -1,4 +1,8 @@
-{ ... }:
+{ inputs, ... }:
 {
-  services.openssh.enable = true;
+  dendritic.darwinModules."darwin/networking/ssh" =
+    { ... }:
+    {
+      services.openssh.enable = true;
+    };
 }

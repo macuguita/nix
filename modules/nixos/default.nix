@@ -1,22 +1,6 @@
+{ inputs, ... }:
 {
-  inputs,
-  ...
-}:
-{
-  imports = [
-    ../common
-    ./nixos-init.nix
-    ./hardware
-    ./network
-    ./boot.nix
-    ./flatpak.nix
-    ./users.nix
-    ./graphical
-    ./services.nix
-    ./locale.nix
-    ./shell.nix
-    ./security.nix
-    ./waydroid.nix
-    inputs.nur.modules.nixos.default
-  ];
+  dendritic.nixosModules."nixos/nur" = {
+    imports = [ inputs.nur.modules.nixos.default ];
+  };
 }

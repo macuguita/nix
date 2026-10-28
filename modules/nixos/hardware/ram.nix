@@ -1,9 +1,13 @@
-{ ... }:
+{ inputs, ... }:
 {
-  zramSwap = {
-    enable = true;
-    priority = 100;
-  };
+  dendritic.nixosModules."nixos/hardware/ram" =
+    { ... }:
+    {
+      zramSwap = {
+        enable = true;
+        priority = 100;
+      };
 
-  boot.kernel.sysctl."vm.swappiness" = 180;
+      boot.kernel.sysctl."vm.swappiness" = 180;
+    };
 }

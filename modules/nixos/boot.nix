@@ -1,14 +1,18 @@
-{ pkgs, ... }:
+{ inputs, ... }:
 {
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 10;
+  dendritic.nixosModules."nixos/boot" =
+    { pkgs, ... }:
+    {
+      boot = {
+        loader = {
+          systemd-boot = {
+            enable = true;
+            configurationLimit = 10;
 
-        editor = false;
+            editor = false;
+          };
+        };
+        kernelPackages = pkgs.linuxPackages_latest;
       };
     };
-    kernelPackages = pkgs.linuxPackages_latest;
-  };
 }

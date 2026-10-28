@@ -1,21 +1,25 @@
-{ osConfig, pkgs, ... }:
+{ inputs, ... }:
 {
-  programs.foot = {
-    enable = pkgs.stdenv.hostPlatform.isLinux && osConfig.macuguita.profiles.graphical.enable;
-    server.enable = true;
+  dendritic.homeModules."home/raul/programs/terminal" =
+    { osConfig, pkgs, ... }:
+    {
+      programs.foot = {
+        enable = pkgs.stdenv.hostPlatform.isLinux && osConfig.macuguita.profiles.graphical.enable;
+        server.enable = true;
 
-    settings = {
-      main = {
-        term = "xterm-256color";
-        font = "monospace:size=14";
-      };
-      colors-dark = {
-        background = "121212";
-        foreground = "ffffff";
-        alpha = 0.75;
-      };
+        settings = {
+          main = {
+            term = "xterm-256color";
+            font = "monospace:size=14";
+          };
+          colors-dark = {
+            background = "121212";
+            foreground = "ffffff";
+            alpha = 0.75;
+          };
 
-      cursor.style = "beam";
+          cursor.style = "beam";
+        };
+      };
     };
-  };
 }

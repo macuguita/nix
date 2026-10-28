@@ -1,11 +1,14 @@
+{ inputs, ... }:
 {
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
-{
-  home.packages = [
-    inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ];
+  dendritic.homeModules."home/raul/programs/helium" =
+    {
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      home.packages = [
+        inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
+    };
 }

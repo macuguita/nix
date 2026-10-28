@@ -15,6 +15,9 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-raddebugger.url = "github:MithicSpirit/nixpkgs/raddbg";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:denful/import-tree";
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,88 +68,12 @@
   };
 
   outputs =
-    inputs@{ nixpkgs, ... }:
-    let
-      inherit (inputs.nix-darwin.lib) darwinSystem;
-      inherit (nixpkgs.lib) nixosSystem;
-
-      util = import ./util.nix (inputs // { lib = nixpkgs.lib; });
-      mkTreefmt =
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        pkgs.treefmt.withConfig {
-          runtimeInputs = [ pkgs.nixfmt ];
-
-          settings = {
-            excludes = [ ".jj/**" ];
-
-            formatter.nixfmt = {
-              command = "nixfmt";
-              includes = [ "*.nix" ];
-            };
-          };
-        };
-      mkNixOSConfiguration =
-        name: system:
-        (nixosSystem {
-          inherit system;
-
-          specialArgs = {
-            inherit util;
-            inherit inputs;
-            inherit system;
-          };
-
-          modules = [
-            ./hosts/${name}
-            ./modules/nixos
-            ./modules/packages
-          ];
-        });
-      mkDarwinConfiguration =
-        name: system:
-        (darwinSystem {
-          inherit system;
-          specialArgs = {
-            inherit util;
-            inherit inputs;
-            inherit system;
-          };
-
-          modules = [
-            ./hosts/${name}
-            ./modules/darwin
-            ./modules/packages
-          ];
-        });
-    in
-    {
-      nixosConfigurations = {
-        desktop = mkNixOSConfiguration "desktop" "x86_64-linux";
-      };
-
-      darwinConfigurations = {
-        mac-raul = mkDarwinConfiguration "mac-raul" "aarch64-darwin";
-      };
-
-      formatter = util.eachSystem mkTreefmt;
-
-      devShells = util.eachSystem (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default = pkgs.mkShellNoCC {
-            buildInputs = with pkgs; [
-              nixd
-              nixfmt
-              (mkTreefmt system)
-            ];
-          };
-        }
-      );
-    };
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      inputs.import-tree [
+        ./modules
+        ./home
+        ./hosts
+      ]
+    );
 }
