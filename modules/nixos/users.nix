@@ -1,14 +1,10 @@
-{ config, inputs, ... }:
+{ inputs, ... }:
 {
   dendritic.nixosModules."nixos/users" = {
-    imports = [ inputs.home-manager.nixosModules.home-manager ];
+    imports = [ inputs.hjem.nixosModules.default ];
 
-    home-manager = {
-      useUserPackages = true;
-      useGlobalPkgs = true;
-      backupFileExtension = "homemanager.bak";
-      users.raul = config.dendritic.homeProfiles."raul-linux";
-    };
+    hjem.clobberByDefault = true;
+    hjem.users.raul = { };
 
     users.users.raul = {
       isNormalUser = true;

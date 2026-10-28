@@ -1,37 +1,27 @@
 { inputs, ... }:
 {
   dendritic.darwinModules."darwin/graphical/fonts" =
+    { pkgs, ... }:
     {
-      lib,
-      config,
-      pkgs,
-      ...
-    }:
-    let
-      inherit (lib.modules) mkIf;
-    in
-    {
-      config = mkIf config.macuguita.profiles.graphical.enable {
-        fonts.packages = with pkgs; [
-          noto-fonts
-          noto-fonts-cjk-sans
-          twitter-color-emoji
+      fonts.packages = with pkgs; [
+        noto-fonts
+        noto-fonts-cjk-sans
+        twitter-color-emoji
 
-          material-symbols
+        material-symbols
 
-          nerd-fonts.symbols-only
+        nerd-fonts.symbols-only
 
-          dejavu_fonts
-          liberation_ttf
+        dejavu_fonts
+        liberation_ttf
 
-          # MS fonts
-          corefonts
-          vista-fonts
+        # MS fonts
+        corefonts
+        vista-fonts
 
-          inter
+        inter
 
-          maple-mono.NL-NF
-        ];
-      };
+        maple-mono.NL-NF
+      ];
     };
 }

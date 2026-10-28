@@ -16,9 +16,12 @@ in
     # the composition itself (which would recurse).
     nixosModules = moduleSet "NixOS modules registered by the flake tree.";
     darwinModules = moduleSet "nix-darwin modules registered by the flake tree.";
-    homeModules = moduleSet "Home-manager modules registered by the flake tree.";
-    homeProfiles = moduleSet "Composed home-manager module sets (linux/darwin).";
+    homeModules = moduleSet "Hjem user modules registered by the flake tree.";
   };
+
+  # flake-parts doesn't declare this output, so declare it ourselves to let the
+  # leaf aggregate and the host-facing groups merge.
+  options.flake.darwinModules = moduleSet "nix-darwin modules exposed by the flake.";
 
   # Home modules have no aggregate in `flake.homeModules`, so aliasing is safe.
   config.flake.homeModules = config.dendritic.homeModules;

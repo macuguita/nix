@@ -2,7 +2,7 @@
 #
 # `macUtis`/`macExtensions` key the macOS handler per UTI or filename extension,
 # `linux` per MIME type, `desktop` is the Linux .desktop entry id and `macApp`
-# the app bundle name under ~/Applications/Home Manager Apps.
+# the app bundle name under ~/Applications/Nix User Apps.
 {
   apps = {
     emacs = {
@@ -247,11 +247,55 @@
 
       linux = [ "video/*" ];
     };
+
+    nemo = {
+      desktop = "nemo.desktop";
+      linux = [
+        "inode/directory"
+        "application/x-gnome-saved-search"
+      ];
+    };
+
+    pluey = {
+      desktop = "com.macuguita.Pluey.desktop";
+      linux = [
+        "image/jpeg"
+        "image/png"
+        "image/webp"
+        "image/gif"
+        "image/bmp"
+        "image/tiff"
+        "image/x-portable-pixmap"
+        "image/x-portable-graymap"
+        "image/x-portable-bitmap"
+        "image/x-portable-anymap"
+        "image/x-tga"
+        "image/x-xbitmap"
+        "image/x-xpixmap"
+        "image/avif"
+        "image/heic"
+        "image/heif"
+      ];
+    };
+
+    mupdf = {
+      desktop = "mupdf.desktop";
+      linux = [
+        "application/pdf"
+      ];
+    };
+
+    vesktop = {
+      desktop = "vesktop.desktop";
+      linux = [
+        "x-scheme-handler/discord"
+      ];
+    };
   };
 
   # Linux-only: shared-mime-info has no type for these extensions, so declare
-  # them (installed via home.packages so `xdg.mime.enable` picks them up), and
-  # XDG can then associate the files.
+  # them (installed via hjem packages so XDG picks them up), and XDG can then
+  # associate the files.
   linuxExtraMime = [
     {
       mimeType = "application/x-minecraft-nbt";

@@ -3,48 +3,25 @@ let
   hostModule =
     { ... }:
     {
-      macuguita = {
-        platform = "linux";
-
-        signingKey = "DE0F62AEEC379198";
-
-        hardware = {
-          cpu = "amd";
-          gpu = "amd";
-
-          bluetooth = true;
-          qmk = true;
-          qmkKeychron = true;
-          wifi = false;
-        };
-
-        localAi.enable = true;
-
-        monitors = {
-          HDMI-A-1 = {
-            width = 1920;
-            height = 1080;
-
-            primary = true;
-
-            refreshRate = 74.97300;
-          };
-        };
-
-        profiles = {
-          graphical.enable = true;
-        };
-      };
-
       system.stateVersion = "26.05";
       networking.hostName = "pc-raul";
+
+      hjem.specialArgs.signingKey = "DE0F62AEEC379198";
+
+      hjem.users.raul.imports = [
+        config.flake.homeModules.base
+        config.flake.homeModules.desktop
+        config.flake.homeModules.linux
+        config.flake.homeModules.local-ai
+      ];
     };
 in
 {
   flake.nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
-      config.flake.nixosModules.all
+      config.flake.nixosModules.desktop
+      config.flake.nixosModules.local-ai
       config.dendritic.nixosModules."hosts/desktop/hardware-configuration"
       config.dendritic.nixosModules."hosts/desktop/btrfs"
       hostModule

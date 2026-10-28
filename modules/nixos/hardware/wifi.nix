@@ -1,22 +1,17 @@
 { inputs, ... }:
 {
   dendritic.nixosModules."nixos/hardware/wifi" =
-    { config, lib, ... }:
-    let
-      inherit (lib.modules) mkIf;
-    in
+    { ... }:
     {
-      config = mkIf config.macuguita.hardware.wifi {
-        hardware.wirelessRegulatoryDatabase = true;
+      hardware.wirelessRegulatoryDatabase = true;
 
-        networking = {
-          networkmanager = {
-            enable = true;
+      networking = {
+        networkmanager = {
+          enable = true;
 
-            wifi = {
-              backend = "iwd";
-              powersave = true;
-            };
+          wifi = {
+            backend = "iwd";
+            powersave = true;
           };
         };
       };

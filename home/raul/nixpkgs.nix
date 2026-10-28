@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   dendritic.homeModules."home/raul/nixpkgs" = {
-    xdg.configFile."nixpkgs/config.nix".text = ''
+    xdg.config.files."nixpkgs/config.nix".text = ''
       { allowUnfree = true; }
     '';
   };

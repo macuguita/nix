@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   dendritic.nixosModules."nixos/services" =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       services = {
         avahi = {
@@ -20,14 +20,6 @@
         tailscale.enable = true;
 
         gvfs.enable = true;
-
-        # remote desktop
-        sunshine = {
-          enable = config.macuguita.profiles.graphical.enable;
-          autoStart = config.macuguita.profiles.graphical.enable;
-          capSysAdmin = config.macuguita.profiles.graphical.enable;
-          openFirewall = config.macuguita.profiles.graphical.enable;
-        };
       };
 
       systemd.services.tailscale-serve-navidrome = {

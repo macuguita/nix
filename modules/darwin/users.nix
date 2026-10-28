@@ -1,16 +1,36 @@
-{ config, inputs, ... }:
+{ inputs, ... }:
 {
   dendritic.darwinModules."darwin/users" =
-    { pkgs, ... }:
     {
-      imports = [ inputs.home-manager.darwinModules.home-manager ];
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      inherit (lib.attrsets) mapAttrsToList;
+      inherit (lib.strings) concatStringsSep escapeShellArg;
 
-      home-manager = {
-        useUserPackages = true;
-        useGlobalPkgs = true;
-        backupFileExtension = "homemanager.bak";
-        users.raul = config.dendritic.homeProfiles."raul-darwin";
-      };
+      toEnv =
+        value: if builtins.isList value then concatStringsSep ":" (map toString value) else toString value;
+
+      # Home-manager used to export these for GUI apps through launchd. Hjem
+      # only produces a shell script, so publish the same variables to launchd.
+      environmentScript = pkgs.writeShellScript "hjem-user-environment" ''
+        set -euo pipefail
+
+        ${concatStringsSep "\n" (
+          mapAttrsToList (
+            name: value: "/bin/launchctl setenv ${escapeShellArg name} ${escapeShellArg (toEnv value)}"
+          ) config.hjem.users.raul.environment.sessionVariables
+        )}
+      '';
+    in
+    {
+      imports = [ inputs.hjem.darwinModules.default ];
+
+      hjem.clobberByDefault = true;
+      hjem.users.raul = { };
 
       users.users.raul = {
         home = "/Users/raul";
@@ -18,5 +38,11 @@
       };
 
       system.primaryUser = "raul";
+
+      launchd.user.envVariables = config.hjem.users.raul.environment.sessionVariables;
+      launchd.user.agents.user-environment.serviceConfig = {
+        RunAtLoad = true;
+        ProgramArguments = [ "${environmentScript}" ];
+      };
     };
 }

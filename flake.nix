@@ -23,8 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
+    hjem = {
+      url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -43,21 +43,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    catppuccin = {
-      url = "github:catppuccin/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     helium = {
       url = "github:amaanq/helium-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Disabling the follows nixpkgs because it'll miss the caches and take really long to build
-    vicinae.url = "github:vicinaehq/vicinae";
-
     pluey = {
       url = "git+https://tangled.org/macuguita.com/pluey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    kopuz = {
+      url = "github:temidaradev/kopuz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

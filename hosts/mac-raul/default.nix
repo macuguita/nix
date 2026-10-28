@@ -3,26 +3,21 @@ let
   hostModule =
     { ... }:
     {
-      macuguita = {
-        platform = "darwin";
-
-        signingKey = "40A199C6E6E4D710";
-
-        localAi.enable = false;
-
-        profiles = {
-          graphical.enable = true;
-        };
-      };
-
       system.stateVersion = 6;
+
+      hjem.specialArgs.signingKey = "40A199C6E6E4D710";
+
+      hjem.users.raul.imports = [
+        config.flake.homeModules.base
+        config.flake.homeModules.desktop
+      ];
     };
 in
 {
   flake.darwinConfigurations.mac-raul = inputs.nix-darwin.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [
-      config.flake.darwinModules.all
+      config.flake.darwinModules.desktop
       hostModule
     ];
   };
