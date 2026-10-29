@@ -4,8 +4,15 @@
     { pkgs, lib, ... }:
     {
       xdg.config.files = {
+        # Replace the old home-manager GTK CSS imports (Catppuccin/Breeze) so
+        # they stop overriding the Adwaita-dark theme.
+        "gtk-3.0/gtk.css".text = "";
+        "gtk-4.0/gtk.css".text = "";
+
         "gtk-3.0/settings.ini".text = ''
           [Settings]
+          gtk-theme-name=Adwaita-dark
+          gtk-icon-theme-name=Adwaita
           gtk-application-prefer-dark-theme=1
           gtk-font-name=Inter 11
           gtk-xft-antialias=1
@@ -15,6 +22,8 @@
 
         "gtk-4.0/settings.ini".text = ''
           [Settings]
+          gtk-theme-name=Adwaita-dark
+          gtk-icon-theme-name=Adwaita
           gtk-application-prefer-dark-theme=1
           gtk-font-name=Inter 11
           gtk-xft-antialias=1
@@ -58,9 +67,19 @@
             "org/gnome/desktop/interface" = {
               accent-color = "blue";
               color-scheme = "prefer-dark";
+              gtk-theme = "Adwaita-dark";
+              icon-theme = "Adwaita";
               cursor-theme = "Adwaita";
               cursor-size = lib.gvariant.mkInt32 24;
               font-name = "Inter 11";
+            };
+            # Keep the machine reachable over Tailscale while idle. GNOME
+            # defaults to suspending after 15 minutes on AC.
+            "org/gnome/settings-daemon/plugins/power" = {
+              sleep-inactive-ac-type = "nothing";
+              sleep-inactive-ac-timeout = lib.gvariant.mkInt32 0;
+              sleep-inactive-battery-type = "nothing";
+              sleep-inactive-battery-timeout = lib.gvariant.mkInt32 0;
             };
             "org/gnome/desktop/input-sources" = {
               sources = [
@@ -133,17 +152,18 @@
         systemPackages = with pkgs; [
           wl-clipboard
 
+          # Qt Wayland decorations in the GNOME/Adwaita style.
           qadwaitadecorations
           qadwaitadecorations-qt6
-
-          qgnomeplatform
-          qgnomeplatform-qt6
         ];
 
         sessionVariables = {
           NIXOS_OZONE_WL = "1";
           _JAVA_AWT_WM_NONREPARENTING = "1";
           QT_QPA_PLATFORM = "wayland;xcb";
+
+          # Without this Qt apps get no titlebar buttons under Wayland.
+          QT_WAYLAND_DECORATION = "adwaita";
         };
       };
     };

@@ -24,7 +24,13 @@
         vulkan-tools-lunarg
       ];
 
-      qt.enable = true;
+      qt = {
+        enable = true;
+
+        # Use the default GNOME look for Qt apps, but explicitly dark.
+        platformTheme = "gnome";
+        style = "adwaita-dark";
+      };
 
       console = {
         earlySetup = true;
