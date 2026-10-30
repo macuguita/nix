@@ -94,6 +94,9 @@
           screenshot-window = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
           show-screen-recording-ui = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
         };
+        "org/gnome/settings-daemon/plugins/housekeeping" = {
+          donation-reminder-enabled = false;
+        };
         "org/gnome/settings-daemon/plugins/media-keys" = {
           next = [ "AudioNext" ];
           play = [ "AudioPlay" ];
