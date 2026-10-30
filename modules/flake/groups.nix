@@ -48,8 +48,6 @@ let
       (nixos "graphical")
       (nixos "graphical/fonts")
       (nixos "graphical/gnome")
-      (nixos "graphical/gnome-dconf")
-      (nixos "graphical/nemo-dconf")
       (nixos "programs/emacs")
       (nixos "services/music")
     ];
@@ -81,6 +79,7 @@ let
       (home "shell")
       (home "nixpkgs")
       (home "identity")
+      (home "dconf")
       (home "programs/direnv")
       (home "default-apps")
     ];
@@ -100,7 +99,7 @@ let
     imports = [
       (home "programs/gnome")
       (home "programs/ghostty")
-      (home "programs/nemo")
+      (home "programs/file-manager")
       (home "programs/music")
       (home "programs/steam")
     ];

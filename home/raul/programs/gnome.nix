@@ -11,7 +11,7 @@
 
         "gtk-3.0/settings.ini".text = ''
           [Settings]
-          gtk-theme-name=Adwaita-dark
+          gtk-theme-name=Adwaita
           gtk-icon-theme-name=Adwaita
           gtk-application-prefer-dark-theme=1
           gtk-font-name=Inter 11
@@ -22,7 +22,7 @@
 
         "gtk-4.0/settings.ini".text = ''
           [Settings]
-          gtk-theme-name=Adwaita-dark
+          gtk-theme-name=Adwaita
           gtk-icon-theme-name=Adwaita
           gtk-application-prefer-dark-theme=1
           gtk-font-name=Inter 11
@@ -56,75 +56,71 @@
         record
         ddcutil
       ];
-    };
 
-  dendritic.nixosModules."nixos/graphical/gnome-dconf" =
-    { lib, ... }:
-    {
-      programs.dconf.profiles.user.databases = [
-        {
-          settings = {
-            "org/gnome/desktop/interface" = {
-              accent-color = "blue";
-              color-scheme = "prefer-dark";
-              gtk-theme = "Adwaita-dark";
-              icon-theme = "Adwaita";
-              cursor-theme = "Adwaita";
-              cursor-size = lib.gvariant.mkInt32 24;
-              font-name = "Inter 11";
-            };
-            # Keep the machine reachable over Tailscale while idle. GNOME
-            # defaults to suspending after 15 minutes on AC.
-            "org/gnome/settings-daemon/plugins/power" = {
-              sleep-inactive-ac-type = "nothing";
-              sleep-inactive-ac-timeout = lib.gvariant.mkInt32 0;
-              sleep-inactive-battery-type = "nothing";
-              sleep-inactive-battery-timeout = lib.gvariant.mkInt32 0;
-            };
-            "org/gnome/desktop/input-sources" = {
-              sources = [
-                (lib.gvariant.mkTuple [
-                  "xkb"
-                  "es"
-                ])
-              ];
-              mru-sources = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-            };
-            "org/gnome/shell/keybindings" = {
-              screenshot = [ "<Shift><Super>3" ];
-              show-screenshot-ui = [ "<Shift><Super>5" ];
-              screenshot-window = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-              show-screen-recording-ui = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-            };
-            "org/gnome/settings-daemon/plugins/media-keys" = {
-              next = [ "AudioNext" ];
-              play = [ "AudioPlay" ];
-              previous = [ "AudioPrev" ];
-              volume-down = [ "AudioLowerVolume" ];
-              volume-mute = [ "AudioMute" ];
-              volume-up = [ "AudioRaiseVolume" ];
+      dconf.settings = {
+        "system/locale" = {
+          region = "es_ES.UTF-8";
+        };
+        "org/gnome/desktop/interface" = {
+          accent-color = "blue";
+          color-scheme = "prefer-dark";
+          gtk-theme = "Adwaita";
+          gtk-enable-primary-paste = true;
+          icon-theme = "Adwaita";
+          cursor-theme = "Adwaita";
+          cursor-size = lib.gvariant.mkInt32 24;
+          font-name = "Inter 11";
+        };
+        # Keep the machine reachable over Tailscale while idle. GNOME
+        # defaults to suspending after 15 minutes on AC.
+        "org/gnome/settings-daemon/plugins/power" = {
+          sleep-inactive-ac-type = "nothing";
+          sleep-inactive-ac-timeout = lib.gvariant.mkInt32 0;
+          sleep-inactive-battery-type = "nothing";
+          sleep-inactive-battery-timeout = lib.gvariant.mkInt32 0;
+        };
+        "org/gnome/desktop/input-sources" = {
+          sources = [
+            (lib.gvariant.mkTuple [
+              "xkb"
+              "es"
+            ])
+          ];
+          mru-sources = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        };
+        "org/gnome/shell/keybindings" = {
+          screenshot = [ "<Shift><Super>3" ];
+          show-screenshot-ui = [ "<Shift><Super>5" ];
+          screenshot-window = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+          show-screen-recording-ui = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        };
+        "org/gnome/settings-daemon/plugins/media-keys" = {
+          next = [ "AudioNext" ];
+          play = [ "AudioPlay" ];
+          previous = [ "AudioPrev" ];
+          volume-down = [ "AudioLowerVolume" ];
+          volume-mute = [ "AudioMute" ];
+          volume-up = [ "AudioRaiseVolume" ];
 
-              custom-keybindings = [
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
-              ];
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
-              name = "Terminal";
-              command = "ghostty";
-              binding = "<Control><Alt>t";
-            };
-            "org/gnome/shell" = {
-              favorite-apps = [
-                "helium.desktop"
-                "nemo.desktop"
-                "emacsclient.desktop"
-                "com.mitchellh.ghostty.desktop"
-                "vesktop.desktop"
-              ];
-            };
-          };
-        }
-      ];
+          custom-keybindings = [
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
+          ];
+        };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
+          name = "Terminal";
+          command = "ghostty";
+          binding = "<Control><Alt>t";
+        };
+        "org/gnome/shell" = {
+          favorite-apps = [
+            "helium.desktop"
+            "org.gnome.Nautilus.desktop"
+            "emacsclient.desktop"
+            "com.mitchellh.ghostty.desktop"
+            "vesktop.desktop"
+          ];
+        };
+      };
     };
 
   dendritic.nixosModules."nixos/graphical/gnome" =

@@ -248,8 +248,8 @@
       linux = [ "video/*" ];
     };
 
-    nemo = {
-      desktop = "nemo.desktop";
+    nautilus = {
+      desktop = "nautilus.desktop";
       linux = [
         "inode/directory"
         "application/x-gnome-saved-search"
