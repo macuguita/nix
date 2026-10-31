@@ -35,6 +35,26 @@
         "type": "github"
       }
     },
+    "earport": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793349482,
+        "narHash": "sha256-Xy86HWYtu2hgIMCbK0YrpirYRZiWCyYT9wPDzSzPfZc=",
+        "owner": "Anoryth",
+        "repo": "earport",
+        "rev": "09c693b2a0bb744b4078f0b6755b1e4d265f6f46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Anoryth",
+        "repo": "earport",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -320,6 +340,7 @@
     "root": {
       "inputs": {
         "bedrock-on-linux": "bedrock-on-linux",
+        "earport": "earport",
         "flake-parts": "flake-parts",
         "helium": "helium",
         "hjem": "hjem",

@@ -36,7 +36,7 @@
     in
     {
       options.dconf.settings = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.attrsOf (lib.types.attrsOf lib.types.anything);
         default = { };
         description = ''
           Per-user dconf settings, keyed by schema path (e.g.

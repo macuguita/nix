@@ -100,6 +100,7 @@ let
       (home "programs/gnome")
       (home "programs/ghostty")
       (home "programs/file-manager")
+      (home "programs/earport")
       (home "programs/music")
       (home "programs/steam")
     ];

@@ -43,6 +43,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    earport = {
+      url = "github:Anoryth/earport";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     helium = {
       url = "github:amaanq/helium-flake";
       inputs.nixpkgs.follows = "nixpkgs";

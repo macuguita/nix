@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   dendritic.homeModules."home/raul/programs/gnome" =
-    { pkgs, lib, ... }:
+    { config, pkgs, lib, ... }:
     {
       xdg.config.files = {
         # Replace the old home-manager GTK CSS imports (Catppuccin/Breeze) so
@@ -57,9 +57,24 @@
         ddcutil
       ];
 
-      dconf.settings = {
+      dconf.settings =
+        let
+          wallpaper = "file://${config.directory}/.wallpaper";
+        in
+      {
         "system/locale" = {
           region = "es_ES.UTF-8";
+        };
+        "org/gnome/desktop/background" = {
+          picture-uri = wallpaper;
+          picture-uri-dark = wallpaper;
+          color-shading-type = "solid";
+          picture-options = "zoom";
+        };
+        "org/gnome/desktop/screensaver" = {
+          picture-uri = wallpaper;
+          primary-color = "#3a4ba0";
+          secondary-color = "#2f302f";
         };
         "org/gnome/desktop/interface" = {
           accent-color = "blue";
@@ -70,6 +85,9 @@
           cursor-theme = "Adwaita";
           cursor-size = lib.gvariant.mkInt32 24;
           font-name = "Inter 11";
+        };
+        "org/gnome/desktop/wm/keybindings" = {
+          close = [ "<Super>q" ];
         };
         # Keep the machine reachable over Tailscale while idle. GNOME
         # defaults to suspending after 15 minutes on AC.
@@ -112,7 +130,7 @@
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
           name = "Terminal";
           command = "ghostty";
-          binding = "<Control><Alt>t";
+          binding = "<Super>t";
         };
         "org/gnome/shell" = {
           favorite-apps = [
