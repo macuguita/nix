@@ -22,7 +22,7 @@
         "ghostty/config".text = ''
           term = xterm-256color
 
-          font-family = monospace
+          font-family = "Maple Mono NL NF"
           font-size = 14
 
           background = 121212

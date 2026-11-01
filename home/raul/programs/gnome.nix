@@ -1,7 +1,12 @@
 { inputs, ... }:
 {
   dendritic.homeModules."home/raul/programs/gnome" =
-    { config, pkgs, lib, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     {
       xdg.config.files = {
         # Replace the old home-manager GTK CSS imports (Catppuccin/Breeze) so
@@ -61,87 +66,87 @@
         let
           wallpaper = "file://${config.directory}/.wallpaper";
         in
-      {
-        "system/locale" = {
-          region = "es_ES.UTF-8";
-        };
-        "org/gnome/desktop/background" = {
-          picture-uri = wallpaper;
-          picture-uri-dark = wallpaper;
-          color-shading-type = "solid";
-          picture-options = "zoom";
-        };
-        "org/gnome/desktop/screensaver" = {
-          picture-uri = wallpaper;
-          primary-color = "#3a4ba0";
-          secondary-color = "#2f302f";
-        };
-        "org/gnome/desktop/interface" = {
-          accent-color = "blue";
-          color-scheme = "prefer-dark";
-          gtk-theme = "Adwaita";
-          gtk-enable-primary-paste = true;
-          icon-theme = "Adwaita";
-          cursor-theme = "Adwaita";
-          cursor-size = lib.gvariant.mkInt32 24;
-          font-name = "Inter 11";
-        };
-        "org/gnome/desktop/wm/keybindings" = {
-          close = [ "<Super>q" ];
-        };
-        # Keep the machine reachable over Tailscale while idle. GNOME
-        # defaults to suspending after 15 minutes on AC.
-        "org/gnome/settings-daemon/plugins/power" = {
-          sleep-inactive-ac-type = "nothing";
-          sleep-inactive-ac-timeout = lib.gvariant.mkInt32 0;
-          sleep-inactive-battery-type = "nothing";
-          sleep-inactive-battery-timeout = lib.gvariant.mkInt32 0;
-        };
-        "org/gnome/desktop/input-sources" = {
-          sources = [
-            (lib.gvariant.mkTuple [
-              "xkb"
-              "es"
-            ])
-          ];
-          mru-sources = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-        };
-        "org/gnome/shell/keybindings" = {
-          screenshot = [ "<Shift><Super>3" ];
-          show-screenshot-ui = [ "<Shift><Super>5" ];
-          screenshot-window = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-          show-screen-recording-ui = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-        };
-        "org/gnome/settings-daemon/plugins/housekeeping" = {
-          donation-reminder-enabled = false;
-        };
-        "org/gnome/settings-daemon/plugins/media-keys" = {
-          next = [ "AudioNext" ];
-          play = [ "AudioPlay" ];
-          previous = [ "AudioPrev" ];
-          volume-down = [ "AudioLowerVolume" ];
-          volume-mute = [ "AudioMute" ];
-          volume-up = [ "AudioRaiseVolume" ];
+        {
+          "system/locale" = {
+            region = "es_ES.UTF-8";
+          };
+          "org/gnome/desktop/background" = {
+            picture-uri = wallpaper;
+            picture-uri-dark = wallpaper;
+            color-shading-type = "solid";
+            picture-options = "zoom";
+          };
+          "org/gnome/desktop/screensaver" = {
+            picture-uri = wallpaper;
+            primary-color = "#3a4ba0";
+            secondary-color = "#2f302f";
+          };
+          "org/gnome/desktop/interface" = {
+            accent-color = "blue";
+            color-scheme = "prefer-dark";
+            gtk-theme = "Adwaita";
+            gtk-enable-primary-paste = true;
+            icon-theme = "Adwaita";
+            cursor-theme = "Adwaita";
+            cursor-size = lib.gvariant.mkInt32 24;
+            font-name = "Inter 11";
+          };
+          "org/gnome/desktop/wm/keybindings" = {
+            close = [ "<Super>q" ];
+          };
+          # Keep the machine reachable over Tailscale while idle. GNOME
+          # defaults to suspending after 15 minutes on AC.
+          "org/gnome/settings-daemon/plugins/power" = {
+            sleep-inactive-ac-type = "nothing";
+            sleep-inactive-ac-timeout = lib.gvariant.mkInt32 0;
+            sleep-inactive-battery-type = "nothing";
+            sleep-inactive-battery-timeout = lib.gvariant.mkInt32 0;
+          };
+          "org/gnome/desktop/input-sources" = {
+            sources = [
+              (lib.gvariant.mkTuple [
+                "xkb"
+                "es"
+              ])
+            ];
+            mru-sources = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+          };
+          "org/gnome/shell/keybindings" = {
+            screenshot = [ "<Shift><Super>3" ];
+            show-screenshot-ui = [ "<Shift><Super>5" ];
+            screenshot-window = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+            show-screen-recording-ui = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+          };
+          "org/gnome/settings-daemon/plugins/housekeeping" = {
+            donation-reminder-enabled = false;
+          };
+          "org/gnome/settings-daemon/plugins/media-keys" = {
+            next = [ "AudioNext" ];
+            play = [ "AudioPlay" ];
+            previous = [ "AudioPrev" ];
+            volume-down = [ "AudioLowerVolume" ];
+            volume-mute = [ "AudioMute" ];
+            volume-up = [ "AudioRaiseVolume" ];
 
-          custom-keybindings = [
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
-          ];
+            custom-keybindings = [
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
+            ];
+          };
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
+            name = "Terminal";
+            command = "ghostty";
+            binding = "<Super>t";
+          };
+          "org/gnome/shell" = {
+            favorite-apps = [
+              "helium.desktop"
+              "org.gnome.Nautilus.desktop"
+              "emacsclient.desktop"
+              "com.mitchellh.ghostty.desktop"
+              "vesktop.desktop"
+            ];
+          };
         };
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
-          name = "Terminal";
-          command = "ghostty";
-          binding = "<Super>t";
-        };
-        "org/gnome/shell" = {
-          favorite-apps = [
-            "helium.desktop"
-            "org.gnome.Nautilus.desktop"
-            "emacsclient.desktop"
-            "com.mitchellh.ghostty.desktop"
-            "vesktop.desktop"
-          ];
-        };
-      };
     };
 
   dendritic.nixosModules."nixos/graphical/gnome" =

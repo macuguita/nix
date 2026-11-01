@@ -57,6 +57,8 @@
         description = "Emacs daemon";
         wantedBy = [ "default.target" ];
 
+        path = [ pkgs.gzip ];
+
         serviceConfig = {
           Type = "simple";
           ExecStart = "${emacs.emacsPkg}/bin/emacs --fg-daemon";
