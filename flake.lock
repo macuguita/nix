@@ -324,11 +324,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792988299,
-        "narHash": "sha256-pm69L0fqRZnNA15AATI0oLRYMUJZtUOnJQObeqOuhnU=",
+        "lastModified": 1793630727,
+        "narHash": "sha256-MbfG3wG0FbCtJrtW+HBDJNZtc98rU0pEEdmxZvPUMk4=",
         "ref": "refs/heads/main",
-        "rev": "21267a57b420b754adf83131ff0f29042f511442",
-        "revCount": 20,
+        "rev": "dbe6f1a3774594233ae012a35b8db5c8f67d8ede",
+        "revCount": 21,
         "type": "git",
         "url": "https://tangled.org/macuguita.com/pluey"
       },

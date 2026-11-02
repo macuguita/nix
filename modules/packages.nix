@@ -67,6 +67,7 @@ let
                     genericName = "Unofficial Minecraft Launcher";
                     exec = "pandora_launcher";
                     icon = "pandora_launcher";
+                    startupWMClass = "PandoraLauncher";
                   })
                 ];
 
