@@ -60,6 +60,7 @@
           mupdf
           inputs.pluey.packages.${system}.pluey
           inputs.bedrock-on-linux.packages.${system}.default
+          inputs.quadra.packages.${system}.default # Roblox macOS client on linux
           inputs.kopuz.packages.${system}.default
           onlyoffice-desktopeditors
           kdePackages.kdenlive

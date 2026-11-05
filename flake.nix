@@ -63,6 +63,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    quadra = {
+      url = "github:QuadraHQ/Quadra";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     bedrock-on-linux = {
       url = "github:Wyze3306/BedrockOnLinux";
       inputs.nixpkgs.follows = "nixpkgs";

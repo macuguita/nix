@@ -337,6 +337,26 @@
         "url": "https://tangled.org/macuguita.com/pluey"
       }
     },
+    "quadra": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793846457,
+        "narHash": "sha256-GbDZHgiwTUwBl7ZmzS9zhpkQMVbloQNdCMitPU8AN+U=",
+        "owner": "QuadraHQ",
+        "repo": "Quadra",
+        "rev": "6ca19b1cd96400de43e1eaf604767dbaae25a321",
+        "type": "github"
+      },
+      "original": {
+        "owner": "QuadraHQ",
+        "repo": "Quadra",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "bedrock-on-linux": "bedrock-on-linux",
@@ -352,7 +372,8 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-raddebugger": "nixpkgs-raddebugger",
         "nur": "nur",
-        "pluey": "pluey"
+        "pluey": "pluey",
+        "quadra": "quadra"
       }
     },
     "rust-overlay": {
