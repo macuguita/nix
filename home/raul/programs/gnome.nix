@@ -76,6 +76,13 @@
             color-shading-type = "solid";
             picture-options = "zoom";
           };
+          "org/gnome/desktop/datetime" = {
+            automatic-timezone = true;
+          };
+          "org/gnome/desktop/interface" = {
+            clock-show-weekday = true;
+            clock-show-date = true;
+          };
           "org/gnome/desktop/screensaver" = {
             picture-uri = wallpaper;
             primary-color = "#3a4ba0";
