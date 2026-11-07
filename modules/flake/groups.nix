@@ -105,6 +105,10 @@ let
       (home "programs/steam")
     ];
   };
+
+  homeAI = {
+    imports = [ (home "programs/ai") ];
+  };
 in
 {
   flake.nixosModules = {
@@ -151,9 +155,6 @@ in
     base = homeBase;
     desktop = homeDesktop;
     linux = homeLinux;
-
-    local-ai = {
-      imports = [ (home "programs/opencode") ];
-    };
+    ai = homeAI;
   };
 }

@@ -10,6 +10,7 @@ let
       hjem.users.raul.imports = [
         config.flake.homeModules.base
         config.flake.homeModules.desktop
+        config.flake.homeModules.ai
       ];
     };
 in

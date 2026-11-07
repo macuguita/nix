@@ -1,14 +1,13 @@
 { inputs, ... }:
 {
   dendritic.nixosModules."nixos/hardware/audio" =
-    { ... }:
+    { pkgs, ... }:
     {
       services.pipewire = {
         enable = true;
 
         audio.enable = true;
         pulse.enable = true;
-        jack.enable = true;
 
         alsa = {
           enable = true;
@@ -25,6 +24,10 @@
           };
         };
       };
+
+      # Launch JACK applications with `pw-jack <app>` instead of relying on a
+      # global LD_LIBRARY_PATH.
+      environment.systemPackages = [ pkgs.pipewire.jack ];
 
       # allows programs to choose their scheduling policy, so pipewire can request realtime
       security.rtkit.enable = true;

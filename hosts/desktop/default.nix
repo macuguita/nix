@@ -12,7 +12,7 @@ let
         config.flake.homeModules.base
         config.flake.homeModules.desktop
         config.flake.homeModules.linux
-        config.flake.homeModules.local-ai
+        config.flake.homeModules.ai
       ];
     };
 in
