@@ -57,7 +57,7 @@
         description = "Emacs daemon";
         wantedBy = [ "default.target" ];
 
-        path = [ pkgs.gzip ];
+        path = [ pkgs.gzip pkgs.git ];
 
         serviceConfig = {
           Type = "simple";

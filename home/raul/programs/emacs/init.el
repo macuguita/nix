@@ -95,6 +95,11 @@
 (use-package markdown-ts-mode
   :ensure nil
   :mode ("\\.md\\'" "\\.markdown\\'"))
+;; Typst
+(use-package typst-ts-mode
+  :vc (:url "https://codeberg.org/meow_king/typst-ts-mode"
+       :rev :newest)
+  :mode "\\.typ\\'")
 
 ;; Keybinds
 (cua-mode 1) ;; Copy paste mode
