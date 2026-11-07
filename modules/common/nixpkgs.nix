@@ -8,8 +8,6 @@ let
           allowUnfree = true;
           allowBroken = false;
         };
-        overlays = [
-        ];
       };
     };
 in

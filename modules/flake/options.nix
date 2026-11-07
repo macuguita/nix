@@ -23,6 +23,13 @@ in
   # leaf aggregate and the host-facing groups merge.
   options.flake.darwinModules = moduleSet "nix-darwin modules exposed by the flake.";
 
+  # Helper for hosts: resolve a list of extra home group names on top of the
+  # base+desktop profile into the actual home modules.
+  options.flake.homeProfile = lib.mkOption {
+    type = lib.types.functionTo (lib.types.listOf lib.types.raw);
+    description = "Build the home module list for user raul from extra group names.";
+  };
+
   # Home modules have no aggregate in `flake.homeModules`, so aliasing is safe.
   config.flake.homeModules = config.dendritic.homeModules;
 }

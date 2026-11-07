@@ -21,7 +21,6 @@
 
         vulkan-tools
         vulkan-validation-layers
-        vulkan-tools-lunarg
       ];
 
       qt = {

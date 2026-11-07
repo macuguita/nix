@@ -2,7 +2,6 @@
 {
   dendritic.nixosModules."hosts/desktop/hardware-configuration" =
     {
-      config,
       lib,
       modulesPath,
       ...
@@ -23,10 +22,6 @@
         "usbhid"
         "sd_mod"
       ];
-      boot.initrd.kernelModules = [ ];
-      boot.kernelModules = [ "kvm-amd" ];
-      boot.extraModulePackages = [ ];
-
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/6655f363-3fd6-4ed4-9101-7551e356e6e0";
         fsType = "btrfs";
@@ -81,6 +76,5 @@
       ];
 
       nixpkgs.hostPlatform = mkDefault "x86_64-linux";
-      hardware.cpu.amd.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
     };
 }

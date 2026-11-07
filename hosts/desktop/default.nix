@@ -8,11 +8,9 @@ let
 
       hjem.specialArgs.signingKey = "DE0F62AEEC379198";
 
-      hjem.users.raul.imports = [
-        config.flake.homeModules.base
-        config.flake.homeModules.desktop
-        config.flake.homeModules.linux
-        config.flake.homeModules.ai
+      hjem.users.raul.imports = config.flake.homeProfile [
+        "linux"
+        "ai"
       ];
     };
 in

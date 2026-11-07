@@ -79,10 +79,6 @@
           "org/gnome/desktop/datetime" = {
             automatic-timezone = true;
           };
-          "org/gnome/desktop/interface" = {
-            clock-show-weekday = true;
-            clock-show-date = true;
-          };
           "org/gnome/desktop/screensaver" = {
             picture-uri = wallpaper;
             primary-color = "#3a4ba0";
@@ -90,6 +86,8 @@
           };
           "org/gnome/desktop/interface" = {
             accent-color = "blue";
+            clock-show-weekday = true;
+            clock-show-date = true;
             color-scheme = "prefer-dark";
             gtk-theme = "Adwaita";
             gtk-enable-primary-paste = true;

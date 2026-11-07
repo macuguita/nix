@@ -13,6 +13,7 @@ let
     imports = [
       (nixos "common/nix")
       (nixos "common/nixpkgs")
+      (nixos "common/shell")
       (nixos "packages")
       (nixos "nixos-init")
       (nixos "boot")
@@ -61,11 +62,11 @@ let
     imports = [
       (darwin "common/nix")
       (darwin "common/nixpkgs")
+      (darwin "common/shell")
       (darwin "packages")
       (darwin "nur")
       (darwin "locale")
       (darwin "services")
-      (darwin "shell")
       (darwin "users")
       (darwin "networking")
       (darwin "networking/ssh")
@@ -157,4 +158,16 @@ in
     linux = homeLinux;
     ai = homeAI;
   };
+
+  # Hosts pass `config.flake.homeProfile [ ... ]` as `hjem.specialArgs.homeGroups`
+  # so every host gets base+desktop and only lists its extra groups.
+  flake.homeProfile =
+    extras:
+    map (name: config.dendritic.homeModules.${name}) (
+      [
+        "base"
+        "desktop"
+      ]
+      ++ extras
+    );
 }

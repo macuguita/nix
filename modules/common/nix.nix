@@ -12,7 +12,6 @@ let
         channel.enable = false;
 
         settings = {
-          connect-timeout = 50000;
           warn-dirty = false;
           auto-optimise-store = true;
           max-jobs = "auto";

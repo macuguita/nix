@@ -7,11 +7,7 @@ let
 
       hjem.specialArgs.signingKey = "40A199C6E6E4D710";
 
-      hjem.users.raul.imports = [
-        config.flake.homeModules.base
-        config.flake.homeModules.desktop
-        config.flake.homeModules.ai
-      ];
+      hjem.users.raul.imports = config.flake.homeProfile [ "ai" ];
     };
 in
 {

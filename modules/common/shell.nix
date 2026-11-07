@@ -1,9 +1,16 @@
 { inputs, ... }:
-{
-  dendritic.darwinModules."darwin/shell" =
+let
+  module =
     { pkgs, ... }:
     {
-      programs.zsh.enable = true;
+      programs = {
+        zsh.enable = true;
+
+        gnupg.agent = {
+          enable = true;
+          enableSSHSupport = true;
+        };
+      };
 
       environment.systemPackages = with pkgs; [
         wget
@@ -24,13 +31,9 @@
         gnutar
         gzip
       ];
-
-      programs = {
-        gnupg.agent = {
-          enable = true;
-
-          enableSSHSupport = true;
-        };
-      };
     };
+in
+{
+  dendritic.nixosModules."nixos/common/shell" = module;
+  dendritic.darwinModules."darwin/common/shell" = module;
 }
