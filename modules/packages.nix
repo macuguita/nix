@@ -19,6 +19,7 @@ let
             mcaselector = pkgs.callPackage ../packages/mcaselector { };
             vineflower = pkgs.callPackage ../packages/vineflower { };
             ryubing-canary = pkgs.callPackage ../packages/ryubing-canary { };
+            docker-desktop = pkgs.callPackage ../packages/docker-desktop { };
 
             # Upstream pandora-launcher-unwrapped doesn't produce a macOS .app.
             # Mirrors https://github.com/NixOS/nixpkgs/pull/557789, plus a rebased

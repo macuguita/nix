@@ -49,6 +49,7 @@
 
           python3
           rlwrap
+          docker
         ]
         ++ optionals isLinux [
           filezilla
@@ -75,6 +76,7 @@
           shottr
           whatsapp-for-mac
           whisky
+          docker-desktop
         ];
     };
 }

@@ -8,8 +8,9 @@
       ...
     }:
     let
-      inherit (pkgs.stdenv.hostPlatform) isLinux;
+      inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
       inherit (lib.lists) optionals;
+      inherit (lib.strings) optionalString;
     in
     {
       packages =
@@ -34,6 +35,13 @@
 
       files = {
         ".zshrc".text = ''
+          # Environment
+          ${optionalString isDarwin ''
+            # Docker Desktop's credential helpers (docker-credential-desktop, …)
+            # live inside the app bundle; ~/.docker/config.json expects them on PATH.
+            export PATH="$PATH:$HOME/Applications/Nix User Apps/Docker.app/Contents/Resources/bin"
+          ''}
+
           # Aliases
           alias cat="bat"
           alias grep="grep --color=auto"

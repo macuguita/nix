@@ -23,6 +23,7 @@ let
       (nixos "users")
       (nixos "nur")
       (nixos "services")
+      (nixos "docker")
       (nixos "network")
       (nixos "network/firewall")
       (nixos "network/ssh")

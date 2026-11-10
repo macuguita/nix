@@ -20,6 +20,7 @@
         "libvirtd"
         "kvm"
         "i2c"
+        "docker"
       ];
 
       home = "/home/raul";
