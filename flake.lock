@@ -373,7 +373,8 @@
         "nixpkgs-raddebugger": "nixpkgs-raddebugger",
         "nur": "nur",
         "pluey": "pluey",
-        "quadra": "quadra"
+        "quadra": "quadra",
+        "vice": "vice"
       }
     },
     "rust-overlay": {
@@ -409,6 +410,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vice": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794437631,
+        "narHash": "sha256-tLh0HUw1RikfpQOkwGkSWWJ7PI7P1jxWaZ46u76iQjE=",
+        "owner": "splitshotz",
+        "repo": "Vice",
+        "rev": "b16598250e2506c65b69000c91c54b50710cf0d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "splitshotz",
+        "repo": "Vice",
         "type": "github"
       }
     }

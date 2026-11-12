@@ -116,6 +116,8 @@
             ];
             mru-sources = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
           };
+          # GNOME's own screen recorder is disabled; recording goes through
+          # Vice (see the vice-clip custom keybinding below and its F9 hotkey).
           "org/gnome/shell/keybindings" = {
             screenshot = [ "<Shift><Super>3" ];
             show-screenshot-ui = [ "<Shift><Super>5" ];
@@ -135,12 +137,18 @@
 
             custom-keybindings = [
               "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vice-clip/"
             ];
           };
           "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
             name = "Terminal";
             command = "ghostty";
             binding = "<Super>t";
+          };
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vice-clip" = {
+            name = "Vice clip";
+            command = "vice clip";
+            binding = "<Shift><Super>r";
           };
           "org/gnome/shell" = {
             favorite-apps = [

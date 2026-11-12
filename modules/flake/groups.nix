@@ -56,7 +56,10 @@ let
   };
 
   nixosGaming = {
-    imports = [ (nixos "programs/steam") ];
+    imports = [
+      (nixos "programs/steam")
+      (nixos "vice")
+    ];
   };
 
   darwinBase = {

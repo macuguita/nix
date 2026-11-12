@@ -29,11 +29,13 @@
     {
       packages = [
         (withRuntimeTools pkgs.opencode)
-        (withRuntimeTools <| pkgs.mistral-vibe.overrideAttrs (old:
-        {
-          doCheck = false;
-          doInstallCheck = false;
-        }))
+        (
+          withRuntimeTools
+          <| pkgs.mistral-vibe.overrideAttrs (old: {
+            doCheck = false;
+            doInstallCheck = false;
+          })
+        )
       ];
 
       xdg.config.files = {

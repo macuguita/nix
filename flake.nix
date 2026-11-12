@@ -72,6 +72,11 @@
       url = "github:Wyze3306/BedrockOnLinux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vice = {
+      url = "github:splitshotz/Vice";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
