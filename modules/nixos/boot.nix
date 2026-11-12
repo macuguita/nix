@@ -13,6 +13,11 @@
           };
         };
         kernelPackages = pkgs.linuxPackages_latest;
+
+        plymouth = {
+          enable = true;
+          # default theme (bgrt/spinner); set `theme` to pick another
+        };
       };
     };
 }

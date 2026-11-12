@@ -108,6 +108,7 @@ let
       (home "programs/earport")
       (home "programs/music")
       (home "programs/steam")
+      (home "programs/vice")
     ];
   };
 
