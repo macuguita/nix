@@ -80,13 +80,11 @@ in
         ++ map (macEntry app "tag") (app.macExtensions or [ ])
       ) (attrValues data.apps);
 
-      macEntriesJson = pkgs.writeText "default-apps-launchservices.json" (builtins.toJSON macEntries);
+      macEntriesJson = (pkgs.formats.json { }).generate "default-apps-launchservices.json" macEntries;
 
-      macAppsJson = pkgs.writeText "default-apps-launchservices-apps.json" (
-        builtins.toJSON (
-          map (app: "${config.users.users.raul.home}/Applications/Nix User Apps/${app.macApp}") (
-            builtins.filter (app: app ? macApp) (attrValues data.apps)
-          )
+      macAppsJson = (pkgs.formats.json { }).generate "default-apps-launchservices-apps.json" (
+        map (app: "${config.users.users.raul.home}/Applications/Nix User Apps/${app.macApp}") (
+          builtins.filter (app: app ? macApp) (attrValues data.apps)
         )
       );
     in

@@ -29,30 +29,40 @@
           };
         };
 
-        "git/config".text = ''
-          [user]
-          name = macuguita
-          email = me@macuguita.com
-          signingKey = ${signingKey}
-          [commit]
-          gpgsign = true
-          [core]
-          excludesFile = ${pkgs.writeText "gitignore" ''
-            .jj
-            .env
-            .DS_Store
-          ''}
-          [diff]
-          algorithm = histogram
-          colorMoved = plain
-          mnemonicprefix = true
-          [fetch]
-          prune = true
-          [push]
-          autoSetupRemote = true
-          [init]
-          defaultBranch = main
-        '';
+        "git/config" = {
+          generator = (pkgs.formats.gitIni { }).generate "git-config";
+          value = {
+            user = {
+              name = "macuguita";
+              email = "me@macuguita.com";
+              signingKey = signingKey;
+            };
+            commit = {
+              gpgsign = true;
+            };
+            core = {
+              excludesFile = pkgs.writeText "gitignore" ''
+                .jj
+                .env
+                .DS_Store
+              '';
+            };
+            diff = {
+              algorithm = "histogram";
+              colorMoved = "plain";
+              mnemonicprefix = true;
+            };
+            fetch = {
+              prune = true;
+            };
+            push = {
+              autoSetupRemote = true;
+            };
+            init = {
+              defaultBranch = "main";
+            };
+          };
+        };
       };
     };
 }

@@ -7,6 +7,17 @@
       lib,
       ...
     }:
+    let
+      gtkSettings = {
+        "gtk-theme-name" = "Adwaita";
+        "gtk-icon-theme-name" = "Adwaita";
+        "gtk-application-prefer-dark-theme" = 1;
+        "gtk-font-name" = "Inter 11";
+        "gtk-xft-antialias" = 1;
+        "gtk-xft-hinting" = 1;
+        "gtk-xft-hintstyle" = "hintslight";
+      };
+    in
     {
       xdg.config.files = {
         # Replace the old home-manager GTK CSS imports (Catppuccin/Breeze) so
@@ -14,36 +25,26 @@
         "gtk-3.0/gtk.css".text = "";
         "gtk-4.0/gtk.css".text = "";
 
-        "gtk-3.0/settings.ini".text = ''
-          [Settings]
-          gtk-theme-name=Adwaita
-          gtk-icon-theme-name=Adwaita
-          gtk-application-prefer-dark-theme=1
-          gtk-font-name=Inter 11
-          gtk-xft-antialias=1
-          gtk-xft-hinting=1
-          gtk-xft-hintstyle=hintslight
-        '';
+        "gtk-3.0/settings.ini" = {
+          generator = (pkgs.formats.ini { }).generate "gtk3-settings.ini";
+          value.Settings = gtkSettings;
+        };
 
-        "gtk-4.0/settings.ini".text = ''
-          [Settings]
-          gtk-theme-name=Adwaita
-          gtk-icon-theme-name=Adwaita
-          gtk-application-prefer-dark-theme=1
-          gtk-font-name=Inter 11
-          gtk-xft-antialias=1
-          gtk-xft-hinting=1
-          gtk-xft-hintstyle=hintslight
-        '';
+        "gtk-4.0/settings.ini" = {
+          generator = (pkgs.formats.ini { }).generate "gtk4-settings.ini";
+          value.Settings = gtkSettings;
+        };
       };
 
       files = {
-        ".icons/default/index.theme".text = ''
-          [Icon Theme]
-          Name=Default
-          Comment=Default Cursor Theme
-          Inherits=Adwaita
-        '';
+        ".icons/default/index.theme" = {
+          generator = (pkgs.formats.ini { }).generate "index.theme";
+          value."Icon Theme" = {
+            Name = "Default";
+            Comment = "Default Cursor Theme";
+            Inherits = "Adwaita";
+          };
+        };
       };
 
       environment.sessionVariables = {

@@ -8,12 +8,15 @@
     in
     {
       xdg.config.files = mkIf isLinux {
-        "navidrome/navidrome.toml".text = ''
-          MusicFolder = "/home/raul/Music"
-          Address = "127.0.0.1"
-          Port = 4533
-          DataFolder = "/home/raul/.local/share/navidrome"
-        '';
+        "navidrome/navidrome.toml" = {
+          generator = (pkgs.formats.toml { }).generate "navidrome.toml";
+          value = {
+            MusicFolder = "/home/raul/Music";
+            Address = "127.0.0.1";
+            Port = 4533;
+            DataFolder = "/home/raul/.local/share/navidrome";
+          };
+        };
 
         "nicotine/config" = {
           generator = (pkgs.formats.ini { }).generate "nicotine-config";

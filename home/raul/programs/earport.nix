@@ -28,12 +28,12 @@
       xdg.config.files."earport/daemon.conf" = {
         type = "copy";
         permissions = "0644";
-        text = ''
-          [Settings]
-          ear_pause_mode=1
-          auto_connect=false
-          apple_handoff=false
-        '';
+        generator = (pkgs.formats.ini { }).generate "daemon.conf";
+        value.Settings = {
+          ear_pause_mode = 1;
+          auto_connect = false;
+          apple_handoff = false;
+        };
       };
 
       systemd.services.earport-daemon = {
