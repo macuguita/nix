@@ -21,6 +21,18 @@ let
             ryubing-canary = pkgs.callPackage ../packages/ryubing-canary { };
             docker-desktop = pkgs.callPackage ../packages/docker-desktop { };
 
+            # nixpkgs' cargo setup hook forces AWS_LC_SYS_USE_SYSTEM=1 on every
+            # vendored Rust build, but this revision's mistral-vibe doesn't ship
+            # the system AWS-LC that pkg-config then looks for (fixed upstream;
+            # drop this override after the next nixpkgs bump past it).
+            mistral-vibe = super.mistral-vibe.overrideAttrs (old: {
+              passthru = old.passthru // {
+                vibe-rs = old.passthru.vibe-rs.overrideAttrs (vibe: {
+                  buildInputs = vibe.buildInputs ++ [ super.aws-lc ];
+                });
+              };
+            });
+
             # Upstream pandora-launcher-unwrapped doesn't produce a macOS .app.
             # Mirrors https://github.com/NixOS/nixpkgs/pull/557789, plus a rebased
             # https://github.com/Moulberry/PandoraLauncher/pull/551 for bwrap on NixOS.

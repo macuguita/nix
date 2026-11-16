@@ -37,7 +37,20 @@
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
-          ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg 4533";
+
+          # `serve` fails with "unexpected state: NoState" when it races
+          # tailscaled restoring its (existing) state after a restart, and a
+          # failed oneshot never retries — so retry here for a while.
+          ExecStart = pkgs.writeShellScript "tailscale-serve-navidrome" ''
+            for i in $(seq 1 30); do
+              if ${pkgs.tailscale}/bin/tailscale serve --bg 4533; then
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "tailscale-serve-navidrome: tailscaled never left NoState" >&2
+            exit 1
+          '';
         };
       };
     };

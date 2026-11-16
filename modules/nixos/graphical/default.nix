@@ -1,11 +1,25 @@
 { inputs, ... }:
 {
   dendritic.nixosModules."nixos/graphical" =
-    { pkgs, lib, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     {
       nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
 
-      programs.dconf.enable = true;
+      programs.dconf = {
+        enable = true;
+
+        # GDM owns /etc/dconf/profile/user now, which shadows hjem's
+        # per-user profile, so the declarative dconf settings have to be
+        # merged into the system profile here instead.
+        profiles.user.databases = [
+          { settings = config.hjem.users.raul.dconf.settings; }
+        ];
+      };
 
       services = {
         libinput.enable = true;
