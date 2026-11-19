@@ -20,8 +20,8 @@
               backend = "gpg";
               key = signingKey;
             };
-            git = {
-              sign-on-push = true;
+            revsets = {
+              git-sign-on-push = "~signed() & mine()";
             };
             revset-aliases = {
               "immutable_heads()" = "builtin_immutable_heads() | remote_bookmarks()";
