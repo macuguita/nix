@@ -64,7 +64,13 @@
           (lambda ()
             (setq-local tab-width 2)
             (setq-local nix-indent-offset 2)))
-;; C
+;; C-like: default indent = 4
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq c-basic-offset 4)))
+(add-hook 'c-ts-mode-hook
+          (lambda ()
+            (setq c-basic-offset 4)))
 (use-package c-ts-mode
   :ensure nil
   :mode (("\\.c\\'" . c-ts-mode)
