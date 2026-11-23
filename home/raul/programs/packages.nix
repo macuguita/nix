@@ -45,7 +45,6 @@
 
           pw-gui
           vineflower
-          mcaselector
 
           python3
           rlwrap
@@ -77,6 +76,7 @@
           whatsapp-for-mac
           whisky
           docker-desktop
+          mcaselector
         ];
     };
 }
