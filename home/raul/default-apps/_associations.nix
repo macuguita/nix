@@ -5,6 +5,11 @@
 # the app bundle name under ~/Applications/Nix User Apps.
 {
   apps = {
+    blockbench = {
+      desktop = "blockbench.desktop";
+      linux = [ "application/x-blockbench-model" ];
+    };
+
     emacs = {
       bundleId = "com.macuguita.emacs-client";
       macApp = "Emacs Client.app";
@@ -297,6 +302,11 @@
   # them (installed via hjem packages so XDG picks them up), and XDG can then
   # associate the files.
   linuxExtraMime = [
+    {
+      mimeType = "application/x-blockbench-model";
+      comment = "Blockbench model";
+      extensions = [ "bbmodel" ];
+    }
     {
       mimeType = "application/x-minecraft-nbt";
       comment = "Minecraft NBT data";
