@@ -20,11 +20,11 @@ echo "latest Docker Desktop: $version ($url)"
 
 hash=$(nix store prefetch-file --json "$url" | jq -r .hash)
 
-# BSD sed (macOS) requires an explicit empty backup suffix for -i.
-sed -i '' \
+sed -i.bak \
   -e "s|version = \"[^\"]*\";|version = \"$version\";|" \
   -e "s|https://desktop.docker.com/mac/main/arm64/[0-9]*/Docker.dmg|$url|" \
   -e "s|hash = \"sha256-[^\"]*\";|hash = \"$hash\";|" \
   "$pkg"
 
+rm "$pkg.bak"
 echo "updated $pkg -> $version"

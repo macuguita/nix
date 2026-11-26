@@ -12,11 +12,11 @@ let
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "docker-desktop";
-  version = "4.98.0";
+  version = "4.99.0";
 
   src = fetchurl {
-    url = "https://desktop.docker.com/mac/main/arm64/245422/Docker.dmg";
-    hash = "sha256-nG8Tzk7doqvyDYAVUrasuWrNPWSz6RtQxEhDU4AnWLU=";
+    url = "https://desktop.docker.com/mac/main/arm64/245822/Docker.dmg";
+    hash = "sha256-Dt5/mRe1XDlqF7A8Bpyt9Fen0hkEvCZMbTmP4TLaf7k=";
   };
 
   nativeBuildInputs = [ undmg ];
