@@ -135,11 +135,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795446590,
-        "narHash": "sha256-r5RpoYZOwd5y+LwcveGzMNNuapXIK6dSOqb9tXOD4KA=",
+        "lastModified": 1795607293,
+        "narHash": "sha256-a0Q3+z23BSIvsQaiz4fInmIbEuCEDgG+w0wh2hASu8g=",
         "owner": "amaanq",
         "repo": "helium-flake",
-        "rev": "b13d85a06c1c4c189504cc9da87790541d096698",
+        "rev": "077f04d80e1ddd98ff86b0709d9916f86385d12f",
         "type": "github"
       },
       "original": {
@@ -192,11 +192,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1795447411,
-        "narHash": "sha256-VT9LUyzmxvQejZv/NFgB4sq/mgZAv+WuqPrDtq3uRwY=",
+        "lastModified": 1795622512,
+        "narHash": "sha256-U3gWyM065dw/iqDJB0+dg/RIP68FENKsYaRkObYs06c=",
         "owner": "temidaradev",
         "repo": "kopuz",
-        "rev": "908bce63c323e53a6c168168eab7edfb946a4a60",
+        "rev": "2f29c2fed1259134e24ec0df69c76c792438592f",
         "type": "github"
       },
       "original": {
@@ -254,11 +254,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795416618,
-        "narHash": "sha256-yt+hZIQ/IvwOCNFO5npT8KLrXZ+U7vDeQxjX8ZvoHQ8=",
+        "lastModified": 1795679147,
+        "narHash": "sha256-cfkui25akpB0JXG14uytHgM7OM+QXvtjEpkf8eq5jJ0=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "661f7bc4cfed8c0143603f3df2fd89a0e5fcf04a",
+        "rev": "d402f63141df1d9c8504666a162e59d1fc3d6aac",
         "type": "github"
       },
       "original": {
@@ -322,11 +322,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795462304,
-        "narHash": "sha256-gpunqo7nkvwjnqa4+ykbzbuaD20qk7x9zcRouee2Qco=",
+        "lastModified": 1795696299,
+        "narHash": "sha256-c7mGXgiTfR/jkfpRMI/HPMRQlGM4DBsn7YtZP6ueHCk=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "860f39f86321e38855bbb69561c3ab4e9f3e0bfb",
+        "rev": "86a88e3da13e8b395a4592ba6797f042dbf88f70",
         "type": "github"
       },
       "original": {
@@ -363,11 +363,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795442421,
-        "narHash": "sha256-/BRWIHPiB9r1k5zRAwFFsGZxXJTatNnyOpXi9CmOFBQ=",
+        "lastModified": 1795647853,
+        "narHash": "sha256-ATvCMdROm8jWSk+ZoqVZpbh39G20zZbtz4GEHLPxCiw=",
         "owner": "QuadraHQ",
         "repo": "Quadra",
-        "rev": "eb0eb158efe32d866e836eefd0c11b9ba829f74f",
+        "rev": "f252814fdfac1f7db851230d5cc398c2cbff011e",
         "type": "github"
       },
       "original": {
